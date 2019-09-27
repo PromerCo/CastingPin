@@ -1,0 +1,27 @@
+<view class="project">
+  <view class="new">
+    <view class="basic">-----基本信息-----</view>
+    <view class="con">
+      <view class="name">
+      <p>姓名：</p>
+      <input class="input" name="userName" placeholder="选填" 
+    bindinput="userNameInput"/>
+      </view>
+       <view class="name">
+      <p>姓名：</p>
+      <input class="input" name="userName" placeholder="选填" 
+    bindinput="userNameInput"/>
+      </view>
+       <view class="name">
+      <p>姓名：</p>
+      <input class="input" name="userName" placeholder="选填" 
+    bindinput="userNameInput"/>
+      </view>
+       <view class="name">
+      <p>姓名：</p>
+      <input class="input" name="userName" placeholder="选填" 
+    bindinput="userNameInput"/>
+      </view>
+    </view>
+  </view>
+</view>

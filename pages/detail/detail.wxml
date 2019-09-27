@@ -1,0 +1,68 @@
+<view class="wrap">
+  <!-- 详情 -->
+  <view class="whole" wx:for="{{arr}}" wx:for-index="idx" wx:key="idx" bindtap="detail">
+    <view class="type all">
+      <p>类型:
+        <span>{{item.type}}</span>
+      </p>
+      <view>{{item.minute}}</view>
+    </view>
+    <view class="time all">
+      <p>时间:
+        <span class="hole">{{item.date}}</span>
+      </p>
+    </view>
+    <view class="recruit all">
+      <p>招募:
+        <span class="hole">{{item.actor}}</span>
+        <span class="hole">{{item.actress}}</span>
+      </p>
+    </view>
+    <view class="field all">
+      <p>场地:
+        <span class="hole">{{item.addressfirst}}</span>
+        <span class="hole">{{item.addresssecond}}</span>
+        <span class="hole">{{item.addressthird}}</span>
+      </p>
+    </view>
+    <view class=" nickname all">
+      <view class="nick">
+        <image src="{{item.icon}}" class="icon" mode="center"></image>
+        <p>归于初遇呀</p>
+        <p>-经纪人</p>
+      </view>
+      <view class="end">两天后结束</view>
+    </view>
+  </view>
+  <!-- 角色简介 -->
+  <view class="role">
+    <view class="role_top">
+      <p> 角色简介</p>
+    </view>
+    <view class="area">
+      <textarea bindblur="bindTextAreaBlur" maxlength="300" class="textarea" />
+    </view>
+  </view>
+  <!-- 项目简介 -->
+  <view class="role">
+    <view class="role_top">项目简介</view>
+    <view class="project">
+        <textarea bindblur="bindTextAreaBlur" maxlength="300" class="textarea_pro" />
+    </view>
+  </view>
+  <!-- 底部 -->
+  <view class="footer">
+    <view>
+      <image src="../../image/share.png"></image>
+      <span>分享</span>
+    </view>
+    <view>
+      <image src="../../image/collection.png"></image>
+      <span>关注</span>
+    </view>
+    <view>
+      <image src="../../image/email.png"></image>
+      <span>邀请</span>
+    </view>
+  </view>
+</view>

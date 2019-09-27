@@ -1,0 +1,140 @@
+.wrap {
+  width: 100%;
+  height: 100%;
+}
+.search_wrap {
+  width: 100%;
+  height: 80rpx;
+  padding-top:20rpx;
+  padding-bottom: 20rpx;
+  background-color: white;
+  display: flex;
+  border-bottom: 1rpx solid rgb(247, 248, 250);
+}
+.search {
+  width:100%;
+  height: 80rpx;
+  background-color: rgb(247, 248, 250);
+  border-radius: 40rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin-left: 20rpx;
+}
+.search image {
+  width: 40rpx;
+  height: 40rpx;
+  margin: 25rpx 20rpx;
+}
+.search input {
+  font-size: 24rpx;
+  margin-top: 20rpx;
+}
+.screen {
+width: 10%;
+font-size: 24rpx;
+padding-top: 20rpx;
+padding-left: 35px;
+margin-right: 10rpx;
+}
+.screen image {
+width: 40rpx;
+height: 40rpx;
+}
+.screen_detail{
+  width: 100%;
+  height: auto;
+  border-top: 1rpx solid  lightblue;
+  background-color: rgb(253,253,253);
+  padding-bottom: 20rpx;
+  position: absolute;
+  right: 0;
+  z-index: 200;
+}
+.tea{
+width: 95%;
+height: 80rpx;
+line-height: 80rpx;
+font-size: 24rpx;
+border-bottom: 1rpx solid #ccc;
+margin: 6rpx 20rpx 12rpx 20rpx;
+
+}
+.com{
+width: 95%;
+display: flex;
+margin: 0rpx auto;
+justify-content: space-around;
+}
+.hide{
+  position: relative;
+}
+.screen_hower{
+  width: 100%;
+  height: 1300rpx;
+  position: absolute;
+  left:0;
+  top:0;
+  z-index: 199;
+  background-color: rgba(0,0,0,0.3);
+}
+.typepic{
+  width: 20rpx;
+  height: 20rpx;
+}
+.picker p{
+  margin-left:10rpx;
+}
+.jiantou{
+ width: 50rpx;
+ height: 50rpx;
+ float: right;
+ margin-top: 20rpx;
+}
+/* 首页 */
+.whole{
+height: 280rpx;
+margin: 20rpx 20rpx;
+border-bottom: 1rpx solid rgb(235, 235, 235);
+position: relative;
+}
+.all{
+width: 100%;
+line-height: 68rpx;
+font-size: 24rpx;
+}
+.type {
+  display: flex;
+  justify-content: space-between;
+}
+.all p:nth-of-type(1){
+  margin-left: 30rpx;
+}
+.type view{
+  margin-right:30rpx;
+  font-size:20rpx;
+}
+.hole{
+  margin-left: 20rpx;
+}
+.field {
+  display: flex;
+  justify-content: space-between;
+}
+.icon{
+  width: 50rpx;
+  height: 50rpx;
+  margin-right:30rpx;
+}
+/* 发布 */
+.publish{
+width: 80rpx;
+height: 80rpx;
+position: fixed;
+right: 10rpx;
+bottom:20rpx;
+}
+.publish image{
+  width: 80rpx;
+  height: 80rpx;
+}

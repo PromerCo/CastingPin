@@ -1,0 +1,63 @@
+<view class="wrap">
+  <form bindsubmit="formSubmit" bindreset="formReset">
+     <!-- 类型 -->
+    <view class="title_name name">
+       <p>姓名:</p>
+      <input maxlength="20" placeholder="必填" placeholder-class="phcolor" type=" text" class="input_common" name="title"></input>
+    </view>
+    <!-- 类型 -->
+    <view class="title name">
+      <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+        <view class="picker">
+          <p>类型:</p>
+          <p class="title_x"> {{array[index]}}</p>
+        </view>
+      </picker>
+    </view>
+    <!-- 时间 -->
+    <view class="platform name">
+      <p>时间：</p>
+      <wux-date-picker mode="date" value="{{ value2 }}" lang="{{ lang }}" data-index="2" data-mode="date" bind:confirm="onConfirm">
+        <wux-cell title="" is-link extra="{{ displayValue2 }}"></wux-cell>
+      </wux-date-picker>
+    </view>
+    <!-- 招募 -->
+    <view class="participants name">
+      <picker bindchange="bindPickerChange1" value="{{index1}}" range="{{array1}}">
+        <view class="picker">
+          <p>招募:</p>
+          <p class="title_x">{{array1[index1]}}</p>
+        </view>
+      </picker>
+    </view>
+    <!-- 场地 -->
+    <view class="title name">
+      <p>场地:</p>
+      <input maxlength="20" placeholder="必填" placeholder-class="phcolor" type=" text" class="input_common" name="title"></input>
+    </view>
+    <!-- 角色简介 -->
+    <view class="introduction ">
+      <p>角色简介：</p>
+    </view>
+    <view class='detail-view'>
+      <text class='detail-placeholder' hidden='{{isHidePlaceholder}}'>更详细的介绍可以提升角色的曝光率（不超过300字)可以上传图片哦！</text>
+      <textarea name="describe" class='detail-textarea' auto-height='true' maxlength='300' bindinput='getTextareaInput' />
+      <wux-upload progress listType="picture-card" showUploadList="{{ false }}" url="https://www.skyvow.cn/api/common/file" bind:change="onChange" bind:success="onSuccess" bind:fail="onFail" bind:complete="onComplete" bind:progress="onProgress" bind:preview="onPreview">
+        <image src="{{ imageUrl }}" wx:if="{{ imageUrl }}" />
+        <text wx:else>Upload</text>
+      </wux-upload>
+    </view>
+    <!-- 项目简介 -->
+    <view class="introduction ">
+      <p>项目简介：</p>
+    </view>
+    <view class='detail-view'>
+      <text class='detail-placeholder' hidden='{{isHidePlaceholder}}'>更详细的介绍可以提升项目的了解（不超过300字）可以上传图片哦！</text>
+      <textarea name="describe" class='detail-textarea' auto-height='true' maxlength='300' bindinput='getTextareaInput' />
+      <wux-upload progress listType="picture-card" showUploadList="{{ false }}" url="https://www.skyvow.cn/api/common/file" bind:change="onChange" bind:success="onSuccess" bind:fail="onFail" bind:complete="onComplete" bind:progress="onProgress" bind:preview="onPreview" sourceType="camera album">
+        <image src="{{ imageUrl }}" wx:if="{{ imageUrl }}" />
+        <text wx:else>Upload</text>
+      </wux-upload>
+    </view>
+  </form>
+</view>

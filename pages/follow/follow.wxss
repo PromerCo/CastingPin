@@ -1,0 +1,44 @@
+.wrap{
+  width: 95%;
+  height: 160rpx;
+  margin:0rpx auto;
+  border-bottom:1rpx solid rgb(245,245,245)
+}
+.douyin{
+  width:30rpx;
+  height:30rpx;
+  margin-top: 25rpx;
+}
+.list{
+  width: 95%;
+  height:80rpx;
+  line-height:80rpx;
+  margin:0rpx auto;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+}
+.list p{
+margin-left: 20rpx;
+font-size: 28rpx;
+}
+.brand{
+  font-size:28rpx;
+  margin:20rpx;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+.guanzhu{
+   width:30rpx;
+   height:30rpx;
+   margin-right:20rpx;
+}
+.time{
+  color:gainsboro;
+  font-size: 20rpx !important;
+  margin-left: 100px !important;
+}
+.brand p{
+  font-size: 24rpx;
+}

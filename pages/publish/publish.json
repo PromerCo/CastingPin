@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "wux-segmented-control": "../../components/dist/segmented-control/index",
+    "wux-date-picker": "../../components/dist/date-picker/index",
+    "wux-cell-group": "../../components/dist/cell-group/index",
+    "wux-cell": "../../components/dist/cell/index",
+    "wux-upload": "../../components/dist/upload/index"
+  }
+}

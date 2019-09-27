@@ -1,0 +1,24 @@
+.project{
+  width: 100%;
+  height: 100%;
+}
+.new{
+  width: 100%;
+  height: 200rpx;
+  border-bottom: 1rpx solid rgb(235,235,235);
+}
+.basic{
+  text-align: center;
+}
+.name{
+float: left;
+width: 30%;
+margin: 12rpx 75rpx;
+}
+.name p{
+  float: left;
+}
+.name input{
+float: left;
+width: 100rpx;   
+}

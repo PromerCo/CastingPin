@@ -1,0 +1,28 @@
+<view class="wrap">
+  <view class="name">
+    <p>姓名：</p>
+    <input class="input" name="" placeholder="*必填" placeholder-class="placeholderStyle" bindinput="Input" />
+  </view>
+  <view class="name">
+    <p>艺名：</p>
+    <input class="input" name="" placeholder="选填" bindinput="Input" />
+  </view>
+  <view class="name">
+    <p>身高：</p>
+    <input class="input" name="" placeholder="选填" bindinput="Input" />
+  </view>
+  <view class="name">
+    <p>三围：</p>
+    <input class="input" name="" placeholder="选填" bindinput="Input" />
+  </view>
+  <view class="name">
+    <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+      <view class="picker">
+        <p>特长:</p><p class="hoddy">{{array[index]}}</p>
+      </view>
+    </picker>
+  </view>
+  <view>
+  <p class="name">写真：</p>
+  </view>
+</view>

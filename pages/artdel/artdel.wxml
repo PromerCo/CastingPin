@@ -1,0 +1,70 @@
+<view class="wrap">
+  <!-- 封面图 -->
+  <view class="cover">
+    <view class="picture">
+      <image src="../../image/image.jpg"></image>
+    </view>
+    <view class="picture_image">
+      <view>
+        <image src="../../image/me.png" class="me"></image>
+        <p class="pic_name">黄江</p>
+        <p class="pic_author">演员</p>
+      </view>
+      <view class="new">
+        <p class="width">175cm</p>
+        <p class="circles">80-78-90</p>
+        <view class="speciality">
+          <p>特长：</p>
+          <span>运动</span>
+          <span>舞蹈 </span>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- 音频 -->
+  <view class="audio">
+    <audio src="{{current.src}}" poster="{{current.poster}}" name="{{current.name}}" author="{{current.author}}" action="{{audioAction}}" bindplay="audioPlayed" bindtimeupdate="audioTimeUpdated" controls></audio>
+  </view>
+  <!-- 视频 -->
+  <view class="video">
+    <video id="myVideo" src="http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400"
+      binderror="videoErrorCallback" controls autoplay="true"></video>
+  </view>
+  <!-- 写真 -->
+  <view>
+  <view class="photo">写真</view>
+    <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" circular="{{circular}}" vertical="{{vertical}}" interval="{{interval}}" duration="{{duration}}" previous-margin="{{previousMargin}}px" next-margin="{{nextMargin}}px">
+      <block wx:for="{{background}}" wx:key="*this">
+        <swiper-item>
+          <image src="{{item.image}}"></image>
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+  <!-- 剧照 -->
+  <view>
+    <view class="photo">剧照</view>
+    <swiper indicator-dots="{{indicatorDots1}}" autoplay="{{autoplay1}}" circular="{{circular1}}" vertical="{{vertical1}}" interval="{{interval1}}" duration="{{duration1}}" previous-margin="{{previousMargin1}}px" next-margin="{{nextMargin1}}px">
+      <block wx:for="{{background1}}" wx:key="*this">
+        <swiper-item>
+          <image src="{{item.image1}}"></image>
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+  <!-- 底部 -->
+  <view class="footer">
+    <view>
+      <image src="../../image/share.png"></image>
+      <span>分享</span>
+    </view>
+    <view>
+      <image src="../../image/collection.png"></image>
+      <span>关注</span>
+    </view>
+    <view>
+      <image src="../../image/email.png"></image>
+      <span>邀请</span>
+    </view>
+  </view>
+</view>

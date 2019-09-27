@@ -1,0 +1,12 @@
+<view class="wrap" wx:for="{{array}}"  wx:for-index="idx" wx:for-item="itemName" wx:key="idx">
+  <view class="list">
+    <image src="{{itemName.imagefirst}}" class="douyin"></image>
+    <p>{{itemName.title}}</p>
+    <p class="time">过期时间：{{itemName.time}}</p>
+  </view>
+  <view class="brand">
+    <p>召集人数：{{itemName.number}}</p>
+    <image src="{{itemName.icon}}" class="guanzhu"></image>
+    <!-- <image src="../../image/woman.png" class="guanzhu"></image> -->
+  </view>
+</view>

@@ -1,0 +1,53 @@
+ <view class="project">
+    <view class="project_top">
+      <view class="whole name">
+        <p>北京博纳传媒有限公司</p>
+      </view>
+      <view class="whole platform">
+        <p class="plat">行业</p>
+        <span class="plat_del">文化传媒</span>
+      </view>
+      <view class="whole fans">
+        <p class="plat">职位</p>
+        <span class="plat_del">演员统筹</span>
+      </view>
+      <view class="whole tag">
+        <p class="plat">品牌</p>
+        <span class="plat_del">博纳</span>
+      </view>
+      <view class="whole address">
+        <p class="plat">地址</p>
+        <span class="plat_del">北京市朝阳区</span>
+        <image src="../../image/woman.png" class="img"></image>
+      </view>
+    </view>
+      <view class="project_bottom">
+      <view class="data">
+        <!-- <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}"> -->
+          <view class="picker">
+            <p>行业：</p>
+             <!-- {{array[index]}} -->
+                  <input class="input" name="" placeholder="选填" 
+    bindinput="userNameInput"/>
+          </view>
+        <!-- </picker> -->
+      </view>
+      <view class="data">
+        <picker bindchange="bindPickerChange1" value="{{index1}}" range="{{array1}}">
+          <view class="picker">
+            <p>职位：</p> {{array1[index1]}}
+          </view>
+        </picker>
+      </view>
+      <view class="data">
+        <p>品牌：</p>
+      </view>
+      <view class="data">
+        <picker mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{customItem}}">
+          <view class="picker">
+            <p>地址 ：</p>{{region[0]}}，{{region[1]}}
+          </view>
+        </picker>
+      </view>
+    </view>
+  </view>

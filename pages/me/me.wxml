@@ -1,0 +1,114 @@
+<!--pages/me/me.wxml-->
+<block wx:if="{{boolean==true}}">
+  <view class="project">
+    <view class="content">
+      <view class='head_content_make'>
+        <view class="top">
+          <image src="../../image/change.png" class="change" bindtap="change" mode="scaleToFill"></image>
+        </view>
+         <image src="../../image/cute.jpg" class="pic" bindtap="basicart"></image>
+          <view class="name">
+            <p class="text">黄渤</p>
+          </view>
+        <view class="center">
+          <view class="icon city">
+            <image src="../../image/pingtai.png" class="address"></image>
+            <p>演员</p>
+          </view>
+          <view class="icon fans">
+            <image src="../../image/fensi.png" class="address"></image>
+            <p>20-50万</p>
+          </view>
+          <view class="icon music">
+            <image src="../../image/biaoqian.png" class="address"></image>
+            <p>#搞笑#剧情#情感</p>
+          </view>
+          <view class="icon tag">
+            <image src="../../image/diqu.png" class="address"></image>
+            <p>北京市朝阳区</p>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="project_bottom">
+      <view class="bottom_all" bindtap="follow">
+        <p>
+          <image src="../../image/guanzhu2.png" class="guanzhu"></image>
+          <p class="isuse">关注的通告</p>
+        </p>
+        <image src="../../image/xiaojiantou2.png" class="arrow"></image>
+      </view>
+      <view class="bottom_all" bindtap="list">
+        <p>
+          <image src="../../image/fabu2.png" class="guanzhu"></image>
+          <p class="isuse">报名的通告</p>
+        </p>
+        <image src="../../image/xiaojiantou2.png" class="arrow"></image>
+      </view>
+      <view class="bottom_all">
+        <p>
+          <image src="../../image/photo2.png" class="guanzhu"></image>
+          <p class="isuse">商务通讯录</p>
+        </p>
+        <image src="../../image/xiaojiantou2.png" class="arrow"></image>
+      </view>
+    </view>
+  </view>
+</block>
+<block wx:elif="{{boolean==false}}">
+  <view class="project">
+    <view class="content">
+      <view class='head_content_make'>
+        <view class="top">
+          <image src="../../image/change.png" class="change" bindtap="change" mode="scaleToFill"></image>
+        </view>
+        <image src="../../image/timg.jpg" class="pic" bindtap="basicgro"></image>
+        <view class="name">
+       
+          <p class="text">北京博纳传媒有限公司</p>
+        </view>
+        <view class="center">
+          <view class="icon city">
+            <image src="../../image/hangye.png" class="address"></image>
+            <p>文化传媒</p>
+          </view>
+          <view class="icon fans">
+            <image src="../../image/zhiwei.png" class="address"></image>
+            <p>演员统筹</p>
+          </view>
+          <view class="icon music">
+            <image src="../../image/pingpai.png" class="address"></image>
+            <p>博纳</p>
+          </view>
+          <view class="icon tag">
+            <image src="../../image/diqu.png" class="address"></image>
+            <p>北京市朝阳区</p>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="project_bottom">
+      <view class="bottom_all">
+        <p>
+          <image src="../../image/guanzhu2.png" class="guanzhu"></image>
+          <p class="isuse">关注的艺人</p>
+        </p>
+        <image src="../../image/xiaojiantou2.png" class="arrow"></image>
+      </view>
+      <view class="bottom_all" bindtap="guanzhu">
+        <p>
+          <image src="../../image/fabu2.png" class="guanzhu" ></image>
+          <p class="isuse">发布的通告</p>
+        </p>
+        <image src="../../image/xiaojiantou2.png" class="arrow"></image>
+      </view>
+      <view class="bottom_all">
+        <p>
+          <image src="../../image/photo2.png" class="guanzhu"></image>
+          <p class="isuse">商务通讯录</p>
+        </p>
+        <image src="../../image/xiaojiantou2.png" class="arrow"></image>
+      </view>
+    </view>
+  </view>
+</block>
