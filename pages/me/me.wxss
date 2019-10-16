@@ -8,6 +8,7 @@
   width: 95%;
   height: auto;
   margin: 20rpx auto;
+
 }
 
 /* 第一部分详情 */
@@ -32,12 +33,24 @@
 }
 
 .pic {
-  width: 150rpx;
-  height: 150rpx;
+
   margin: 0 auto;
+  overflow:hidden;
   display: block;
+  width: 160rpx;
+  height: 160rpx;
   border-radius: 50%;
+  border: 2px solid #fff;
+
 }
+
+/* .open-data-class {
+width: 160rpx;
+height: 160rpx;
+display:block;
+overflow:hidden;
+border-radius: 50%;
+} */
 
 .city {
   left: 68rpx !important;
@@ -60,8 +73,12 @@
 }
 
 .name {
-  text-align: center;
-  margin-top: 90rpx;
+  
+text-align: center;
+margin-top: 80rpx;
+font-size: 26rpx;
+
+
 }
 
 .top image {

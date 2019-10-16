@@ -1,0 +1,24 @@
+.weui-input {
+height: 2.58823529em;
+min-height: 2.58823529em;
+line-height: 2.58823529em;
+border-bottom: 1rpx solid #DDDDDD;
+padding-left: 80rpx;
+font-size: 26rpx;
+
+}
+
+.option {
+    margin-left: 50rpx;
+    height:80rpx;
+
+}
+.school-img{
+  
+width: 38rpx;
+height: 38rpx;
+position: absolute;
+margin-top: 15rpx;
+margin-left: 20rpx;
+}
+

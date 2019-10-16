@@ -42,6 +42,27 @@ class Me extends Base {
     };
     this.request(param);
   }
+
+/*
+   切换角色
+*/
+  cutRole(param,callback){
+
+    var type = param
+
+    console.log(type)
+    
+    var param = {
+      url: 'castingpinuser/cutrole',
+      data: { 'type': type },
+      type: 'POST',
+      sCallback: function (data) {
+        callback && callback(data);
+      }
+    };
+    this.request(param);
+  }
+
  
 };
 export { Me };

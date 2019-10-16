@@ -11,10 +11,20 @@ Page({
   change:function(e){
 
     var bol = e.currentTarget.dataset.type;
-    console.log(bol)
-    this.setData({
-      type: bol
+
+    me.cutRole(bol, (data) => {
+
+
+
+      if (data.code == 201){
+        this.setData({
+          type: data.data.type,
+          material: data.data.material
+        })
+      }
+
     })
+
 
 
 
@@ -62,42 +72,42 @@ Page({
   onLoad: function (options) {
     
     var that = this;
-    // wx.getSetting({
-    //   success(res) {
-    //     if (!res.authSetting['scope.userInfo']) {
-      
-    //       that.setData({
-    //         authHidding: true,
-    //         loadingHidden: true
-    //       })
-    //     } else {
-    //       that._loadData();
-    //     }
-    //   }
-    // })
+    wx.getSetting({
+      success(res) {
+        if (!res.authSetting['scope.userInfo']) {
+             console.log('没有授权')
+           that.setData({
+            authHidding: true,
+            loadingHidden: true
+          })
+
+        } else {
+
+          console.log('已经授权')
+
+          that._loadData();
+        }
+      }
+    })
   },
 
   bindGetUserInfo: function (e) {
     var that = this
     var userInfo = e.detail.rawData
-    that.setData({
-      loadingHidden: false
-    })
-    wx.setStorageSync('userInfo', e.detail.userInfo)
+
+
     me.getUserAhth(userInfo, (data) => {
     
       console.log(data)
       if (data.code == 201) {
         that._loadData();
         that.setData({
-          userInfo: JSON.parse(userInfo),
           authHidding: false,
           loadingHidden: true,
           status: 0
         })
       } else {
         that.setData({
-          userInfo: JSON.parse(userInfo),
           authHidding: false,
           loadingHidden: true,
           status: 0
@@ -114,28 +124,68 @@ Page({
   },
 
   /*加载所有数据*/
-  _loadData: function (callback) {
+  _loadData: function () {
     var that = this;
-    var userInfo = wx.getStorageSync('userInfo'); 
-    me.roleStatus((data) => {   
-      console.log(data)
+    // var userInfo = wx.getStorageSync('userInfo'); 
+    
+    
 
-      if (data.code == 200){
+    me.roleStatus((data) => {  
+
+
+
+      var chaceRecord = wx.getStorageSync('chace_record')  //缓存数据
+
+
+      if (data.code == 201){
+
         var material = data.data.material  //查看是否填写资料
         var type = data.data.type   //类型
+        var message = data.data 
         if (type == 2){
+        
         //艺人 
+          var speciality = data.data.speciality   //特长
+          var occupation = data.data.occupation   //职位
+          //数组转字符串
+          var cache_speciality = wx.getStorageSync('chace_record')
+          var check_tags = speciality.split(",");
+          // 特长
+          let tags_list = [];
+          for (var i = 0; i <= check_tags.length; i++) {
+            for (var j = 0; j < cache_speciality.length; j++) {
+              if (cache_speciality[j]['code'] == check_tags[i]) {
+
+                tags_list.push(cache_speciality[j]['name'])
+
+              }
+            }
+            var speciality = tags_list.join('#');
+          }
+
+          for (var i = 0; i <= cache_speciality.length - 1; i++) {
+            if (cache_speciality[i]['code'] == occupation) {
+              var occupation = cache_speciality[i]['name']
+            }
+
+          }
+
+          message['tags_list'] = speciality //特长
+          message['occupation'] = occupation //职位
+          
           that.setData({
+            message: message,
             authHidding: false,
-            loadingHidden:false,
+            loadingHidden:true,
             material: material   //是否填写资料
           })
 
         }else{
         //统筹
           that.setData({
+            message: data.data,
             authHidding: false,
-            loadingHidden: false,
+            loadingHidden: true,
             material: material  //是否填写资料
           })
 

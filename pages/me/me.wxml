@@ -1,42 +1,47 @@
 <!--pages/me/me.wxml-->
-<view hidden="{{loadingHidden}}">
+
+
+<view hidden="{{!loadingHidden}}">
 
 <view hidden='{{authHidding}}'>
 
 
 
-<block wx:if="{{type==1}}">
+<block wx:if="{{type==2}}">
 
   <view class="project">
     <view class="content">
       <view class='head_content_make'>
-        <view class="top" bindtap="change" data-type="2">
+        <view class="top" bindtap="change" data-type="1">
           <image src="../../image/artistgray.png" class="change"  mode="scaleToFill"></image>
           <p>切换身份</p>
         </view>
 
-         <image src="../../image/cute.jpg" class="pic" bindtap="basicart"></image>
+   <view class="pic" bindtap="basicart">
+     <open-data type="userAvatarUrl" mode="aspectFit"></open-data>
+   </view>
+
           <view class="name">
-            <p class="text">黄渤</p>
+       <open-data type="userNickName" lang="zh_CN"></open-data>
           </view>
 
 
         <view class="center" wx:if="{{material}}">
           <view class="icon city">
             <image src="../../image/pingtai.png" class="address"></image>
-            <p>演员</p>
+            <p>{{message.stage_name}}</p>
           </view>
           <view class="icon fans">
-            <image src="../../image/fensi.png" class="address"></image>
-            <p>20-50万</p>
+            <image src="../../image/Csms-school.png" class="address"></image>
+            <p>{{message.university}}</p>
           </view>
           <view class="icon music">
             <image src="../../image/biaoqian.png" class="address"></image>
-            <p>#搞笑#剧情#情感</p>
+            <p>{{message.tags_list}}</p>
           </view>
           <view class="icon tag">
-            <image src="../../image/diqu.png" class="address"></image>
-            <p>北京市朝阳区</p>
+            <image src="../../image/Csms-occupation.png" class="address"></image>
+            <p>{{message.occupation}}</p>
           </view>
         </view>
 
@@ -89,20 +94,24 @@
     </view>
   </view>
 </block>
-<block wx:elif="{{type==2}}">
+<block wx:elif="{{type==1}}">
 
   <view class="project">
     <view class="content">
       <view class='head_content_make'>
-        <view class="top"  bindtap="change" data-type="1">
+        <view class="top"  bindtap="change" data-type="2">
           <image src="../../image/me3.png" class="change" mode="scaleToFill"></image>
           <p>切换身份</p>
         </view>
-        <image src="../../image/timg.jpg" class="pic" bindtap="basicgro"></image>
 
-        <view class="name">
-          <p class="text">北京博纳传媒有限公司</p>
-        </view>
+     <view class="pic" bindtap="basicart">
+     <open-data type="userAvatarUrl" mode="aspectFit"></open-data>
+   </view>
+
+          <view class="name">
+       <open-data type="userNickName" lang="zh_CN"></open-data>
+          </view>
+
 
 
         <view class="center" wx:if="{{material}}">
@@ -179,3 +188,7 @@
 </view>
 
 </view>
+
+<loading hidden="{{loadingHidden}}">
+    加载中...
+</loading>

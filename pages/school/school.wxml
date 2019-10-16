@@ -1,0 +1,9 @@
+<view class="page-section">
+   <span>  <image class="school-img" src="../../image/sele.png" ></image></span> 
+    <input bindconfirm="query" bindinput="inputBind" placeholder-style="font-size:24rpx" class="weui-input" placeholder='默认为不限'  confirmType="search"  type="text" value="{{inputValue}}"></input>
+</view>
+<view class="option" wx:for="{{bindSource}}">
+    <view bindtap="itemtap" class="itemview" data-statu="close" id="{{item}}" wx:if="{{showInputStatus}}">
+                          {{item}}   
+                </view>
+</view>

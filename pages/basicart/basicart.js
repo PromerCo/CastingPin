@@ -1,8 +1,10 @@
 import { Basicart } from 'basicart-model.js';
+
 var basicart = new Basicart(); //实例化 首页 对象
 const app = getApp()
 Page({
   data: {
+    loadingHidden: false,
     // 手机号
     phoneNumber: '',
     url: app.globalData.url,
@@ -27,84 +29,11 @@ Page({
       ['1', '2', '3', '4', '5', '6', '7', '8'],
       ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     ],
-    // 职业
-    array: ['演员', '模特', '主持人', '歌手'],
-    objectArray: [
-      {
-        id: 1,
-        name: '演员'
-      },
-      {
-        id: 2,
-        name: '模特'
-      },
-      {
-        id: 3,
-        name: '主持人'
-      },
-      {
-        id: 4,
-        name: '歌手'
-      }
-    ],
-    index: 1,
 
-    // 特长
-    array1: ['运动', '舞蹈', '乐器', '戏曲', '武术', '书画 ', '曲艺', '语言', '声乐 ', '其他'],
-    objectArray1: [
-      {
-        id: 0,
-        name: '运动'
-      },
-      {
-        id: 1,
-        name: '舞蹈'
-      },
-      {
-        id: 2,
-        name: '乐器'
-      },
-      {
-        id: 3,
-        name: '戏曲'
-      },
-      {
-        id: 4,
-        name: '武术 '
-      },
-      {
-        id: 5,
-        name: '书画'
-      },
-      {
-        id: 6,
-        name: '曲艺 '
-      },
-      {
-        id: 7,
-        name: '语言'
-      },
-      {
-        id: 8,
-        name: '声乐 '
-      },
-      {
-        id: 9,
-        name: '其他'
-      },
-    ],
-    tag:[
-      { 'id': 100001,'title':  '运动' },
-      { 'id': 100002, 'title': '舞蹈' },
-      { 'id': 100003, 'title': '乐器' },
-      { 'id': 100004, 'title': '戏曲' },
-      { 'id': 100005, 'title': '武术' },
-      { 'id': 100006, 'title': '书画' },
-      { 'id': 100007, 'title': '曲艺' },
-      { 'id': 100008, 'title': '语言' },
-      { 'id': 100009, 'title': '语言' },
-      { 'id': 100010, 'title': '其他' },
-    ],
+    index: 1,
+    // 学校
+    schoolName:'',
+    tag:[],
     index1: 0,
     // 简介
     isHidePlaceholder: false,
@@ -141,10 +70,37 @@ Page({
   },
   // 城市
   bindRegionChange: function (e) {
-    console.log('picker发送选择改变，携带值为', e.detail.value)
+    var that = this
+    var conurbation = e.detail.value
+    //数组转字符串
+    var city = conurbation.join(",")
+    var data = [];
+    data.push({ "city": city })
+    that._saveMsg(data)
     this.setData({
       region: e.detail.value
     })
+  },
+
+  //艺人
+  bingd_stage:function(e){
+
+    var that = this
+    var stage_name = e.detail.value
+    var data = [];
+    data.push({ "stage_name": stage_name })
+    that._saveMsg(data)
+
+  },
+  //学校
+  bingd_university:function(e){
+
+    var school = e.currentTarget.dataset.school
+
+    wx.navigateTo({
+      url: '../../pages/school/school?school=' + school,
+    })
+
   },
   // 身高
   showPicker_03: function () {
@@ -180,8 +136,31 @@ Page({
 
     var woman = e.detail.displayValue
 
+    var woman_str = woman.join('-');
+
+    var bust  = woman[0]   //胸围
+
+    var waist = woman[1]   //腰围
+   
+    var hip = woman[2]     //臀围
+
+    var woman = woman_str   //三围
+
+    var data = [];
+
+    data['bust'] = bust
+
+    data['waist'] = waist
+
+    data['hip'] = hip
+
+    data['woman'] = woman
+
+    data.push({ "bust": bust,"waist": waist,"hip": hip,"woman": woman })
+
+    that._saveMsg(data)
+  
     that.setData({
- 
         value: woman
     })
 
@@ -208,6 +187,12 @@ Page({
 bingd_wx:function(e){
   var that = this
   var wx_name = e.detail.value 
+  var data = [];
+
+  data.push({ "wechat": wx_name })
+
+  that._saveMsg(data)
+
   that.setData({
     wx_name: wx_name
   })
@@ -216,36 +201,47 @@ bingd_wx:function(e){
 /*
    邮箱
 */
-  bingd_emali:function(e){
-    var that = this
-    var emali = e.detail.value
-    that.setData({
-      emali: emali
-    }) 
+  // bingd_emali:function(e){
+  //   var that = this
+  //   var emali = e.detail.value
+  //   console.log(emali)
+  //   var data = [];
+  //   data.push({ "emali": emali })
+  //   that._saveMsg(data)
+  //   that.setData({
+  //     emali: emali
+  //   }) 
 
-  },
+  // },
   /*
   公司
   */
   bingd_corporation:function(e){
     var that = this
     var corporation = e.detail.value
-    that.setData({
-      corporation:corporation
-    })
-
+    var data = [];
+    data.push({ "corporation": corporation })
+    that._saveMsg(data)
   },
    
-
-
 /*
   出生日期
 */
   bindDateChange: function (e) {
 
+    var that = this
+
+    var birthday = e.detail.value
+
+    console.log(birthday)
+
+    var data = [];
+    data.push({ "birthday": birthday })
+
+    that._saveMsg(data)
 
     this.setData({
-      date: e.detail.value,
+      date: birthday,
     })
   },
 
@@ -282,18 +278,12 @@ bingd_wx:function(e){
     var msg = options
    
     basicart.saveData(msg, (data) => {
-
+      
+      console.log(data)
     
-
     })
 
-
-
-
-
   },
-
-
 
 
   // 特长
@@ -388,53 +378,43 @@ bingd_wx:function(e){
            speciality.push(item)
       }
     })
+
     that.setData({
       occupation_list: occupation,
       speciality_list: speciality
     })
 
-
-      
     basicart.getList((data) => {
-
     var message = data.data 
 
     var woman = message.woman
-
     var value = woman.split("-");
 
-    var tag = that.data.tag
-
+    var speciality_list = that.data.speciality_list
     var speciality = message.speciality
-
-
-      var check_tags = speciality.split(","); 
-
-      let tags_list = [];
-      
-      // for (var i = 0; i <= check_tags.length;i++){
-      //   for (var j = 0; j < tag.length;j++){
-      //     if (tag[j]['id'] == check_tags[i]){
-      //       tag.push({
-      //         'check': 'check',
-      //       })
-      //     }
-      //   }
-      // }
-
-  
+    
+    var check_tags = speciality.split(","); 
+    var tid_s = that.data.tid_s
+    let tags_list = [];
+    for (var i = 0; i <= check_tags.length;i++){
+      for (var j = 0; j < speciality_list.length;j++){
+        if (speciality_list[j]['code'] == check_tags[i]){
+          tid_s.push(check_tags[j]);
+          speciality_list[j]['check'] = 'check'
+      }
+      }
+     }
 
      that.setData({
         type: type,
+        speciality_list: speciality_list,
         message:    message,
-        emali:      message.email,
         wx_name:    message.wechat,
-        phoneNumber:message.phone,
-        corporation:message.corporation,
         actor_height: message.height,
         actor_weight: message.weight,
-        occupation: message.occupation,
-        tags_list: tags_list,
+        phoneNumber:message.phone,
+        schoolName: message.university,
+        loadingHidden: true,
         value: value
       })
     })
@@ -465,7 +445,11 @@ bingd_wx:function(e){
   afterChangeHeight:function(e){
     var that   = this
     var height = e.detail.value
-    console.log(height[0])
+
+    var data = [];
+    data.push({ "height": height[0] })
+    that._saveMsg(data)
+
     that.setData({
       actor_height: height[0]
     })
@@ -477,9 +461,12 @@ bingd_wx:function(e){
 
   afterChangeWeight:function(e){
     var that = this
-    var height = e.detail.value
+    var weight = e.detail.value
+    var data = [];
+    data.push({ "weight": weight[0] })
+    that._saveMsg(data)
     that.setData({
-      actor_weight: height[0]
+      actor_weight: weight[0]
     })
 
   },
@@ -517,12 +504,14 @@ bingd_wx:function(e){
   文本组件
   */
   updatePosition(keyboardHeight) {
+
     const toolbarHeight = 100
     const { windowHeight, platform } = wx.getSystemInfoSync()
     let editorHeight = keyboardHeight > 0 ? (windowHeight - keyboardHeight - toolbarHeight) : windowHeight
     this.setData({ editorHeight, keyboardHeight })
   },
   calNavigationBarAndStatusBar() {
+
     const systemInfo = wx.getSystemInfoSync()
     const { statusBarHeight, platform } = systemInfo
     const isIOS = platform === 'ios'
@@ -535,6 +524,7 @@ bingd_wx:function(e){
     wx.createSelectorQuery().select('#editor').context(function (res) {
       that.editorCtx = res.context
       var describe = that.data.message.profile
+
       that.editorCtx.setContents({
         html: describe,
         success: (res) => {
@@ -551,6 +541,12 @@ bingd_wx:function(e){
   bindinput: function (e) {
     var that = this
     var info = e.detail.html
+
+    var data = [];
+    data.push({ "profile": info })
+
+    that._saveMsg(data)
+
     that.setData({
       details: info
     })
@@ -682,83 +678,25 @@ bingd_wx:function(e){
    * 生命周期函数--监听页面卸载
    */
   onUnload: function (e) {
-
     var that = this
 
-    var wx_name = that.data.wx_name   //微信名
-
-    var emali = that.data.emali       //邮箱号
-
-    var corporation = that.data.corporation   //公司
-
-    var region = that.data.region     //城市
-
-    var city = region.join(',');
-
-    var actor_height = that.data.actor_height     //身高
-
-    var actor_weight = that.data.actor_weight     //体重
-
-    var birthday = that.data.date
-
-    var occupation = that.data.occupation
-
-    var phoneNumber = that.data.phoneNumber 
-
-    var woman = that.data.value
-
-    var woman_str = woman.join('-');
-
-    var tid_s = that.data.tid_s
-
-    var speciality = tid_s.join(',');
-
-    console.log(speciality)
-
-
-    let msg = [];
-
-    msg['speciality'] = speciality
-    msg['wechat'] = wx_name
-    msg['email'] = emali
-    msg['occupation'] = occupation
-    msg['corporation'] = corporation
-    msg['city'] = city
-    msg['height'] = actor_height
-    msg['weight'] = actor_weight
-    msg['birthday'] = birthday
-    msg['woman'] = woman_str
-    msg['phone'] = phoneNumber
-   
-    basicart.saveMsg(msg, (data) => {
-      if (data.code == 201){
-
-      }else{
-        console.log(data.msg)
-      }
-
-
-    })
   },
 
 
   check: function (e) {
     var that = this
-    var t_id = e.currentTarget.dataset.id
-    var tags = this.data.tag
+    var t_id = e.currentTarget.dataset.id 
+    var speciality_list = this.data.speciality_list
     var index = e.currentTarget.dataset.index
     var tid_s = that.data.tid_s;
-    var chek = tags[index];
+    var chek = speciality_list[index];
     var tag_list = that.data.tag_list;
     var tag_all = that.data.tag_all;
-
-
 
     if (chek['check'] == 'check') {
       chek['check'] = 'none'
       for (var i = 0; i < tid_s.length; i++) {
         if (tid_s[i] == t_id) {
-
           tid_s.splice(i, 1);
           tag_list.splice(i, 1);
           tag_all.splice(i, 1)
@@ -786,19 +724,20 @@ bingd_wx:function(e){
       tid_s.push(t_id)
       tag_all.push(chek);
 
-    
       that.setData({
         tid_s: tid_s,
         tag_list: tag_list,
         tag_all: tag_all
       })
     }
+ 
+    var speciality =    tid_s.join(',');
+    var data = [];
+    data.push({ "speciality": speciality })
+    that._saveMsg(data)
 
-
-    console.log(tags)
-    console.log(tid_s)
     that.setData({
-      tag: tags,
+      speciality_list: speciality_list,
       tid_s: tid_s,
     })
 
