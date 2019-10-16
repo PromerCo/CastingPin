@@ -1,0 +1,71 @@
+.page {
+  margin-left: 10rpx;
+  margin-right: 10rpx;
+}
+
+.swiper-tab {
+  display: flex;
+  flex-direction: row;
+  line-height: 80rpx;
+  border-bottom: 2rpx solid rgb(235, 235, 235);
+}
+
+.tab-item {
+  width: 33.3%;
+  text-align: center;
+  font-size: 15px;
+  color: #777;
+}
+
+.swiper {
+  height: 1100px;
+  background: white;
+}
+
+.on {
+  font-weight: 700;
+  color: #f60;
+  border-bottom: 5rpx solid #f60;
+}
+.wrap{
+  width: 100%;
+  height: 100%;
+}
+.content{
+  width: 100%;
+  height: 580rpx;
+  /* background: wheat; */
+  margin-top: 15rpx;
+}
+.text{
+  width: 100%;
+  height: 60rpx;
+  line-height: 60rpx;
+  display: flex;
+}
+.text image{
+  width: 40rpx;
+  height: 40rpx;
+  margin-left: 20rpx;
+  margin-top: 8rpx;
+
+}
+.text p{
+  font-size: 28rpx;
+}
+.image{
+  width: 100%;
+  height: 520rpx;
+}
+.image image{
+  width: 100%;
+  height: 520rpx;
+}
+.ghent {
+  width: 80%;
+}
+.ghent image{
+width: 100%;
+height: 900rpx;
+margin: 50rpx 70rpx;
+}

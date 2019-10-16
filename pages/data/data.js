@@ -1,4 +1,6 @@
-// pages/data/data.js
+import { Data } from 'data-model.js';
+var data = new Data(); //实例化 首页 对象
+const app = getApp()
 Page({
 
   /**

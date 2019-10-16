@@ -1,3 +1,6 @@
+import { Artdel } from 'artdel-model.js';
+var artdel = new Artdel(); //实例化 首页 对象
+const app = getApp()
 Page({
   onReady: function (res) {
     this.videoContext = wx.createVideoContext('myVideo')
@@ -23,7 +26,7 @@ Page({
       {
         "image": 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=584453011,1889633233&fm=26&gp=0.jpg',
       },{
-        "image": 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=186171598,1892413795&fm=26&gp=0.jpg',
+        "image": 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1569832208075&di=7892618464a63350ac9585dda6ddd45e&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fpic%2F4%2Fdc%2F581c1297747.jpg',
       },{
         "image": 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1077137436,1609348946&fm=26&gp=0.jpg',
       }
@@ -38,7 +41,7 @@ Page({
       {
         "image1": 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=584453011,1889633233&fm=26&gp=0.jpg',
       }, {
-        "image1": 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=186171598,1892413795&fm=26&gp=0.jpg',
+        "image1": 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1569832208075&di=7892618464a63350ac9585dda6ddd45e&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fpic%2F4%2Fdc%2F581c1297747.jpg',
       }, {
         "image1": 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1077137436,1609348946&fm=26&gp=0.jpg',
       }

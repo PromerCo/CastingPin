@@ -1,3 +1,13 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+      "wux-cell-group": "../../components/dist/cell-group/index",
+      "wux-cell": "../../components/dist/cell/index",
+      "wux-picker": "../../components/dist/picker/index",
+      "wux-segmented-control": "../../components/dist/segmented-control/index",
+      "wux-date-picker": "../../components/dist/date-picker/index",
+      "wux-upload": "../../components/dist/upload/index",
+      "wux-icon": "../../components/dist/icon/index",
+      "wux-slider": "../../components/dist/slider/index",
+      "wux-multi-picker-view": "../../components/dist/multi-picker-view/index"
+  }
 }

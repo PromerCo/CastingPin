@@ -1,6 +1,6 @@
 <view class="wrap">
   <form bindsubmit="formSubmit" bindreset="formReset">
-     <!-- 类型 -->
+     <!-- 姓名 -->
     <view class="title_name name">
        <p>姓名:</p>
       <input maxlength="20" placeholder="必填" placeholder-class="phcolor" type=" text" class="input_common" name="title"></input>

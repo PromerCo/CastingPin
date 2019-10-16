@@ -1,3 +1,6 @@
+import { Publish } from 'publish-model.js';
+var app = getApp();
+var publish = new Publish(); //实例化 首页 对象
 Page({
   data: {
     array: ['不限 ', '院线电影 ', ' 网络电影 ', '数字电影', '电影 ', '电视剧', ' 网络剧', '广告拍摄', 'MV', '综艺节目', '演出活动 ', ' 话剧'],

@@ -1,3 +1,5 @@
+import { Artist } from 'artist-model.js';
+var artist = new Artist(); //实例化 首页 对象
 const app = getApp()
 let timeout
 
@@ -32,20 +34,46 @@ Page({
     noPageScroll: false,
     // 显示隐藏
     hidden: 1,
-    array: ['不限', '男', '女'],
-    array1: ['不限', '150以下', '150-160', '160-170', '170-180', '180以上'],
-    array2: ['不限', '  演员', '  模特', ' 主持人', '歌手', '导演', ' 编剧', '制片'],
-    array3: ['不限', ' 特长', ' 运动', ' 舞蹈 ', '乐器', '戏曲', '武术', '其他', ' 书画', '曲艺', '语言', '声乐'],
-    array4: ['不限', ' 北京', '上海', ' 横店', '其他'],
-    array5: ['不限', ' 男演员', '女演员 ', '儿童演员 ', '特约演员', '跟组演员', '群众演员', '特技替身'],
-    array6: ['不限', ' 大卡司 ', '大平台 ', '大制作 ', '工作室筹备', '急聘', '角色众多', '名编剧', '启用新人', '热门IP', '有具体薪资', '有名导', '有人物小传', '招主演', '中外合拍'],
-    index: 0,
-    index1: 0,
-    index2: 0,
-    index3: 0,
-    index4: 0,
-    index5: 0,
-    index6: 0,
+    texf:'none',
+    banner: [{
+      "image": "../../image/tupian.jpg",
+    }, {
+      "image": "../../image/tupian.jpg",
+    }, {
+      "image": "../../image/tupian.jpg",
+    }, {
+      "image": "../../image/tupian.jpg",
+    }, {
+      "image": "../../image/tupian.jpg",
+    }, {
+      "image": "../../image/tupian.jpg",
+    }, {
+      "image": "../../image/tupian.jpg",
+    }, {
+      "image": "../../image/tupian.jpg",
+    }, {
+      "image": "../../image/tupian.jpg",
+    }],
+    column: [{
+      "id": "100000",
+      "title": "全部"
+    }, {
+      "id": "100001",
+      "title": "不限"
+    }, {
+      "id": "100002",
+      "title": "演员"
+    }, {
+      "id": "100003",
+      "title": "模特"
+    }, {
+      "id": "100004",
+      "title": "主持人"
+    }, {
+      "id": "100005",
+      "title": "歌手"
+    }, ]
+
   },
   info: {
     videoPlayDetail: {} // 存放所有视频的播放位置
@@ -62,43 +90,27 @@ Page({
       hidden: 1
     })
   },
-  bindPickerChange: function(e) {
-    this.setData({
-      index: e.detail.value,
+  // 点击切换
+  onTabsChange: function(e) {
+    const {
+      index
+    } = e.detail
+    // 当前项
+    const item = this.data.column[index]
+    const platform_id = item.id
+    var msg = [];
+    msg.platform_id = platform_id
+    console.log(msg.platform_id)
 
-    })
-  },
-  bindPickerChange1: function(e) {
+    if (msg.platform_id == 100000) {
+      msg.type = 0
+    } else {
+      msg.type = 1
+    }
     this.setData({
-      index1: e.detail.value,
+      loadingHidden: false
+    })
 
-    })
-  },
-  bindPickerChange2: function(e) {
-    this.setData({
-      index2: e.detail.value,
-
-    })
-  },
-  bindPickerChange3: function(e) {
-    this.setData({
-      index3: e.detail.value,
-    })
-  },
-  bindPickerChange4: function(e) {
-    this.setData({
-      index4: e.detail.value,
-    })
-  },
-  bindPickerChange5: function(e) {
-    this.setData({
-      index5: e.detail.value,
-    })
-  },
-  bindPickerChange6: function(e) {
-    this.setData({
-      index6: e.detail.value,
-    })
   },
   // video
   video() {
@@ -222,9 +234,20 @@ Page({
       noPageScroll: fullScreen
     })
   },
-  onPageScroll({
-    scrollTop
-  }) {
+  onPageScroll:function(e){
+
+    let scrollTop = e.scrollTop
+
+
+    if(scrollTop>50){
+      this.setData({
+        texf:'block'
+      })
+    }else{
+      this.setData({
+        texf: 'none'
+      })
+    }
     if (this.data.noPageScroll) {
       return
     }
@@ -308,11 +331,6 @@ Page({
       this.setData({
         location
       })
-    })
-  },
-  nav_yr:function() {
-    wx.navigateTo({
-      url: '../../pages/data/data',
     })
   },
 })

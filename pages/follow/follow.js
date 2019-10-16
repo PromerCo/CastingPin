@@ -1,4 +1,6 @@
-// pages/follow/follow.js
+import { Follow } from 'follow-model.js';
+var app = getApp();
+var follow = new Follow(); //实例化 首页 对象
 Page({
 
   /**

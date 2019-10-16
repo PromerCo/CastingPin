@@ -1,0 +1,56 @@
+<view class="page">
+  <!--顶部导航栏-->
+  <view class="swiper-tab">
+    <view class="tab-item {{currentTab==0 ? 'on' : ''}}" data-current="0" bindtap="swichNav">侧边式</view>
+    <view class="tab-item {{currentTab==1 ? 'on' : ''}}" data-current="1" bindtap="swichNav">插入式</view>
+    <view class="tab-item {{currentTab==2 ? 'on' : ''}}" data-current="2" bindtap="swichNav">底部式</view>
+    <view class="tab-item {{currentTab==3 ? 'on' : ''}}" data-current="3" bindtap="swichNav">竖版</view>
+  </view>
+  <!--内容主体-->
+  <swiper class="swiper" current="{{currentTab}}" duration="200" bindchange="swiperChange">
+    <swiper-item>
+      <view class="wrap">
+        <view class="content" wx:for="{{array}}" wx:for-index="idx" wx:for-item="itemName">
+          <view class="text">
+            <image src="../../image/me.png"></image>
+            <p>{{itemName.text}}</p>
+          </view>
+          <view class="image">
+            <image src="{{itemName.image}}"></image>
+          </view>
+        </view>
+      </view>
+    </swiper-item>
+    <swiper-item>
+      <view class="wrap">
+        <view class="content" wx:for="{{array1}}" wx:for-index="idx" wx:for-item="itemName">
+          <view class="text">
+            <image src="../../image/me.png"></image>
+            <p>{{itemName.text}}</p>
+          </view>
+          <view class="image">
+            <image src="{{itemName.image}}"></image>
+          </view>
+        </view>
+      </view>
+    </swiper-item>
+    <swiper-item>
+      <view class="wrap">
+        <view class="content" wx:for="{{array2}}" wx:for-index="idx" wx:for-item="itemName">
+          <view class="text">
+            <image src="../../image/me.png"></image>
+            <p>{{itemName.text}}</p>
+          </view>
+          <view class="image">
+            <image src="{{itemName.image}}"></image>
+          </view>
+        </view>
+      </view>
+    </swiper-item>
+    <swiper-item>
+      <view class="ghent">
+        <image src="../../image/tupian.jpg" class="mode"></image>
+      </view>
+    </swiper-item>
+  </swiper>
+</view>

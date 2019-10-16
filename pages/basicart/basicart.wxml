@@ -1,27 +1,221 @@
 <view class="project">
-  <view class="new">
-    <view class="basic">-----基本信息-----</view>
-    <view class="con">
-      <view class="name">
-      <p>姓名：</p>
-      <input class="input" name="userName" placeholder="选填" 
-    bindinput="userNameInput"/>
+
+  <view class="information" >
+    <view class="Consignee">
+      <view class="Consignee_left">
+        <image src="../../image/cute.jpg"></image>
       </view>
-       <view class="name">
-      <p>姓名：</p>
-      <input class="input" name="userName" placeholder="选填" 
-    bindinput="userNameInput"/>
-      </view>
-       <view class="name">
-      <p>姓名：</p>
-      <input class="input" name="userName" placeholder="选填" 
-    bindinput="userNameInput"/>
-      </view>
-       <view class="name">
-      <p>姓名：</p>
-      <input class="input" name="userName" placeholder="选填" 
-    bindinput="userNameInput"/>
+      <view class="Consignee_right">
+
+        <view class=" com phone ">
+          <p>电话:</p>
+          <view wx:if='{{message.phone}}' class="phonenumber com phone">
+            <input placeholder="\*" placeholder-class="phcolor" bindblur="validate" maxlength="11" class="input-text" value='{{message.phone}}' name="phone"></input>
+          </view>
+          <view wx:else class="phonenumber">
+            <view wx:if="{{phoneNumber}}">
+              <input placeholder="\*" placeholder-class="phcolor" bindblur="validate" maxlength="11" class="input-text" value='{{phoneNumber}}' name="phone"></input>
+            </view>
+            <view wx:else>
+              <button class='phone_button' open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">一键绑定</button>
+            </view>
+
+          </view>
+        </view>
+        <view class=" com wx ">
+          <p>微信:</p>
+          <input   bindinput="bingd_wx"  placeholder="\*" placeholder-class="phcolor" type=" text" class="input-text" name="wx_name" value='{{message.wechat}}'></input>
+        </view>
+
+        <view class="com email">
+          <p>邮箱:</p>
+          <input   bindinput="bingd_emali"  placeholder="必填" placeholder-class="phcolor" type=" text" class="input-text" name="email" value='{{message.email}}'></input>
+        </view>
+
       </view>
     </view>
   </view>
+  <view class="news">
+    <view class="basic company">
+      <p>
+        <image src="../../image/yanyuan.png" class="icon"></image>
+        公 司:
+      </p>
+      <view class="rig">
+        <input  bindinput="bingd_corporation"   placeholder="\*" placeholder-class="phcolor" type=" text" class="input-xin" name="company" value='{{message.corporation}}'></input>
+    
+      </view>
+    </view>
+
+    <view class="basic city">
+      <picker mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{customItem}}">
+        <view class="picker">
+          <p>
+            <image src="../../image/yanyuan.png" class="icon"></image>
+            城 市
+          </p>
+          <view class="rig">
+            <view class="city_y">{{region[0]}}，{{region[1]}}，{{region[2]}}</view>
+            <image src="../../image/xiaojiantou2.png" class="jiantou"></image>
+          </view>
+        </view>
+      </picker>
+    </view>
+    
+
+    
+    <view class="basic age" bindtap="showPicker_05">
+
+
+  <picker mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange">
+        <view class="picker">
+          <p>
+            <image src="../../image/yanyuan.png" class="icon"></image>
+            日 期
+          </p>
+          <view class="rig">
+            <view class="height_y"> {{date}}</view>
+            <image src="../../image/xiaojiantou2.png" class="jiantou"></image>
+          </view>
+          <input hidden value='{{multiArray2[0][multiIndex2[0]]}}{{multiArray2[1][multiIndex2[1]]}}' name="birthday"></input>
+ 
+        </view>
+  </picker>
+
+    </view>
+
+
+    <view class="basic profession">
+      <picker bindchange="bindPickerChange" value="{{occupation_list[index].name}}" range="{{occupation_list}}"  range-key="name">
+        <view class="picker">
+          <p>
+            <image src="../../image/yanyuan.png" class="icon"></image>
+            职 业
+          </p>
+          <view class="rig">
+            <view class="height_y"> {{occupation_list[index].name}}</view>
+      
+            <image src="../../image/xiaojiantou2.png" class="jiantou"></image>
+          </view>
+        </view>
+      </picker>
+    </view>
+
+
+  <view class="contivide">
+
+     <view class="page__bd page__bd_spacing">
+     <view class="sub-title">
+       身高({{actor_height}})
+      </view>
+
+        <wux-slider min="150" max="200"  controlled   bind:afterChange="afterChangeHeight"  bind:change="onChangeHeight"  defaultValue="{{ [ actor_height ] }}"  value="{{ [actor_height] }}" showValue />
+    </view>
+
+
+     <view class="page__bd page__bd_spacing">
+
+        <view class="sub-title">
+           体重({{actor_weight}})
+        </view>
+        <wux-slider min="70" max="200" controlled defaultValue="{{ [actor_weight] }}" defaultValue="{{ [ actor_weight ] }}"   bind:afterChange="afterChangeWeight"  bind:change="onChangeWeight"   value="{{ [actor_weight] }}" showValue />
+
+    </view>
+
+
+       <view class="page__bd">
+        <view class="sub-title">三围(胸围,腰围,臀围)</view>
+
+       <view class="multi">
+
+
+        <wux-multi-picker-view itemHeight="28" value="{{ value }}"  options="{{ options }}" bind:valueChange="onValueChange" />
+       </view>
+
+
+
+    </view>
+
+    </view>
+
+
+    <!-- <view class="basic height" bindtap="showPicker_03"> -->
+      <!-- <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
+        <view class="picker">
+          <p>
+            <image src="../../image/yanyuan.png" class="icon"></image>
+            身 高
+          </p>
+          <view class="rig">
+            <view class="height_y">
+           {{multiArray[0][multiIndex[0]]}}{{multiArray[1][multiIndex[1]]}} 
+ <input hidden name="height" value="{{multiArray[0][multiIndex[0]]}}{{multiArray[1][multiIndex[1]]}}"></input>
+            
+             </view>
+            <image src="../../image/xiaojiantou2.png" class="jiantou"></image>
+          </view>
+
+        </view>
+      </picker> -->
+    <!-- </view> -->
+
+    <!-- <view class="basic weight" bindtap="showPicker_04">
+      <picker mode="multiSelector" bindchange="bindMultiPickerChange1" bindcolumnchange="bindMultiPickerColumnChange1" value="{{multiIndex1}}" range="{{multiArray1}}">
+        <view class="picker">
+          <p>
+            <image src="../../image/yanyuan.png" class="icon"></image>
+            体 重
+          </p>
+          <view class="rig">
+            <view class="height_y"> {{multiArray1[0][multiIndex1[0]]}}{{multiArray1[1][multiIndex1[1]]}} </view>
+            <image src="../../image/xiaojiantou2.png" class="jiantou"></image>
+          </view>
+          <input hidden value='{{multiArray1[0][multiIndex1[0]]}}{{multiArray1[1][multiIndex1[1]]}}' name="weight"></input>
+
+        </view>
+      </picker>
+    </view> -->
+
+     <view class="territory_name">特长</view>
+
+    <view class='territory'>
+              <p  class="{{item.check}}" wx:for="{{tag}}" data-index='{{index}}'   catchtap="check" data-id="{{item.id}}">{{item.title}}
+              </p>
+    </view>
+
+<!--文本编辑器 -->
+<view class="synopsis">
+<view class="jianjie"> 简介 </view>
+<view class="container_s" >
+<editor
+  id="editor"
+  class="ql-container"
+  placeholder="{{placeholder}}"
+  showImgSize
+  showImgToolbar
+  showImgResize
+  bindstatuschange="onStatusChange"
+  bindinput="bindinput"	
+  read-only="{{readOnly}}"
+  bindready="onEditorReady">
+</editor>   
+</view>
+<view class="toolbar" catchtouchend="format" style="bottom: {{isIOS ? keyboardHeight : 0}}rpx">
+  <i class="iconfont icon-charutupian" catchtouchend="insertImage"></i>
+  <i class="iconfont icon-format-header-2 {{formats.header === 2 ? 'ql-active' : ''}}" data-name="header" data-value="{{2}}"></i>
+  <i class="iconfont icon-format-header-3 {{formats.header === 3 ? 'ql-active' : ''}}" data-name="header" data-value="{{3}}"></i>
+  <i class="iconfont icon-zitijiacu {{formats.bold ? 'ql-active' : ''}}" data-name="bold"></i>
+  <i class="iconfont icon-zitixieti {{formats.italic ? 'ql-active' : ''}}" data-name="italic"></i>
+  <i class="iconfont icon-zitixiahuaxian {{formats.underline ? 'ql-active' : ''}}" data-name="underline"></i>
+  <i class="iconfont icon--checklist" data-name="list" data-value="check"></i>
+  <i class="iconfont icon-youxupailie {{formats.list === 'ordered' ? 'ql-active' : ''}}" data-name="list" data-value="ordered"></i>
+  <i class="iconfont icon-wuxupailie {{formats.list === 'bullet' ? 'ql-active' : ''}}" data-name="list" data-value="bullet"></i>
+</view>
+</view>
+<view style="height:100rpx;"></view> 
+  </view>
+
+
+
+
 </view>

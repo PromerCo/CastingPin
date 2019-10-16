@@ -1,9 +1,7 @@
-// pages/list/list.js
+import { List } from 'list-model.js';
+var app = getApp();
+var list = new List(); //实例化 首页 对象
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
     array: [
       {

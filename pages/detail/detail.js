@@ -1,3 +1,6 @@
+import { Detail } from 'detail-model.js';
+var app = getApp();
+var detail = new Detail(); //实例化 首页 对象
 Page({
   data: {
     arr: [

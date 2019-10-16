@@ -45,7 +45,9 @@
   </view>
   <!-- 项目简介 -->
   <view class="role">
-    <view class="role_top">项目简介</view>
+    <view class="role_top">
+   <p> 项目简介</p>
+    </view>
     <view class="project">
         <textarea bindblur="bindTextAreaBlur" maxlength="300" class="textarea_pro" />
     </view>

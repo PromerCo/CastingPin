@@ -23,8 +23,11 @@
   margin-left: 30rpx;
 }
 .type view {
-  margin-right: 30rpx;
+  margin-right:0rpx;
   font-size: 20rpx;
+}
+.all p{
+  font-size: 24rpx;
 }
 .hole {
   margin-left: 20rpx;
@@ -70,6 +73,10 @@ justify-content: flex-start;
   display: flex;
   justify-content: space-between;
   border-bottom: 1rpx solid rgb(235, 235, 235);
+}
+.role_top p{
+margin-left: 20rpx;
+font-size: 24rpx;
 }
 .textarea{
 width:95%;

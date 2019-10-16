@@ -1,127 +1,71 @@
-<!--pages/group/group.wxml-->
 <view class="wrap">
   <!-- 搜索 -->
-  <view class="search_wrap">
-    <view class="search">
-      <image src="../../image/serch.png"></image>
-      <input type="text" placeholder="搜索通告" placeholder-style=""></input>
-    </view>
-    <view class="screen" bindtap="show" data-type="{{hidden}}">
-      <image src="../../image/shaixuan.png"></image>
-    </view>
+  <view class="search_wrap" style="display:{{dis}}">
+    <s-tab-scoller tabs="{{column}}" current="{{index}}" wx:for-item="itemName" bindchange="onTabsChange" data-platform='{{itemName}}'></s-tab-scoller>
   </view>
-  <!-- 隐藏 -->
-  <view class="hide">
-    <view hidden="{{hidden}}" class="screen_detail">
-      <view class="tea">
-        <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
-          <view class="picker">
-            <view>
-              <image src="../../image/type.png" class="typepic"></image>
-              <p>类型：</p>
-              {{array[index]}}
-              <image src="../../image/xiaojiantou.png" class="jiantou"></image>
+  <view class='container' current="{{index}}" duration="300" wx:for-item="itemName" data-platform='{{itemName}}'>
+    <view class="swiper">
+      <!-- 滑动 -->
+      <scroll-view scroll-x="true">
+        <view class="banner" scroll-x="true">
+          <view class="banner_Item" wx:for="{{banner}}" wx:for-index="idx" wx:for-item="itemName" wx:key="idx">
+            <!-- <view class="comop">
+            <p>
+              <image src="../../image/grounp2.png"></image>推荐:
+            </p>
+          </view> -->
+            <view class="pic">
+              <image src="{{itemName.image}}"></image>
+            </view>
+            <view class="name-first first">{{itemName.name}}</view>
+            <view class="title-first first">{{itemName.type}}</view>
+            <view class="time-first first">{{itemName.date}}</view>
+            <view class="city-first first">
+              <span>{{itemName.addressfirst}}</span>
+              <span>{{itemName.addresssecond}}</span>
+              <span>{{itemName.addressthird}}</span>
             </view>
           </view>
-        </picker>
-      </view>
-      <view class="tea">
-        <picker bindchange="bindPickerChange1" value="{{index1}}" range="{{array1}}">
-          <view class="picker">
-            <view>
-              <image src="../../image/type.png" class="typepic"></image>
-              <p> 时间：</p>{{array1[index1]}}
-              <image src="../../image/xiaojiantou.png" class="jiantou"></image>
-            </view>
-          </view>
-        </picker>
-      </view>
-      <view class="tea">
-        <picker bindchange="bindPickerChange2" value="{{index2}}" range="{{array2}}">
-          <view class="picker">
-            <view>
-              <image src="../../image/type.png" class="typepic"></image>
-              <p>年龄：</p>{{array2[index2]}}
-              <image src="../../image/xiaojiantou.png" class="jiantou"></image>
-            </view>
-          </view>
-        </picker>
-      </view>
-      <view class="tea">
-        <picker bindchange="bindPickerChange3" value="{{index3}}" range="{{array3}}">
-          <view class="picker">
-            <view>
-              <image src="../../image/type.png" class="typepic"></image>
-              <p>筹备：</p>{{array3[index3]}}
-              <image src="../../image/xiaojiantou.png" class="jiantou"></image>
-            </view>
-          </view>
-        </picker>
-      </view>
-      <view class="tea">
-        <picker bindchange="bindPickerChange4" value="{{index4}}" range="{{array4}}">
-          <view class="picker">
-            <view>
-              <image src="../../image/type.png" class="typepic"></image>
-              <p> 拍摄：</p>{{array4[index4]}}
-              <image src="../../image/xiaojiantou.png" class="jiantou"></image>
-            </view>
-          </view>
-        </picker>
-      </view>
-      <view class="tea">
-        <picker bindchange="bindPickerChange5" value="{{index5}}" range="{{array5}}">
-          <view class="picker">
-            <view>
-              <image src="../../image/type.png" class="typepic"></image>
-              <p> 招募：</p>{{array5[index5]}}
-              <image src="../../image/xiaojiantou.png" class="jiantou"></image>
-            </view>
-          </view>
-        </picker>
-      </view>
-      <view class="tea">
-        <picker bindchange="bindPickerChange6" value="{{index6}}" range="{{array6}}">
-          <view class="picker">
-            <view>
-              <image src="../../image/type.png" class="typepic"></image>
-              <p> 标签：</p>{{array6[index6]}}
-              <image src="../../image/xiaojiantou.png" class="jiantou"></image>
-            </view>
-          </view>
-        </picker>
-      </view>
+        </view>
+      </scroll-view>
     </view>
-    <view class="screen_hower" hidden="{{hidden}}" catchtap="screen_hower"></view>
-  </view>
-  <!-- 详情 -->
-  <view class="whole" wx:for="{{arr}}" wx:for-index="idx" wx:key="idx" bindtap="detail">
-    <view class="type all">
-      <p>类型:
-        <span>{{item.type}}</span>
-      </p>
-      <view>{{item.minute}}</view>
-    </view>
-    <view class="time all">
-      <p>时间:
-        <span class="hole">{{item.date}}</span>
-      </p>
+    <!-- 详情 -->
+    <view class="whole" wx:for="{{arr}}" wx:for-index="idx" wx:key="idx" bindtap="detail">
+      <view class="type all">
+        <p>剧名：
+          <span>{{item.name}}</span>
+        </p>
+        <view>{{item.minute}}</view>
+      </view>
+      <view class="Drama all">
+        <p>类型:
+          <span>{{item.type}}</span>
+        </p>
+      </view>
+      <view class="time all">
+        <p>时间:
+          <span class="hole">{{item.date}}</span>
+        </p>
 
-    </view>
-    <view class="recruit all">
-      <p>招募:
-        <span class="hole">{{item.actor}}</span>
-        <span class="hole">{{item.actress}}</span>
-      </p>
-    </view>
-    <view class="field all">
-      <p>场地:
-        <span class="hole">{{item.addressfirst}}</span>
-        <span class="hole">{{item.addresssecond}}</span>
-        <span class="hole">{{item.addressthird}}</span>
-      </p>
-      <view>
-        <image src="{{item.icon}}" class="icon" mode="center"></image>
+      </view>
+      <view class="recruit all">
+        <p>招募:
+          <view class="field_x">
+            <view class="hole">{{item.actor}}</view>
+            <view class="hole">{{item.actress}}</view>
+          </view>
+        </p>
+      </view>
+      <view class="field all">
+        <p>场地:
+          <view class="field_x">
+            <view class="hole">{{item.addressfirst}}</view>
+            <view class="hole">{{item.addresssecond}}</view>
+          </view>
+        </p>
+        <view>
+          <image src="{{item.icon}}" class="icon" mode="center"></image>
+        </view>
       </view>
     </view>
   </view>

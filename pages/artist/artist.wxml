@@ -1,87 +1,29 @@
 <view class="wrap">
-  <view class="search_wrap">
-    <view class="search">
-      <image src="../../image/serch.png"></image>
-      <input type="text" placeholder="搜索艺人" placeholder-style=""></input>
-    </view>
-    <view class="screen" bindtap="show" data-type="{{hidden}}">
-      <image src="../../image/shaixuan.png"></image>
-    </view>
+  <view class="search_wrap" style="display:{{texf}}">
+    <s-tab-scoller tabs="{{column}}" current="{{index}}" wx:for-item="itemName" bindchange="onTabsChange" data-platform='{{itemName}}'></s-tab-scoller>
   </view>
-  <view class="hide">
-    <view hidden="{{hidden}}" class="screen_detail">
-      <view class="tea">
-        <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
-          <view class="picker">
-            <view>
-              <image src="../../image/type.png" class="typepic"></image>
-              <p>性别：</p>
-              {{array[index]}}
-              <image src="../../image/xiaojiantou.png" class="jiantou"></image>
-            </view>
+  <view class='container' current="{{index}}" duration="300" wx:for-item="itemName" data-platform='{{itemName}}'>
+    <!-- 滑动 -->
+    <view class="swiper">
+      <scroll-view scroll-x="true">
+        <view class="banner" scroll-x="true">
+          <view class="banner_Item" wx:for="{{banner}}" wx:for-index="idx" wx:for-item="itemName" wx:key="idx">
+            <image src=" {{itemName.image}}  "></image>
           </view>
-        </picker>
-      </view>
-      <view class="tea">
-        <picker bindchange="bindPickerChange1" value="{{index1}}" range="{{array1}}">
-          <view class="picker">
-            <view>
-              <image src="../../image/type.png" class="typepic"></image>
-              <p> 身高：</p>{{array1[index1]}}
-              <image src="../../image/xiaojiantou.png" class="jiantou"></image>
-            </view>
-          </view>
-        </picker>
-      </view>
-      <view class="tea">
-        <picker bindchange="bindPickerChange2" value="{{index2}}" range="{{array2}}">
-          <view class="picker">
-            <view>
-              <image src="../../image/type.png" class="typepic"></image>
-              <p>类型：</p>{{array2[index2]}}
-              <image src="../../image/xiaojiantou.png" class="jiantou"></image>
-            </view>
-          </view>
-        </picker>
-      </view>
-      <view class="tea">
-        <picker bindchange="bindPickerChange3" value="{{index3}}" range="{{array3}}">
-          <view class="picker">
-            <view>
-              <image src="../../image/type.png" class="typepic"></image>
-              <p>特长：</p>{{array3[index3]}}
-              <image src="../../image/xiaojiantou.png" class="jiantou"></image>
-            </view>
-          </view>
-        </picker>
-      </view>
-      <view class="tea">
-        <picker bindchange="bindPickerChange4" value="{{index4}}" range="{{array4}}">
-          <view class="picker">
-            <view>
-              <image src="../../image/type.png" class="typepic"></image>
-              <p> 年龄：</p>{{array4[index4]}}
-              <image src="../../image/xiaojiantou.png" class="jiantou"></image>
-            </view>
-          </view>
-        </picker>
-      </view>
+        </view>
+      </scroll-view>
     </view>
-    <view class="screen_hower" hidden="{{hidden}}" catchtap="screen_hower"></view>
-  </view>
-  <view class='block' style='margin-left:20rpx;' class="construtor">
-    <view catchtap="video">
-      <view class="video-card" id="video{{index}}" wx:for="{{videoList}}" wx:key="*this">
-        <view class="video-box" style="height: {{item.styleHight}}px;">
-          <video wx:if="{{item.isPlay}}" src="{{item.src}}" class="video-video" initial-time="{{item.currentTime}}" controls="{{!false}}" autoplay="{{false}}" loop="{{true}}" bindtimeupdate="eventPlayupdate" bindfullscreenchange="eventFullScreen" data-index="{{index}}">
-          </video>
-          <image wx:if="{{!item.isPlay}}" class="video-cover" mode="aspectFill" src="{{item.cover}}" data-index="{{index}}"></image>
+    <!--  -->
+    <view class='block' class="construtor">
+      <view catchtap="video">
+        <view class="video-card" id="video{{index}}" wx:for="{{videoList}}" wx:key="*this">
+          <view class="video-box" style="height: {{item.styleHight}}px;">
+            <video wx:if="{{item.isPlay}}" src="{{item.src}}" class="video-video" initial-time="{{item.currentTime}}" controls="{{!false}}" autoplay="{{false}}" loop="{{true}}" bindtimeupdate="eventPlayupdate" bindfullscreenchange="eventFullScreen" data-index="{{index}}">
+            </video>
+            <image wx:if="{{!item.isPlay}}" class="video-cover" mode="aspectFill" src="{{item.cover}}" data-index="{{index}}"></image>
+          </view>
         </view>
       </view>
     </view>
-  </view>
-  <!-- 艺人资料 -->
-  <view class="data" bindtap="nav_yr">
-    <image src="../../image/data.png"></image>
   </view>
 </view>

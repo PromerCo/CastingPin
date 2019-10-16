@@ -1,14 +1,23 @@
-import {Me } from "me-model.js"
-var me = new Me;
+import { Me } from 'me-model.js';
+var me = new Me();
+var app = getApp(); 
+
 Page({
   data: {
-    boolean:false,
+    type:2,
+    loadingHidden: false,
+    authHidding:false
   },
-  change:function(){
-    var bol=this.data.boolean;
+  change:function(e){
+
+    var bol = e.currentTarget.dataset.type;
+    console.log(bol)
     this.setData({
-      boolean:!bol
+      type: bol
     })
+
+
+
   },
   // 演员
   follow(){
@@ -36,20 +45,112 @@ Page({
       url: '../../pages/publish/publish',
     })
   },
+
+  make: function () {
+    wx.navigateTo({
+      url: '../../pages/make/make',
+    })
+  },
+  news: function () {
+    var type = this.data.type
+
+    wx.navigateTo({
+      url: '../../pages/basicgro/basicgro?type=' + type,
+    })
+  },
   // 通告
   onLoad: function (options) {
-    this._loadData();
+    
+    var that = this;
+    // wx.getSetting({
+    //   success(res) {
+    //     if (!res.authSetting['scope.userInfo']) {
+      
+    //       that.setData({
+    //         authHidding: true,
+    //         loadingHidden: true
+    //       })
+    //     } else {
+    //       that._loadData();
+    //     }
+    //   }
+    // })
   },
+
+  bindGetUserInfo: function (e) {
+    var that = this
+    var userInfo = e.detail.rawData
+    that.setData({
+      loadingHidden: false
+    })
+    wx.setStorageSync('userInfo', e.detail.userInfo)
+    me.getUserAhth(userInfo, (data) => {
+    
+      console.log(data)
+      if (data.code == 201) {
+        that._loadData();
+        that.setData({
+          userInfo: JSON.parse(userInfo),
+          authHidding: false,
+          loadingHidden: true,
+          status: 0
+        })
+      } else {
+        that.setData({
+          userInfo: JSON.parse(userInfo),
+          authHidding: false,
+          loadingHidden: true,
+          status: 0
+        })
+        wx.showToast({
+          title: '授权失败',//提示文字
+          duration: 500,//显示时长
+          mask: true,//是否显示透明蒙层，防止触摸穿透，默认：false  
+          icon: 'none', //图标，支持"success"、"loading"  
+        })
+      }
+
+    });
+  },
+
   /*加载所有数据*/
   _loadData: function (callback) {
     var that = this;
-    me.getlist((data) => {
-      this.setData({
-        list: data.data
-      })
-      console.log(data.data)
+    var userInfo = wx.getStorageSync('userInfo'); 
+    me.roleStatus((data) => {   
+      console.log(data)
+
+      if (data.code == 200){
+        var material = data.data.material  //查看是否填写资料
+        var type = data.data.type   //类型
+        if (type == 2){
+        //艺人 
+          that.setData({
+            authHidding: false,
+            loadingHidden:false,
+            material: material   //是否填写资料
+          })
+
+        }else{
+        //统筹
+          that.setData({
+            authHidding: false,
+            loadingHidden: false,
+            material: material  //是否填写资料
+          })
+
+
+        }
+        
+      }
+      
     })
+    
+    
+
+
   },
+  
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

@@ -3,9 +3,24 @@ class Me extends Base {
   constructor() {
     super();
   }
-  getlist(callback) {
+
+/*
+授权
+*/
+  getUserAhth(param, callback) {
+    var object = JSON.parse(param);
     var param = {
-      url: 'home/index',
+      url: 'castingpinuser/authorize',
+      data: {
+        nick_name: object.nickName,
+        avatar_url: object.avatarUrl,
+        city: object.city,
+        gender: object.gender,
+        language: object.language,
+        province: object.province,
+        country: object.country,
+        company: object.company
+      },
       type: 'POST',
       sCallback: function (data) {
         callback && callback(data);
@@ -13,5 +28,20 @@ class Me extends Base {
     };
     this.request(param);
   }
+  
+  /*
+  角色类型
+  */
+  roleStatus(callback) {
+    var param = {
+      url: 'castingpinuser/miexhibit',
+      type: 'POST',
+      sCallback: function (data) {
+        callback && callback(data);
+      }
+    };
+    this.request(param);
+  }
+ 
 };
 export { Me };

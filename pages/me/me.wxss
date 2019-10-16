@@ -22,6 +22,8 @@
   width: 100%;
   height: 60rpx;
   line-height: 60rpx;
+  display: flex;
+  justify-content: flex-start;
 }
 
 .center {
@@ -67,11 +69,17 @@
   height: 40rpx;
   float: right;
   border-radius: 50%;
+  margin-top: 10rpx;
+}
+.top p{
+  font-size: 24rpx;
+  margin-left: 10rpx;
 }
 
 .address {
-  width: 40rpx;
-  height: 40rpx;
+width: 30rpx;
+height: 30rpx;
+margin-top: 7rpx;
 }
 
 .icon {
@@ -127,4 +135,37 @@
 
 .isuse {
   margin-left: 20rpx;
+}
+
+.auth_img image{
+width:180rpx;
+height:180rpx;
+margin:0 auto;
+display:block;
+
+}
+
+.auth_img{
+width:90%;
+margin:0 auto;
+
+}
+
+.auth{
+margin-top:100rpx;
+}
+
+.auth_button {
+text-align:center;
+width:38%;
+margin-top:auto;
+display:block;
+margin:80rpx auto;
+height:60rpx;
+line-height:60rpx;
+background:#FF3300 !important;
+color:white !important;
+font-size:28rpx;
+border-radius:10rpx;
+
 }

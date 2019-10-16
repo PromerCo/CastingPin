@@ -1,9 +1,9 @@
 import { Base } from '../../utils/base.js';
 
-class Artist extends Base {
+class Artdel extends Base {
   constructor() {
     super();
   }
 
 }
-export { Artist };
+export { Artdel };
