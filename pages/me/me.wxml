@@ -14,10 +14,12 @@
       <view class='head_content_make'>
         <view class="top" bindtap="change" data-type="1">
           <image src="../../image/artistgray.png" class="change"  mode="scaleToFill"></image>
-          <p>切换身份</p>
+          <p>切换身份
+            <span style="font-size:24rpx;color:gray">(艺人)</span> 
+          </p>
         </view>
 
-   <view class="pic" bindtap="basicart">
+   <view class="pic" bindtap="basicart" data-type="2">
      <open-data type="userAvatarUrl" mode="aspectFit"></open-data>
    </view>
 
@@ -49,7 +51,7 @@
       </view>
     </view>
     <view class="project_bottom">
-      <view class="bottom_all" bindtap="news" >
+      <view class="bottom_all" bindtap="basicart" data-type="{{type}}">
         <p>
           <image src="../../image/guanzhu2.png" class="guanzhu"></image>
           <p class="isuse">个人信息</p>
@@ -101,10 +103,12 @@
       <view class='head_content_make'>
         <view class="top"  bindtap="change" data-type="2">
           <image src="../../image/me3.png" class="change" mode="scaleToFill"></image>
-          <p>切换身份</p>
+          <p>切换身份
+             <span style="font-size:24rpx;color:gray">(统筹)</span> 
+          </p>
         </view>
 
-     <view class="pic" bindtap="basicart">
+     <view class="pic" bindtap="basicart" data-type="1">
      <open-data type="userAvatarUrl" mode="aspectFit"></open-data>
    </view>
 
@@ -117,28 +121,28 @@
         <view class="center" wx:if="{{material}}">
           <view class="icon city">
             <image src="../../image/hangye.png" class="address"></image>
-            <p>文化传媒</p>
+            <p>{{message.industry}}</p>
           </view>
           <view class="icon fans">
             <image src="../../image/zhiwei.png" class="address"></image>
-            <p>演员统筹</p>
+            <p>{{message.position}}</p>
           </view>
           <view class="icon music">
             <image src="../../image/pingpai.png" class="address"></image>
-            <p>博纳</p>
+            <p>{{message.corporation}}</p>
           </view>
           <view class="icon tag">
             <image src="../../image/diqu.png" class="address"></image>
-            <p>北京市朝阳区</p>
+            <p>{{message.city==null?'暂未填写':message.city}}</p>
           </view>
         </view>
       </view>
     </view>
     <view class="project_bottom">
-        <view class="bottom_all" bindtap="news" >
+        <view class="bottom_all" bindtap="basicart" data-type="{{type}}" >
         <p>
           <image src="../../image/fabu2.png" class="guanzhu" ></image>
-          <p class="isuse">编辑资料</p>
+          <p class="isuse">个人信息</p>
         </p>
         <image src="../../image/xiaojiantou2.png" class="arrow"></image>
       </view>

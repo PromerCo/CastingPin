@@ -109,7 +109,7 @@ margin-top: 30rpx;
   width: 420rpx;
   height: 200rpx;
   float: left;
-  margin-top: 70rpx;
+  margin-top: 60rpx;
   margin-left: 30rpx;
 }
 .com {

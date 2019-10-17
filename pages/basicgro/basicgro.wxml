@@ -106,6 +106,8 @@
 </view>
 
 <view wx:else>
+
+
 <view class="project">
   <view class="information">
     <view class="Consignee">

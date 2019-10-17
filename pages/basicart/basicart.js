@@ -19,6 +19,7 @@ Page({
       ['15', '16', '17', '18', '19', '20'],
       ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     ],
+
     //体重
     multiArray1: [
       ['4','5', '6', '7', '8', '9', '10'],
@@ -31,6 +32,8 @@ Page({
     ],
 
     index: 1,
+    c_index:1,
+    p_index:1,
     // 学校
     schoolName:'',
     tag:[],
@@ -108,6 +111,19 @@ Page({
       isShow_03: true
     })
   },
+ // 绑定手机号
+
+  bingd_phone:function(e){
+    var that = this
+    var phone = e.detail.value
+    console.log(phone)
+
+    var data = [];
+    data.push({ "phone": phone })
+    that._saveMsg(data)
+
+  },
+
   bindMultiPickerChange: function (e) {
     var that = this
     var height =  that.data.multiArray
@@ -198,21 +214,7 @@ bingd_wx:function(e){
   })
   
 },
-/*
-   邮箱
-*/
-  // bingd_emali:function(e){
-  //   var that = this
-  //   var emali = e.detail.value
-  //   console.log(emali)
-  //   var data = [];
-  //   data.push({ "emali": emali })
-  //   that._saveMsg(data)
-  //   that.setData({
-  //     emali: emali
-  //   }) 
 
-  // },
   /*
   公司
   */
@@ -269,7 +271,52 @@ bingd_wx:function(e){
     })
   },
 
+  //行业
+  positionChange: function (e) {
+    var that = this
 
+    var position_list = that.data.position_list
+
+    var p_index = e.detail.value
+
+    var position = position_list[p_index]['code']
+
+   
+
+    var data = [];
+
+    data.push({ "position": position })
+
+    that._saveMsg(data)
+
+    this.setData({
+      p_index: p_index,
+    })
+
+
+  },
+
+  //职位
+  industryChange: function (e) {
+    var that = this
+
+    var industry_list = that.data.industry_list
+
+    var c_index = e.detail.value
+
+    var industry = industry_list[c_index]['code']
+
+    var data = [];
+
+    data.push({ "industry": industry })
+
+    that._saveMsg(data)
+
+    this.setData({
+      c_index: c_index,
+    })
+
+  },
 /*
   数据保存
 */
@@ -367,32 +414,58 @@ bingd_wx:function(e){
 
     var chaceRecord = wx.getStorageSync('chace_record')  //缓存数据
 
-    var occupation = [];//职位
+    // 行业   职位
+    var position = [];//职位
+    var industry = [];//特长
 
-    var speciality = [];//特长
+    if (type == 1){
+      basicart.getList((data) => {
+        var message = data.data 
+        chaceRecord.forEach(function (item, index) {
+          if (item.type == 'industry') {
+            industry.push(item)
+          } else if (item.type == 'position') {
+            position.push(item)
+          }
+        })
+        console.log(industry)
+        console.log(position)
 
-    chaceRecord.forEach(function (item, index) {
-      if (item.type == 'occupation'){
-           occupation.push(item)
-      } else if (item.type == 'speciality'){
-           speciality.push(item)
-      }
-    })
+        that.setData({
+          type: type,
+          message: message,
+          loadingHidden: true,
+          position_list: position,
+          industry_list: industry
 
-    that.setData({
-      occupation_list: occupation,
-      speciality_list: speciality
-    })
+      
+        })
+      })
+
+  
+    }else{
+      var occupation = [];//职位
+      var speciality = [];//特长
+      chaceRecord.forEach(function (item, index) {
+        if (item.type == 'occupation') {
+          occupation.push(item)
+        } else if (item.type == 'speciality') {
+          speciality.push(item)
+        }
+      })
+
+      that.setData({
+        occupation_list: occupation,
+        speciality_list: speciality
+      })
 
     basicart.getList((data) => {
     var message = data.data 
-
+      console.log(message)
     var woman = message.woman
     var value = woman.split("-");
-
     var speciality_list = that.data.speciality_list
     var speciality = message.speciality
-    
     var check_tags = speciality.split(","); 
     var tid_s = that.data.tid_s
     let tags_list = [];
@@ -418,10 +491,8 @@ bingd_wx:function(e){
         value: value
       })
     })
-
+    }
   },
-
-
 
   onChangeHeight:function(e){
     console.log(e.detail.value)
@@ -437,19 +508,15 @@ bingd_wx:function(e){
     })
   },
 
-
-
   /*
    身高
   */
   afterChangeHeight:function(e){
     var that   = this
     var height = e.detail.value
-
     var data = [];
     data.push({ "height": height[0] })
     that._saveMsg(data)
-
     that.setData({
       actor_height: height[0]
     })
@@ -458,7 +525,6 @@ bingd_wx:function(e){
   /*
    体重
   */
-
   afterChangeWeight:function(e){
     var that = this
     var weight = e.detail.value
@@ -478,27 +544,25 @@ bingd_wx:function(e){
     //获取用户手机号
     var errMsg = e.detail.errMsg
     var msg = e.detail
-  
     msg.code = that.data.code
 
-        if (errMsg == 'getPhoneNumber:ok') {
+    if (errMsg == 'getPhoneNumber:ok') {
           basicart.getPhone(msg, (data) => {
-
-            console.log(data)
             if (data.code == 201) {
-              var data = JSON.parse(data.msg);
+              var message = JSON.parse(data.msg);
+
+              var data = [];
+              data.push({ "phone": message.phoneNumber })
+              that._saveMsg(data)
+            
               that.setData({
-                phoneNumber: data.phoneNumber
+                phoneNumber: message.phoneNumber
               })
             }
           })
-        }
-    //   }
-    // })
+     }
+
   },
-
-
-
 
   /*
   文本组件

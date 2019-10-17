@@ -11,16 +11,76 @@ Page({
   change:function(e){
 
     var bol = e.currentTarget.dataset.type;
+    var that= this
 
     me.cutRole(bol, (data) => {
 
-
-
       if (data.code == 201){
-        this.setData({
-          type: data.data.type,
-          material: data.data.material
-        })
+        var type = data.data.type
+        var message = data.data
+        var material = data.data.material
+        if (type == 1){
+          var chaceRecord = wx.getStorageSync('chace_record')
+          var industry = message.industry   //行业
+          var position = message.position   //职位
+          for (var i = 0; i <= chaceRecord.length - 1; i++) {
+            if (chaceRecord[i]['code'] == industry) {
+              var industry = chaceRecord[i]['name']
+            } else if (chaceRecord[i]['code'] == position) {
+              var position = chaceRecord[i]['name']
+            }
+          }
+
+          message['industry'] = industry //行业
+          message['position'] = position //职位
+          that.setData({
+            message: message,
+            type: type,
+            authHidding: false,
+            loadingHidden: true,
+            material: material   //是否填写资料
+          })
+
+        }else{
+          //艺人 
+          var speciality = data.data.speciality   //特长
+          var occupation = data.data.occupation   //职位
+          //数组转字符串
+          var cache_speciality = wx.getStorageSync('chace_record')
+          var check_tags = speciality.split(",");
+          // 特长
+          let tags_list = [];
+          for (var i = 0; i <= check_tags.length; i++) {
+            for (var j = 0; j < cache_speciality.length; j++) {
+              if (cache_speciality[j]['code'] == check_tags[i]) {
+
+                tags_list.push(cache_speciality[j]['name'])
+
+              }
+            }
+            var speciality = tags_list.join('#');
+          }
+
+          for (var i = 0; i <= cache_speciality.length - 1; i++) {
+            if (cache_speciality[i]['code'] == occupation) {
+              var occupation = cache_speciality[i]['name']
+            }
+
+          }
+
+          message['tags_list'] = speciality //特长
+          message['occupation'] = occupation //职位
+
+          that.setData({
+            message: message,
+            type: type,
+            authHidding: false,
+            loadingHidden: true,
+            material: material   //是否填写资料
+          })
+
+        }
+ 
       }
 
     })
@@ -40,16 +100,16 @@ Page({
       url: '../../pages/list/list',
     })
   },
-  basicart(){
+  basicart:function(e){
+
+
+    var type = e.currentTarget.dataset.type
+
    wx.navigateTo({
-     url: '../../pages/basicart/basicart',
+     url: '../../pages/basicart/basicart?type=' + type,
    })
   },
-  basicgro() {
-    wx.navigateTo({
-      url: '../../pages/basicgro/basicgro',
-    })
-  },
+
   guanzhu:function(){
     wx.navigateTo({
       url: '../../pages/publish/publish',
@@ -75,16 +135,12 @@ Page({
     wx.getSetting({
       success(res) {
         if (!res.authSetting['scope.userInfo']) {
-             console.log('没有授权')
            that.setData({
             authHidding: true,
             loadingHidden: true
           })
 
         } else {
-
-          console.log('已经授权')
-
           that._loadData();
         }
       }
@@ -126,25 +182,17 @@ Page({
   /*加载所有数据*/
   _loadData: function () {
     var that = this;
-    // var userInfo = wx.getStorageSync('userInfo'); 
-    
-    
-
+  
     me.roleStatus((data) => {  
+  
+    var chaceRecord = wx.getStorageSync('chace_record')  //缓存数据
 
-
-
-      var chaceRecord = wx.getStorageSync('chace_record')  //缓存数据
-
-
-      if (data.code == 201){
-
+    if (data.code == 201){
         var material = data.data.material  //查看是否填写资料
         var type = data.data.type   //类型
         var message = data.data 
         if (type == 2){
-        
-        //艺人 
+          //艺人 
           var speciality = data.data.speciality   //特长
           var occupation = data.data.occupation   //职位
           //数组转字符串
@@ -167,7 +215,6 @@ Page({
             if (cache_speciality[i]['code'] == occupation) {
               var occupation = cache_speciality[i]['name']
             }
-
           }
 
           message['tags_list'] = speciality //特长
@@ -175,17 +222,36 @@ Page({
           
           that.setData({
             message: message,
+            type: type,
             authHidding: false,
             loadingHidden:true,
             material: material   //是否填写资料
           })
 
         }else{
-        //统筹
+          console.log(123)
+         //统筹
+          var industry = message.industry   //行业
+          var position = message.position   //职位
+          for (var i = 0; i <= chaceRecord.length - 1; i++) {
+            if (chaceRecord[i]['code'] == industry) {
+              var industry = chaceRecord[i]['name']
+            } else if (chaceRecord[i]['code'] == position){
+              var position = chaceRecord[i]['name']
+            }
+          }
+
+          message['industry'] = industry //行业
+          message['position'] = position //职位
+
+          console.log(message)
+
+
           that.setData({
             message: data.data,
             authHidding: false,
             loadingHidden: true,
+            type:type,
             material: material  //是否填写资料
           })
 

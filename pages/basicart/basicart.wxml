@@ -1,5 +1,8 @@
 <view class="project"  hidden="{{!loadingHidden}}">
 
+<view wx:if="{{type == 2}}">
+
+
   <view class="information" >
     <view class="Consignee">
       <view class="Consignee_left">
@@ -42,10 +45,6 @@
         <input  bindinput="bingd_stage"   placeholder="\*" placeholder-class="phcolor" type=" text" class="input-xin"  value='{{message.stage_name}}'></input>
       </view>
     </view>
-
-
-
-
     <view class="basic company">
       <p>
         <image src="../../image/sms-compoay.png" class="icon"></image>
@@ -55,7 +54,6 @@
         <input  bindinput="bingd_corporation"   placeholder="\*" placeholder-class="phcolor" type=" text" class="input-xin" name="company" value='{{message.corporation}}'></input>
       </view>
     </view>
-
      <!-- 学校 -->
             <view class="basic company">
       <p>
@@ -67,8 +65,6 @@
            <image src="../../image/xiaojiantou2.png" class="sc_jiantou"></image>
       </view>
     </view>
-
-
     <view class="basic city">
       <picker mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{customItem}}">
         <view class="picker">
@@ -83,12 +79,7 @@
         </view>
       </picker>
     </view>
-    
-
-    
-    <view class="basic age" bindtap="showPicker_05">
-
-
+ <view class="basic age" bindtap="showPicker_05">
   <picker mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange">
         <view class="picker">
           <p>
@@ -100,13 +91,9 @@
             <image src="../../image/xiaojiantou2.png" class="jiantou"></image>
           </view>
           <input hidden value='{{multiArray2[0][multiIndex2[0]]}}{{multiArray2[1][multiIndex2[1]]}}' name="birthday"></input>
- 
         </view>
   </picker>
-
     </view>
-
-
     <view class="basic profession">
       <picker bindchange="bindPickerChange" value="{{occupation_list[index].name}}" range="{{occupation_list}}"  range-key="name">
         <view class="picker">
@@ -122,10 +109,7 @@
         </view>
       </picker>
     </view>
-
-
   <view class="contivide">
-
      <view class="page__bd page__bd_spacing">
      <view class="sub-title">
        身高({{actor_height}})
@@ -133,36 +117,20 @@
 
         <wux-slider min="150" max="200"  controlled   bind:afterChange="afterChangeHeight"  bind:change="onChangeHeight"  defaultValue="{{ [ actor_height ] }}"  value="{{ [actor_height] }}" showValue />
     </view>
-
-
      <view class="page__bd page__bd_spacing">
-
         <view class="sub-title">
            体重({{actor_weight}})
         </view>
         <wux-slider min="70" max="200" controlled defaultValue="{{ [actor_weight] }}" defaultValue="{{ [ actor_weight ] }}"   bind:afterChange="afterChangeWeight"  bind:change="onChangeWeight"   value="{{ [actor_weight] }}" showValue />
-
     </view>
-
-
        <view class="page__bd">
         <view class="sub-title">三围(胸围,腰围,臀围)</view>
-
        <view class="multi">
-
         <wux-multi-picker-view itemHeight="28" value="{{ value }}"  options="{{ options }}" bind:valueChange="onValueChange" />
        </view>
-
-
     </view>
-
     </view>
-
-
-
-
      <view class="territory_name">特长</view>
-
     <view class='territory'>
               <p  class="{{item.check}}" wx:for="{{speciality_list}}" data-index='{{index}}'   catchtap="check" data-id="{{item.code}}">{{item.name}}
               </p>
@@ -200,8 +168,122 @@
 <view style="height:100rpx;"></view> 
   </view>
 </view>
+  <view wx:else>
+  
+ <!-- 统筹 -->
+  
+  
+    <view class="information">
+    <view class="Consignee">
+
+         <view class="Consignee_left">
+         <open-data type="userAvatarUrl" mode="aspectFit"></open-data>
+      </view>
 
 
+ <view class="Consignee_right">
+
+        <view class=" com phone ">
+          <p>电话:</p>
+          <view wx:if='{{message.phone}}' class="phonenumber com phone">
+            <input placeholder="\*"   bindinput="bingd_phone"  placeholder-class="phcolor" bindblur="validate" maxlength="11"  class="input-text" value='{{message.phone}}' name="phone"></input>
+          </view>
+          <view wx:else class="phonenumber">
+            <view wx:if="{{phoneNumber}}">
+              <input  bindinput="bingd_phone"  placeholder="\*" placeholder-class="phcolor" bindblur="validate" maxlength="11" class="input-text_wx" value='{{phoneNumber}}' name="phone"></input>
+            </view>
+            <view wx:else>
+              <button class='phone_button' open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">一键绑定</button>
+            </view>
+
+          </view>
+        </view>
+        <view class=" com wx ">
+          <p>微信:</p>
+          <input   bindinput="bingd_wx"  placeholder="\*" placeholder-class="phcolor" type=" text" class="input-text_wx" name="wx_name" value='{{message.wechat}}'></input>
+        </view>
+
+
+      </view>
+
+
+    </view>
+  </view>
+
+
+
+  <view class="news">
+
+    <view class="basic company">
+      <p>
+        <image src="../../image/sms-compoay.png" class="icon"></image>
+       <span class="commoo_right">公 司:</span>
+      </p>
+      <view class="rig">
+        <input  bindinput="bingd_corporation"   placeholder="\*" placeholder-class="phcolor" type=" text" class="input-xin" name="company" value='{{message.corporation}}'></input>
+      </view>
+    </view>
+
+
+   <view class="basic profession">
+      <picker bindchange="positionChange" value="{{position_list[p_index].name}}" range="{{position_list}}"  range-key="name">
+        <view class="picker">
+          <p>
+            <image src="../../image/sms-hangye.png" class="icon"></image>
+             <span class="commoo_right">职 位:</span>
+          </p>
+          <view class="rig">
+            <view class="height_y"> {{position_list[p_index].name}}</view>
+      
+            <image src="../../image/xiaojiantou2.png" class="jiantou"></image>
+          </view>
+        </view>
+      </picker>
+    </view>
+
+     <view class="basic profession">
+      <picker bindchange="industryChange" value="{{industry_list[c_index].name}}" range="{{industry_list}}"  range-key="name">
+        <view class="picker">
+          <p>
+            <image src="../../image/sms-occupation.png" class="icon"></image>
+             <span class="commoo_right">行 业:</span>
+          </p>
+          <view class="rig">
+            <view class="height_y"> {{industry_list[c_index].name}}</view>
+      
+            <image src="../../image/xiaojiantou2.png" class="jiantou"></image>
+          </view>
+        </view>
+      </picker>
+    </view>
+
+    <view class="basic city">
+      <picker mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{customItem}}">
+        <view class="picker">
+          <p>
+            <image src="../../image/sms-city.png" class="icon"></image>
+             <span class="commoo_right">城 市:</span>
+          </p>
+          <view class="rig">
+            <view class="city_y">{{region[0]}}，{{region[1]}}，{{region[2]}}</view>
+            <image src="../../image/xiaojiantou2.png" class="jiantou"></image>
+          </view>
+        </view>
+      </picker>
+    </view>
+
+ 
+</view>
+  
+  
+  
+  
+  
+  
+  </view>
+
+
+</view>
 <loading hidden="{{loadingHidden}}">
     加载中...
 </loading>
