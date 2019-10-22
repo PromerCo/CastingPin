@@ -1,102 +1,242 @@
 import { Detail } from 'detail-model.js';
 var app = getApp();
 var detail = new Detail(); //实例化 首页 对象
+// 缓存数据
+const cache_list = require('../../utils/package.js');
+
 Page({
   data: {
-    arr: [
-      {
-        "type": "网络电影",
-        "minute": "3分钟前",
-        "date": "2019-10-01",
-        "actor": "男演员",
-        "actress": "女演员",
-        "addressfirst": "北京",
-        "addresssecond": "上海",
-        "addressthird": "横店",
-        "icon": "../../image/woman.png"
-      },
-    ],
+    list: [],
     focus: false,
-    // 上传图片
-    fileList: [{
-      uid: 0,
-      status: 'uploading',
-      url: 'http://cdn.skyvow.cn/qrcode.jpg',
-    },
-    {
-      uid: 1,
-      status: 'done',
-      url: 'http://cdn.skyvow.cn/qrcode.jpg',
-    },
-    {
-      uid: 2,
-      status: 'error',
-      url: 'http://cdn.skyvow.cn/qrcode.jpg',
-    }
-    ],
+    is_collect:0,
+    enroll_list:[],
+    agree:'邀请',
+    notice_id:'',
+    //编辑
+    isIOS: false
   },
-  // 上传图片
-  onChange(e) {
-    const { file } = e.detail
-    if (file.status === 'uploading') {
-      this.setData({
-        progress: 0,
-      })
-      wx.showLoading()
-    } else if (file.status === 'done') {
-      this.setData({
-        imageUrl: file.url,
-      })
-    }
-  },
-  onSuccess(e) {
-    this.setData({
-      url: e.detail.file.url
-    })
-  },
-  onFail(e) {
-    console.log('onFail', e)
-  },
-  onComplete(e) {
-    console.log('onComplete', e)
-    wx.hideLoading()
-  },
-  onProgress(e) {
-    console.log('onProgress', e)
-    this.setData({
-      progress: e.detail.file.progress,
-    })
-  },
-  onPreview(e) {
-    console.log('onPreview', e)
-    const { file, fileList } = e.detail
-    wx.previewImage({
-      current: file.url,
-      urls: fileList.map((n) => n.url),
-    })
-  },
-  onRemove(e) {
-    const { file, fileList } = e.detail
-    wx.showModal({
-      content: '确定删除？',
-      success: (res) => {
-        if (res.confirm) {
-          this.setData({
-            fileList: fileList.filter((n) => n.uid !== file.uid),
-          })
-        }
-      },
-    })
-  },
-  bindTextAreaBlur: function (e) {
-    console.log(e.detail.value)
-  },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+  var that = this  
+  var notice_id = options.id
+
+  //记录浏览量
+  that._loadData(notice_id)
+  detail.list_details(notice_id, (data) => {
+    if (data.code == 201) {
+      var message = data.data
+   
+      message['occupation'] = cache_list.handleCache(message['occupation'], 0); //职业
+      message['position'] = cache_list.handleCache(message['position'], 0); //职位
+      message['age'] = cache_list.handleCache(message['age'], 0); //年龄范围
+      message['speciality'] = cache_list.handleCache(message['speciality'].split(","),1,'#'); //特长
+      var enroll = JSON.parse(JSON.parse(message['enroll']))
+      if (enroll == null || enroll==undefined){
+           enroll = [];
+      }
+      that.setData({
+        list: message,
+        enroll_list: enroll,
+        is_collect: message['is_collect'],
+        enroll_number: message['enroll_number'],
+        notice_id: notice_id
+      })
+    }
+  })
   },
+
+  collect: function (e) {
+    var that = this
+    var msg = [];
+    msg.collect = e.currentTarget.dataset.type
+    msg.notice_id = that.data.notice_id
+    detail.collect(msg, (data) => {
+      if (data.code == 201) {
+        if (data.data == 0) {
+          that.setData({
+            is_collect: data.data,
+          })
+        } else {
+          that.setData({
+            is_collect: data.data,
+          })
+        }
+      }
+    })
+  },
+  _loadData: function (e) {
+    //记录浏览量
+    detail.showAgree(e, (data) => {
+      console.log(data)
+    })
+  },
+
+  agree: function (e){
+    //ID
+    var that = this
+    let notice_id = e.currentTarget.dataset.id
+    var image_list = that.data.enroll_list
+    detail.agree(notice_id, (data) => {
+      var list = data
+      if (list.code == 200){
+        wx.showToast({
+          title: list.msg,
+          icon: 'none',
+          duration: 1000,
+          mask: true,
+        }) 
+      }else if (list.code == 201){
+        //报名成功
+        var img = { 'avatar_url': list.data }; 
+        image_list.push(img)
+        var enroll_number = parseInt(that.data.list.enroll_number) + 1
+        that.setData({
+          is_enroll: 1,
+          enroll_list: image_list,
+          enroll_number: enroll_number,
+          agree: '已申请'
+        })
+      } else if (list.code == 417) {
+        wx.showModal({
+          title: list.msg,
+          content: '确定跳转到身份切换页面吗？',
+          showCancel: true,//是否显示取消按钮
+          success: function (res) {
+            if (res.cancel) {
+              console.log('取消')
+            } else {
+              wx.switchTab({
+                url: '/pages/me/me'
+              })
+            }
+          }
+        })
+      }else{
+          console.log(123)
+      }
+    })
+  },
+
+
+  /*
+  编辑器
+ */
+  updatePosition(keyboardHeight) {
+    const toolbarHeight = 100
+    const { windowHeight, platform } = wx.getSystemInfoSync()
+    let editorHeight = keyboardHeight > 0 ? (windowHeight - keyboardHeight - toolbarHeight) : windowHeight
+    this.setData({ editorHeight, keyboardHeight })
+  },
+  calNavigationBarAndStatusBar() {
+    const systemInfo = wx.getSystemInfoSync()
+    const { statusBarHeight, platform } = systemInfo
+    const isIOS = platform === 'ios'
+    const navigationBarHeight = isIOS ? 44 : 48
+    return statusBarHeight + navigationBarHeight
+  },
+
+  onEditorReady() {
+    const that = this
+    wx.createSelectorQuery().select('#editor').context(function (res) {
+      that.editorCtx = res.context
+      var describe = that.data.list.profile
+      that.editorCtx.setContents({
+        html: describe,
+        success: (res) => {
+          console.log(res)
+        },
+        fail: (res) => {
+          console.log(res)
+        }
+      })
+
+    }).exec()
+  },
+
+  bindinput: function (e) {
+    var that = this
+    var info = e.detail.html
+    that.setData({
+      details: info
+    })
+
+  },
+
+  bindfocus: function (e) {
+    var that = this
+    var info = e.detail.html
+    that.setData({
+      details: info
+    })
+  },
+
+  blur() {
+    this.editorCtx.blur()
+  },
+  format(e) {
+    console.log(e)
+    let { name, value } = e.target.dataset
+    if (!name) return
+    this.editorCtx.format(name, value)
+
+  },
+  onStatusChange(e) {
+    const formats = e.detail
+    console.log(formats)
+
+    this.setData({ formats })
+  },
+  insertDivider() {
+    this.editorCtx.insertDivider({
+      success: function () {
+        console.log('insert divider success')
+      }
+    })
+  },
+  clear() {
+    this.editorCtx.clear({
+      success: function (res) {
+        console.log("clear success")
+      }
+    })
+  },
+  removeFormat() {
+    this.editorCtx.removeFormat()
+  },
+  insertDate() {
+    const date = new Date()
+    const formatDate = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`
+    this.editorCtx.insertText({
+      text: formatDate
+    })
+  },
+  insertImage() {
+    const that = this
+    wx.chooseImage({
+      count: 1,
+      success: function (res) {
+
+        that.editorCtx.insertImage({
+          src: res.tempFilePaths[0],
+          data: {
+            id: 'abcd',
+            role: 'god'
+          },
+          width: '100%',
+          success: function (e) {
+            console.log(e)
+
+          }
+        })
+
+
+      }
+    })
+  },
+
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -109,7 +249,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+
   },
 
   /**

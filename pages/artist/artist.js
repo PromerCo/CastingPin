@@ -1,5 +1,10 @@
 import { Artist } from 'artist-model.js';
 var artist = new Artist(); //实例化 首页 对象
+
+// 缓存数据
+const cache_list = require('../../utils/package.js');
+
+
 const app = getApp()
 let timeout
 
@@ -22,6 +27,7 @@ function throttle(func, wait) {
     }
   }
 }
+
 Page({
   data: {
     width: wx.getSystemInfoSync().windowWidth,
@@ -35,45 +41,10 @@ Page({
     // 显示隐藏
     hidden: 1,
     texf:'none',
-    banner: [{
-      "image": "../../image/tupian.jpg",
-    }, {
-      "image": "../../image/tupian.jpg",
-    }, {
-      "image": "../../image/tupian.jpg",
-    }, {
-      "image": "../../image/tupian.jpg",
-    }, {
-      "image": "../../image/tupian.jpg",
-    }, {
-      "image": "../../image/tupian.jpg",
-    }, {
-      "image": "../../image/tupian.jpg",
-    }, {
-      "image": "../../image/tupian.jpg",
-    }, {
-      "image": "../../image/tupian.jpg",
-    }],
-    column: [{
-      "id": "100000",
-      "title": "全部"
-    }, {
-      "id": "100001",
-      "title": "不限"
-    }, {
-      "id": "100002",
-      "title": "演员"
-    }, {
-      "id": "100003",
-      "title": "模特"
-    }, {
-      "id": "100004",
-      "title": "主持人"
-    }, {
-      "id": "100005",
-      "title": "歌手"
-    }, ]
-
+    banner: [],
+    video_list:[],
+    column: cache_list.columnCache('style'),
+   
   },
   info: {
     videoPlayDetail: {} // 存放所有视频的播放位置
@@ -113,18 +84,49 @@ Page({
 
   },
   // video
-  video() {
+  video:function(e) {
+    let cast_id =  e.currentTarget.dataset.id
     wx.navigateTo({
-      url: '../../pages/artdel/artdel',
+      url: '../../pages/artdel/artdel?cast_id=' + cast_id,
     })
   },
   onLoad(options) {
-    this.getVideoList(1)
+
+    this._loadData();
+
+  },
+
+
+
+  /*
+  页面初始化 
+  */
+  _loadData: function () {
+    var that = this;
+    artist.getlist((data) => {
+      if (data.code == 200){
+        var video_list = data.data
+        video_list.forEach(function (item, index) {
+           video_list[index]['width']  = 480
+           video_list[index]['height'] = 272
+           video_list[index]['isPlay'] = false
+        })
+        that.setData({
+          banner: video_list,
+          video_list: video_list,
+          status: video_list.status
+        })
+        that.getVideoList(1)
+      }
+  
+    })
+    
   },
   /**
    * 分页获取视频
    */
   getVideoList(initPage) {
+    let that = this
     const {
       videoLoading,
       videoList
@@ -135,22 +137,16 @@ Page({
     this.setData({
       videoLoading: true
     })
-    // 制造模拟数据
-    let data = [{
-      cover: 'https://wx4.sinaimg.cn/mw690/ec4d7780ly1fsvx1996xoj20da07in0t.jpg',
-      src: 'http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400',
-      width: 480,
-      height: 272,
-      title: '腾讯大学视频',
-      isPlay: false
-    }]
+
+    var data = that.data.video_list
+
     data = data.concat(data)
-    data = data.concat(data)
-    console.log(data)
+  
+
     // 模拟请求
     setTimeout(() => {
       this.setData({
-        videoList: videoList.concat(this.formatVideoList(data)),
+         videoList: videoList.concat(this.formatVideoList(data)),
         videoLoading: false
       })
       // 给数据足够的渲染时间，之后进行视频位置的测量
@@ -159,9 +155,12 @@ Page({
         if (initPage) { // 如果是首次进入，就自动播放第一个视频
           this.showVideoList(0)
         }
-      }, 1500)
-    }, 1500)
+      }, 300)
+    }, 300)
   },
+  
+
+
   /**
    * 格式化视频列表
    * @param {Array} videoList 需要格式化的视频列表
@@ -176,21 +175,21 @@ Page({
       styleHight = styleHight > 0.7 * height ? 0.7 * height : styleHight
       return {
         ...value,
-        styleHight: Math.floor(styleHight),
+        styleHight: Math.floor(styleHight)+450,
         currentTime: 0,
         isPlay: false
       }
     })
   },
   // 点击播放
-  eventPlay(event) {
+  eventPlay:function(event) {
     const {
       index
     } = event.currentTarget.dataset
     this.showVideoList(index)
   },
   // 视频更新的时候不断的去记录播放的位置
-  eventPlayupdate(event) {
+  eventPlayupdate: function (event) {
     const {
       detail: {
         currentTime
@@ -213,6 +212,7 @@ Page({
     let {
       videoList
     } = this.data
+  
     videoList = videoList.map(value => {
       value.isPlay = false
       return value
@@ -235,10 +235,7 @@ Page({
     })
   },
   onPageScroll:function(e){
-
     let scrollTop = e.scrollTop
-
-
     if(scrollTop>50){
       this.setData({
         texf:'block'
@@ -251,7 +248,6 @@ Page({
     if (this.data.noPageScroll) {
       return
     }
-    // 获取数据分别放置到各自的节流防抖函数中，防止调用的时候数据已近发生改变
 
     // 节流，每200毫秒触发一次
     throttle(() => {

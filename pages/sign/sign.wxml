@@ -1,0 +1,46 @@
+
+<view class="project" hidden="{{!loadingHidden}}">
+
+<view wx:if="{{list.length !=0}}">
+
+ <view  bindtap="see" data-push_id='{{itemName.id}}' class="content" wx:for="{{list}}" wx:for-index="idx" wx:for-item="itemName" wx:key="idx">
+
+    <view class="x_head">
+      <p class="head_text">{{itemName.title}}</p>
+    </view>
+    
+    <!-- <view class="data">
+      <view class="reset_data">状态:
+        <p>{{itemName.activity_status}}</p>
+      </view>
+    </view> -->
+
+<view wx:if="{{type==2}}">
+<view class="attend_user" catchtap="attend" data-push_id='{{itemName.id}}' >申请的KOL</view>
+</view>
+
+</view>
+
+
+
+<view style="height:50rpx;">
+
+</view>
+
+</view>
+
+<view wx:else class='is_excer'>
+
+</view>
+
+<view class='footer'>
+   <view bindtap='navhome'  wx:if="{{type == 1}}">查看更多的HUB</view>
+   <view bindtap='publish' wx:else>立即发布</view>
+</view>
+
+
+</view>
+
+<loading hidden="{{loadingHidden}}">
+  {{presentation}}
+</loading>

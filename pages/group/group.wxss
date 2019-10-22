@@ -64,11 +64,13 @@ scroll-view {
 }
 
 .hole {
-  margin-left: 20rpx;
-  width: 80rpx;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
+
+margin-left: 20rpx;
+width: 320rpx;
+white-space: nowrap;
+text-overflow: ellipsis;
+overflow: hidden;
+
 }
 
 .field {
@@ -77,9 +79,11 @@ scroll-view {
 }
 
 .icon {
-  width: 50rpx;
-  height: 50rpx;
-  margin-right: 30rpx;
+width: 80rpx;
+height: 80rpx;
+margin-right: 30rpx;
+border-radius: 50%;
+
 }
 
 .Drama span {
@@ -108,11 +112,11 @@ scroll-view {
 /* 发布 */
 
 .publish {
-  width: 80rpx;
-  height: 80rpx;
-  position: fixed;
-  right: 10rpx;
-  bottom: 20rpx;
+width: 80rpx;
+height: 80rpx;
+position: fixed;
+right: 30rpx;
+bottom: 30rpx;
 }
 
 .publish image {
@@ -137,7 +141,6 @@ scroll-view {
   background-color: white;
   margin-left: 5px;
   border-radius: 25rpx;
-  border: 1rpx solid #f93;
 }
 
 scroll-view {
@@ -203,16 +206,9 @@ scroll-view {
   color: rgb(245, 11, 62);
 }
 
-.city-first {
-  margin-left: 109rpx;
-}
-
 .city-first span {
-  width: 80rpx;
   display: block;
-  float: left;
   text-align: center;
-  margin-left: 30rpx;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

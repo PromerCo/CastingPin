@@ -1,7 +1,7 @@
 
 import { Base } from '../../utils/base.js';
 
-class Publish extends Base {
+class Cast extends Base {
   constructor() {
     super();
   }
@@ -10,7 +10,7 @@ class Publish extends Base {
 
     let info = param
     var param = {
-      url: 'castingpinnotice/push',
+      url: 'castingpincast/push',
       type: 'POST',
       data: {
         'data': info,
@@ -24,4 +24,4 @@ class Publish extends Base {
 
 };
 
-export { Publish };
+export { Cast };

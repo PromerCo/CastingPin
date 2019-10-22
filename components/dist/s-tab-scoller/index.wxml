@@ -11,7 +11,7 @@
 			 bindtap="onClick"
 			>
 				<view class="inner">
-					<text>{{ item.title }}</text>
+					<text>{{ item.name }}</text>
 				</view>
 			</view>
 		</view>
@@ -30,7 +30,7 @@
 			 data-index="{{ index }}"
 			 bindtap="onClick"
 			>
-				{{ item.title }}
+				{{ item.name }}
 				<text>{{ item.num }}</text>
 			</view>
 		</view>

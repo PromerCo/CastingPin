@@ -1,26 +1,31 @@
 <view class="wrap">
+
   <view class="search_wrap" style="display:{{texf}}">
     <s-tab-scoller tabs="{{column}}" current="{{index}}" wx:for-item="itemName" bindchange="onTabsChange" data-platform='{{itemName}}'></s-tab-scoller>
   </view>
   <view class='container' current="{{index}}" duration="300" wx:for-item="itemName" data-platform='{{itemName}}'>
-    <!-- 滑动 -->
+
     <view class="swiper">
       <scroll-view scroll-x="true">
         <view class="banner" scroll-x="true">
           <view class="banner_Item" wx:for="{{banner}}" wx:for-index="idx" wx:for-item="itemName" wx:key="idx">
-            <image src=" {{itemName.image}}  "></image>
+            <image src=" {{itemName.cover_img}}  "></image>
           </view>
         </view>
       </scroll-view>
     </view>
-    <!--  -->
+ 
+
     <view class='block' class="construtor">
-      <view catchtap="video">
-        <view class="video-card" id="video{{index}}" wx:for="{{videoList}}" wx:key="*this">
+
+      <view >
+      
+        <view catchtap="video" data-id="{{item.open_id}}" class="video-card" id="video{{index}}" wx:for="{{videoList}}" wx:key="*this">
+
           <view class="video-box" style="height: {{item.styleHight}}px;">
-            <video wx:if="{{item.isPlay}}" src="{{item.src}}" class="video-video" initial-time="{{item.currentTime}}" controls="{{!false}}" autoplay="{{false}}" loop="{{true}}" bindtimeupdate="eventPlayupdate" bindfullscreenchange="eventFullScreen" data-index="{{index}}">
+            <video  custom-cache="true"  wx:if="{{item.isPlay}}" src="{{item.cover_video}}" class="video-video" initial-time="{{item.currentTime}}" controls="{{!false}}" autoplay="{{true}}" loop="{{true}}" bindtimeupdate="eventPlayupdate" bindfullscreenchange="eventFullScreen" data-index="{{index}}">
             </video>
-            <image wx:if="{{!item.isPlay}}" class="video-cover" mode="aspectFill" src="{{item.cover}}" data-index="{{index}}"></image>
+            <image wx:if="{{!item.isPlay}}" class="video-cover" mode="aspectFill" src="{{item.cover_img}}" data-index="{{index}}"></image>
           </view>
         </view>
       </view>

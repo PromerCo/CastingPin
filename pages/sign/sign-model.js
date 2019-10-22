@@ -1,20 +1,18 @@
+/**
+ * Created by jimmy on 17/2/26.
+ */
 
 import { Base } from '../../utils/base.js';
 
-class Publish extends Base {
+class Sign extends Base {
   constructor() {
     super();
   }
 
-  pushSave(param, callback) {
-
-    let info = param
+  getlist(callback) {
     var param = {
-      url: 'castingpinnotice/push',
+      url: 'castingpinnotice/lame',
       type: 'POST',
-      data: {
-        'data': info,
-      },
       sCallback: function (data) {
         callback && callback(data);
       }
@@ -22,6 +20,7 @@ class Publish extends Base {
     this.request(param);
   }
 
+
 };
 
-export { Publish };
+export { Sign };

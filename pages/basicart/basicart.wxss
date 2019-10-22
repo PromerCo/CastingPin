@@ -1,31 +1,29 @@
-
 @import "../../components/editor/iconfont.wxss";
 @import "../../components/lib/weui.wxss";
 
 .container_s {
-  top: 0; 
-  left: 0; 
- padding:20px;
-
-}
-.container_s p{
-font-size:28rpx;
-margin-left:16rpx;
+  top: 0;
+  left: 0;
+  padding: 20px;
 }
 
-.jianjie{
-font-size: 24rpx;
-margin-top: 30rpx;
-border-bottom: 1rpx solid lightgray;
-padding-left: 38rpx;
-height: 60rpx;
+.container_s p {
+  font-size: 28rpx;
+  margin-left: 16rpx;
 }
 
-.container_s p{
-font-size:28rpx;
-margin-left:16rpx;
+.jianjie {
+  font-size: 24rpx;
+  margin-top: 30rpx;
+  border-bottom: 1rpx solid lightgray;
+  padding-left: 38rpx;
+  height: 60rpx;
 }
 
+.container_s p {
+  font-size: 28rpx;
+  margin-left: 16rpx;
+}
 
 .ql-container {
   box-sizing: border-box;
@@ -35,11 +33,10 @@ margin-left:16rpx;
   line-height: 1.5;
   overflow: auto;
   padding: 10px 10px 20px 10px;
-
 }
 
 .ql-active {
-  color: #22C704;
+  color: #22c704;
 }
 
 .iconfont {
@@ -62,20 +59,20 @@ margin-left:16rpx;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border: 1px solid #ECECEC;
+  border: 1px solid #ececec;
   border-left: none;
   border-right: none;
-  background:white;
+  background: white;
   z-index: 10000;
 }
 
-.send_msg{
+.send_msg {
   position: fixed;
   bottom: 0;
 }
-.submit{
-  margin-top: 100rpx;
 
+.submit {
+  margin-top: 100rpx;
 }
 
 .project {
@@ -97,12 +94,11 @@ margin-left:16rpx;
 }
 
 .Consignee_left {
-width: 180rpx;
-height: 180rpx;
-float: left;
-margin-left: 25rpx;
-margin-top: 30rpx;
-
+  width: 180rpx;
+  height: 180rpx;
+  float: left;
+  margin-left: 25rpx;
+  margin-top: 30rpx;
 }
 
 .Consignee_right {
@@ -112,33 +108,37 @@ margin-top: 30rpx;
   margin-top: 60rpx;
   margin-left: 30rpx;
 }
+
 .com {
   height: 80rpx;
   /* margin-top: 30rpx; */
   display: flex;
 }
+
 .com p {
   width: 80rpx;
   font-size: 24rpx;
 }
-.input-text {
-font-size: 24rpx;
-margin-top: -3rpx;
-}
-.input-text_wx{
-font-size: 24rpx;
-}
-.rig{
-width: 520rpx;
-float: left;
 
+.input-text {
+  font-size: 24rpx;
+  margin-top: -3rpx;
 }
+
+.input-text_wx {
+  font-size: 24rpx;
+}
+
+.rig {
+  width: 520rpx;
+  float: left;
+}
+
 .input-xin {
   width: 400rpx;
   font-size: 24rpx;
   margin-top: 20rpx;
 }
-
 
 .phone_button {
   height: 50rpx;
@@ -160,67 +160,71 @@ float: left;
 }
 
 .basic p {
-display: flex;
-font-size: 26rpx;
-width: 150rpx;
-
+  display: flex;
+  font-size: 26rpx;
+  width: 150rpx;
 }
 
 .icon {
-
-width: 38rpx;
-height: 38rpx;
-margin-top: 20rpx;
-
-}
-.jiantou{
-width: 50rpx;
-height: 50rpx;
-margin-top: -68rpx;
-float: right;
+  width: 38rpx;
+  height: 38rpx;
+  margin-top: 20rpx;
 }
 
-.sc_jiantou{
-width: 50rpx;
-height: 50rpx;
-margin-top: -50rpx;
-float: right;
+.jiantou {
+  width: 50rpx;
+  height: 50rpx;
+  margin-top: -68rpx;
+  float: right;
 }
 
-.picker{
+.sc_jiantou {
+  width: 50rpx;
+  height: 50rpx;
+  margin-top: -50rpx;
+  float: right;
+}
+
+.picker {
   display: flex;
   font-size: 24rpx;
 }
-.city_y{
- width: 325rpx;
+
+.city_y {
+  width: 325rpx;
 }
-.height_y{
+
+.height_y {
   width: 325rpx;
   height: 80rpx;
 }
-/* 简介 */
-.introduction{
-height:100rpx;
-line-height:100rpx;
-font-size:28rpx;
-margin:0rpx auto;
-padding-left:45rpx;
-}
-.detail-view {
-position:relative;
-margin:0rpx 20rpx;
-min-height:200rpx;
-border:1rpx solid rgb(247, 247, 247);
-padding-left:10rpx 10rpx;
 
+/* 简介 */
+
+.introduction {
+  height: 100rpx;
+  line-height: 100rpx;
+  font-size: 28rpx;
+  margin: 0rpx auto;
+  padding-left: 45rpx;
 }
+
+.detail-view {
+  position: relative;
+  margin: 0rpx 20rpx;
+  min-height: 200rpx;
+  border: 1rpx solid rgb(247, 247, 247);
+  padding-left: 10rpx 10rpx;
+}
+
 .detail-placeholder {
-position:absolute;
-padding:10rpx 20rpx;
-min-height:100%;
-color:#c9c9c9;
-font-size:28rpx;
+  position: absolute;
+  padding: 10rpx 20rpx;
+  min-height: 100%;
+  color: #c9c9c9;
+  font-size: 28rpx;
 }
+
 .detail-textarea {
   height: 150rpx !important;
   top: 12rpx;
@@ -229,83 +233,99 @@ font-size:28rpx;
   /* padding-left:20rpx; */
 }
 
-.territory{
-
-text-align:center;
-padding-left:30rpx;
-color:gray;
-font-size:21rpx;
-display:flex;
-flex-wrap: wrap;
-padding-right:30rpx;
-padding-top:20rpx;
-
-}
-.territory p{
-margin:10rpx;
-width:21%;
-border:1rpx solid rgb(247, 247, 247);
-color:gray;
-height:50rpx;
-line-height:50rpx;
-border-radius:10rpx;
-
-
-}
-.tag{
-  font-size:26rpx;
-  margin-left:45rpx;
+.territory {
+  text-align: center;
+  padding-left: 30rpx;
+  color: gray;
+  font-size: 21rpx;
+  display: flex;
+  flex-wrap: wrap;
+  padding-right: 30rpx;
+  padding-top: 20rpx;
 }
 
-.check{
-  /* background:#FF3300 !important; */
-  color:#FF3300 !important;
-  border:1rpx solid #FF3300 !important;
-  
+.territory p {
+  margin: 10rpx;
+  width: 21%;
+  border: 1rpx solid rgb(247, 247, 247);
+  color: gray;
+  height: 50rpx;
+  line-height: 50rpx;
+  border-radius: 10rpx;
 }
 
-.contivide{
-width: 92%;
-margin: 0 auto;
-
+.tag {
+  font-size: 26rpx;
+  margin-left: 45rpx;
 }
-.wux-slider__handle{
+
+.check {
+  color: #f30 !important;
+  border: 1rpx solid #f30 !important;
+}
+
+.contivide {
+  width: 92%;
+  margin: 0 auto;
+}
+
+.wux-slider__handle {
   height: 32rpx !important;
   width: 32rpx !important;
 }
-.sub-title{
+
+.sub-title {
   font-size: 24rpx;
   margin-top: 30rpx;
 }
-.territory_name{
 
-line-height: 80rpx;
-height: 80rpx;
-font-size: 24rpx;
-width: 92%;
-margin: 0 auto;
-border-bottom: 1rpx solid rgb(235, 235, 235);
-
+.territory_name {
+  line-height: 80rpx;
+  height: 80rpx;
+  font-size: 24rpx;
+  width: 92%;
+  margin: 0 auto;
+  border-bottom: 1rpx solid rgb(235, 235, 235);
 }
-.multi{
+
+.multi {
   margin-top: 30rpx;
 }
 
-.commoo_right{
+.commoo_right {
   margin-left: 20rpx;
   display: inline-block;
   font-size: 24rpx;
-
-
 }
 
-.wux-slider__rail{
+.wux-slider__rail {
   height: 6rpx !important;
 }
-.wux-slider__track{
-   height: 6rpx !important;
+
+.wux-slider__track {
+  height: 6rpx !important;
 }
-.wux-slider__max, .wux-slider__min{
+
+.wux-slider__max, .wux-slider__min {
   font-size: 21rpx !important;
+}
+
+/* 上传图片 */
+
+.wux-upload--picture-card .wux-upload__file {
+  width: 200rpx !important;
+  height: 200rpx  !important;
+  border: 1rpx solid #d9d9d9  !important;
+  border-radius: 10rpx;
+
+}
+.wux-upload{
+margin-top: 30rpx !important;
+margin-left: 30rpx !important;
+}
+.wux-upload--picture-card .wux-upload__select {
+width: 200rpx !important;
+height: 200rpx !important;
+margin-left: 0rpx !important;
 
 }

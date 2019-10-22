@@ -21,37 +21,25 @@ Page({
     },
     // 视屏
     src: '',
-    // swiper
-    background: [
-      {
-        "image": 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=584453011,1889633233&fm=26&gp=0.jpg',
-      },{
-        "image": 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1569832208075&di=7892618464a63350ac9585dda6ddd45e&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fpic%2F4%2Fdc%2F581c1297747.jpg',
-      },{
-        "image": 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1077137436,1609348946&fm=26&gp=0.jpg',
-      }
-    ],
+
     indicatorDots: true,
     vertical:false,
     autoplay: false,
     circular: true,
     interval: 1000,
     duration: 500,
-    background1: [
-      {
-        "image1": 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=584453011,1889633233&fm=26&gp=0.jpg',
-      }, {
-        "image1": 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1569832208075&di=7892618464a63350ac9585dda6ddd45e&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fpic%2F4%2Fdc%2F581c1297747.jpg',
-      }, {
-        "image1": 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1077137436,1609348946&fm=26&gp=0.jpg',
-      }
-    ],
+    list:[],
     indicatorDots1: true,
     vertical1: false,
     autoplay1: false,
     circular1: true,
     interval1: 1000,
     duration1: 500,
+    follow: '关注',
+    status: 0,
+    follow_number: 0,
+    invite: [],
+
   },
   // 音频
   audioPlayed: function (e) {
@@ -63,10 +51,8 @@ Page({
 
   timeSliderChanged: function (e) {
     if (!this.duration)
-      return;
-
+    return;
     var time = this.duration * e.detail.value / 100;
-
     this.setData({
       audioAction: {
         method: 'setCurrentTime',
@@ -128,9 +114,168 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let that = this
+    let cast_id = options.cast_id
+    artdel.getDetails(cast_id,(data) => {
+
+      var message = data.data
+
+      console.log(message) 
+
+      var chaceRecord = wx.getStorageSync('chace_record')  //缓存数据
+
+      var occupation = [];//职业
+      var speciality = [];//特长
+      chaceRecord.forEach(function (item, index) {
+        if (item.type == 'occupation') {
+          occupation.push(item)
+        }else if (item.type == 'speciality') {
+          speciality.push(item)
+        } 
+      })
+
+      var techang = message['speciality'];
     
+      var techang_id = techang.split(",");  
+
+      var occupation_id = message.occupation
+
+      //职业
+      occupation.forEach(function (o_item, o_index) {
+        if (o_item.code == occupation_id) {
+          message['occupation'] = o_item['name']
+        }
+      })
+      //特长
+      var tc = [];
+      for (var i = 0; i < techang_id.length; i++) {
+        speciality.forEach(function (s_item, s_index) {
+          if (techang_id[i] == s_item.code) {
+            tc.push(s_item['name'])
+          }
+          message['speciality'] = tc.join('#');
+        })
+      }
+
+      var invite_number = message['invite_number']
+
+      if (message.invite) {
+        var invite = JSON.parse(JSON.parse(message.invite));
+      } else {
+        var invite = [];
+      }
+
+
+      
+      if (message.status == 0){
+        that.setData({
+          list: message,
+          status: 1,
+          follow: '关注',
+          invite: invite,
+          follow_number: message['follow_number'],
+          invite_number: invite_number
+        })
+      }else{
+        that.setData({
+          list: message,
+          status:0,
+          follow: '取消关注',
+          invite: invite,
+          follow_number: message['follow_number'],
+          invite_number: invite_number
+        })
+      }
+      
+
+    })
   },
 
+  bindFollow:function(e){
+    var that = this
+    var arranger_id = e.currentTarget.dataset.id    //被关注者ID
+    var status = e.currentTarget.dataset.status     //关注状态
+ 
+    var msg = [];
+    msg['arranger_id'] = arranger_id
+    msg['status']      = status
+  
+    artdel.follow(msg, (data) => {
+        console.log(data)
+
+        if(data.code == 201){
+          var message = data.data
+   
+          if (message == 1){
+            that.setData({
+              status: 0,
+              follow: '取消关注'
+            })
+          }else{
+            that.setData({
+              status: 1,
+              follow: '关注'
+            })
+          }
+  
+        }else{
+           console.log(data) 
+        }
+    })
+  },
+
+  /*
+   邀请
+  */
+  invite:function(e){
+    var that = this
+    var arranger_id = e.currentTarget.dataset.id    //被邀请
+    var image_list = that.data.invite
+
+    artdel.invite(arranger_id, (data) => {
+
+      console.log(data.code)
+
+      if (data.code == 201) {
+        var invite_number = data.invite_number
+        invite_number = parseInt(invite_number) + 1
+        
+        var img = { 'avatar_url': data.data };
+        image_list.push(img)
+        that.setData({
+          invite: image_list,
+          invite_number: invite_number,
+          replace: '已邀请'
+        })
+      } else if (data.code == 412) {
+  
+
+        wx.showModal({
+          title: data.msg,
+          content: '确定跳转到身份切换页面吗？',
+          showCancel: true,//是否显示取消按钮
+          success: function (res) {
+            if (res.cancel) {
+              console.log('取消')
+            } else {
+              wx.switchTab({
+                url: '/pages/me/me'
+              })
+
+            }
+          }
+        })
+      }else{
+        wx.showToast({
+          title: data.msg,
+          icon: 'none',
+          duration: 1000,
+          mask: true,
+        })
+      }
+    })
+  },
+  
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

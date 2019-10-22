@@ -97,7 +97,6 @@
   background-color: white;
   margin-left: 5px;
   border-radius: 25rpx;
-  border: 1rpx solid #f93;
 }
 .banner_Item image{
   width: 100%;

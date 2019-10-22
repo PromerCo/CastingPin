@@ -1,56 +1,81 @@
 <view class="wrap">
   <!-- 详情 -->
-  <view class="whole" wx:for="{{arr}}" wx:for-index="idx" wx:key="idx" bindtap="detail">
+  <view class="whole"  >
     <view class="type all">
-      <p>类型:
-        <span>{{item.type}}</span>
+      <p>剧名:
+        <span class="opera">{{list.title}}</span>
       </p>
-      <view>{{item.minute}}</view>
+      <view>{{list.create_time}}</view>
     </view>
     <view class="time all">
-      <p>时间:
-        <span class="hole">{{item.date}}</span>
+      <p>职业:
+        <span class="hole">{{list.occupation}}</span>
       </p>
     </view>
     <view class="recruit all">
-      <p>招募:
-        <span class="hole">{{item.actor}}</span>
-        <span class="hole">{{item.actress}}</span>
+      <p>年龄:
+        <span class="hole">{{list.age}}</span>
       </p>
     </view>
     <view class="field all">
+      <p>特长:
+        <span class="hole">{{list.speciality}}</span>
+      </p>
+    </view>
+        <view class="field all">
       <p>场地:
-        <span class="hole">{{item.addressfirst}}</span>
-        <span class="hole">{{item.addresssecond}}</span>
-        <span class="hole">{{item.addressthird}}</span>
+        <span class="hole">北京 双桥</span>
       </p>
     </view>
     <view class=" nickname all">
       <view class="nick">
-        <image src="{{item.icon}}" class="icon" mode="center"></image>
-        <p>归于初遇呀</p>
-        <p>-经纪人</p>
-      </view>
-      <view class="end">两天后结束</view>
+        <image src="{{list.avatar_url}}" class="icon"></image>
+        <p>{{list.nick_name}} - {{list.position}}</p>
+      </view>    
+ </view>
+ <p class="detail">演员要求</p>
+ <view class="container_s" style="height:auto;">
+<editor
+  id="editor"
+  class="ql-container"
+  placeholder="{{placeholder}}"
+  showImgSize
+  showImgToolbar
+  showImgResize
+  bindstatuschange="onStatusChange"
+  read-only="true"
+  bindfocus="bindfocus"
+  bindinput="bindinput"
+  bindready="onEditorReady"  selectable="true" >
+</editor>
+
+<view class="toolbar" catchtouchend="format" hidden="{{keyboardHeight > 0 ? false : true}}"  style="bottom: {{isIOS ? keyboardHeight : 0}}rpx">
+  <i class="iconfont icon-charutupian" catchtouchend="insertImage"></i>
+  <i class="iconfont icon-format-header-2 {{formats.header === 2 ? 'ql-active' : ''}}" data-name="header" data-value="{{2}}"></i>
+  <i class="iconfont icon-format-header-3 {{formats.header === 3 ? 'ql-active' : ''}}" data-name="header" data-value="{{3}}"></i>
+  <i class="iconfont icon-zitijiacu {{formats.bold ? 'ql-active' : ''}}" data-name="bold"></i>
+  <i class="iconfont icon-zitixieti {{formats.italic ? 'ql-active' : ''}}" data-name="italic"></i>
+  <i class="iconfont icon-zitixiahuaxian {{formats.underline ? 'ql-active' : ''}}" data-name="underline"></i>
+  <i class="iconfont icon--checklist" data-name="list" data-value="check"></i>
+  <i class="iconfont icon-youxupailie {{formats.list === 'ordered' ? 'ql-active' : ''}}" data-name="list" data-value="ordered"></i>
+  <i class="iconfont icon-wuxupailie {{formats.list === 'bullet' ? 'ql-active' : ''}}" data-name="list" data-value="bullet"></i>
+</view>
+   </view>
+ 
+
+    <view class='apply_kol'>
+        <view class='apply_kol_header'>
+         <p>已经申请艺人</p>
+         <p><span>{{list.bystander_number}}查看 / {{enroll_number}}申请</span></p>
+        </view>
+     <view class="icon_wrap">
+      <view class="icon" wx:for='{{enroll_list}}' wx:for-index='index' wx:for-item="item">
+      <image src="{{item.avatar_url}}" class="image"></image>
     </view>
+     </view>
   </view>
-  <!-- 角色简介 -->
-  <view class="role">
-    <view class="role_top">
-      <p> 角色简介</p>
-    </view>
-    <view class="area">
-      <textarea bindblur="bindTextAreaBlur" maxlength="300" class="textarea" />
-    </view>
-  </view>
-  <!-- 项目简介 -->
-  <view class="role">
-    <view class="role_top">
-   <p> 项目简介</p>
-    </view>
-    <view class="project">
-        <textarea bindblur="bindTextAreaBlur" maxlength="300" class="textarea_pro" />
-    </view>
+
+
   </view>
   <!-- 底部 -->
   <view class="footer">
@@ -58,13 +83,17 @@
       <image src="../../image/share.png"></image>
       <span>分享</span>
     </view>
-    <view>
+
+    <view >
       <image src="../../image/collection.png"></image>
-      <span>关注</span>
+ <span  bindtap='collect'  data-type="1"   class="share_word share_sc_color"  wx:if="{{is_collect ==0 }}">收藏</span>
+    <span  bindtap='collect'  data-type="0" class="share_word share_sc_color"  wx:else >已收藏</span>
     </view>
-    <view>
+
+    <view bindtap="agree" data-id="{{list.id}}">
       <image src="../../image/email.png"></image>
-      <span>邀请</span>
+      <span>{{agree}}</span>
     </view>
+
   </view>
 </view>

@@ -114,7 +114,6 @@
      <view class="sub-title">
        身高({{actor_height}})
       </view>
-
         <wux-slider min="150" max="200"  controlled   bind:afterChange="afterChangeHeight"  bind:change="onChangeHeight"  defaultValue="{{ [ actor_height ] }}"  value="{{ [actor_height] }}" showValue />
     </view>
      <view class="page__bd page__bd_spacing">
@@ -123,6 +122,7 @@
         </view>
         <wux-slider min="70" max="200" controlled defaultValue="{{ [actor_weight] }}" defaultValue="{{ [ actor_weight ] }}"   bind:afterChange="afterChangeWeight"  bind:change="onChangeWeight"   value="{{ [actor_weight] }}" showValue />
     </view>
+
        <view class="page__bd">
         <view class="sub-title">三围(胸围,腰围,臀围)</view>
        <view class="multi">
@@ -130,11 +130,33 @@
        </view>
     </view>
     </view>
+
+    
      <view class="territory_name">特长</view>
     <view class='territory'>
               <p  class="{{item.check}}" wx:for="{{speciality_list}}" data-index='{{index}}'   catchtap="check" data-id="{{item.code}}">{{item.name}}
               </p>
     </view>
+
+     <view class="territory_name">封面照</view>
+
+    <view class="page__bd page__bd_spacing">
+        <wux-upload count="1" listType="picture-card" sizeType="compressed" defaultFileList="{{ fileList }}" max="1" url="https://www.skyvow.cn/api/common/file" bind:change="onChange" bind:success="onSuccess" bind:fail="onFail" bind:complete="onComplete" bind:preview="onPreview">
+            <text>+</text>
+        </wux-upload>
+<input name="cover_img"  hidden value="{{cover_img}}" ></input>
+    </view>
+
+
+         <view class="territory_name">短视频</view>
+    <view class="page__bd page__bd_spacing">
+        <wux-upload count="1" defaultFileType="video" listType="picture-card" sizeType="compressed" defaultFileList="{{ fileList }}" max="1" url="https://www.skyvow.cn/api/common/file" bind:change="onChangeVideo"   bind:complete="onCompleteVideo" bind:preview="onPreviewVideo">
+            <text>+</text>
+        </wux-upload>
+<input name="cover_video"  hidden value="{{cover_video}}" ></input>
+    </view>
+
+
 
 <!--文本编辑器 -->
 <view class="synopsis">
@@ -166,6 +188,9 @@
 </view>
 </view>
 <view style="height:100rpx;"></view> 
+
+
+
   </view>
 </view>
   <view wx:else>

@@ -1,27 +1,18 @@
-
 import { Base } from '../../utils/base.js';
 
-class Publish extends Base {
+class Unit extends Base {
   constructor() {
     super();
   }
-
-  pushSave(param, callback) {
-
-    let info = param
+  getlist(callback) {
     var param = {
-      url: 'castingpinnotice/push',
+      url: 'castingpincast/cast',
       type: 'POST',
-      data: {
-        'data': info,
-      },
       sCallback: function (data) {
         callback && callback(data);
       }
     };
     this.request(param);
   }
-
-};
-
-export { Publish };
+}
+export { Unit };

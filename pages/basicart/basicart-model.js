@@ -4,9 +4,6 @@ class Basicart extends Base {
   constructor() {
     super();
   }
-
-
-
   getList(callback) {
     var that = this
     var param = {

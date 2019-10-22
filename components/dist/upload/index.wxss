@@ -48,7 +48,8 @@
 .wux-upload--picture-card .wux-upload__files {
   position: relative;
   display: block;
-  float: left
+  float: left;
+  
 }
 .wux-upload--picture-card .wux-upload__files:after,
 .wux-upload--picture-card .wux-upload__files:before {

@@ -153,10 +153,10 @@
         </p>
         <image src="../../image/xiaojiantou2.png" class="arrow"></image>
       </view>
-      <view class="bottom_all" bindtap="guanzhu">
+      <view class="bottom_all" bindtap="sendPull">
         <p>
           <image src="../../image/fabu2.png" class="guanzhu" ></image>
-          <p class="isuse">发布的通告</p>
+          <p class="isuse">剧组管理</p>
         </p>
         <image src="../../image/xiaojiantou2.png" class="arrow"></image>
       </view>

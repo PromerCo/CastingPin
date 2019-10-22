@@ -1,4 +1,4 @@
-<view class="wrap">
+<view class="wrap"  hidden="{{!loadingHidden}}">
   <!-- 搜索 -->
   <view class="search_wrap" style="display:{{dis}}">
     <s-tab-scoller tabs="{{column}}" current="{{index}}" wx:for-item="itemName" bindchange="onTabsChange" data-platform='{{itemName}}'></s-tab-scoller>
@@ -7,64 +7,54 @@
     <view class="swiper">
       <!-- 滑动 -->
       <scroll-view scroll-x="true">
-        <view class="banner" scroll-x="true">
-          <view class="banner_Item" wx:for="{{banner}}" wx:for-index="idx" wx:for-item="itemName" wx:key="idx">
-            <!-- <view class="comop">
-            <p>
-              <image src="../../image/grounp2.png"></image>推荐:
-            </p>
-          </view> -->
+  <view class="banner" scroll-x="true">
+<view class="banner_Item" wx:for="{{ava_list}}" wx:for-item="itemName" data-id="{{itemName.id}}" bindtap="detail">
             <view class="pic">
-              <image src="{{itemName.image}}"></image>
+              <image src="{{itemName.avatar_url}}"></image>
             </view>
-            <view class="name-first first">{{itemName.name}}</view>
-            <view class="title-first first">{{itemName.type}}</view>
-            <view class="time-first first">{{itemName.date}}</view>
+            <view class="name-first first">{{itemName.title}}</view>
+            <view class="title-first first">{{itemName.occupation}}</view>
+            <view class="time-first first">{{itemName.age}}</view>
             <view class="city-first first">
-              <span>{{itemName.addressfirst}}</span>
-              <span>{{itemName.addresssecond}}</span>
-              <span>{{itemName.addressthird}}</span>
+              <span>{{itemName.speciality}}</span>
             </view>
-          </view>
-        </view>
+         </view>
+</view>
       </scroll-view>
     </view>
     <!-- 详情 -->
-    <view class="whole" wx:for="{{arr}}" wx:for-index="idx" wx:key="idx" bindtap="detail">
+    <view class="whole" wx:for="{{list}}" data-id="{{item.id}}" bindtap="detail">
       <view class="type all">
-        <p>剧名：
-          <span>{{item.name}}</span>
-        </p>
-        <view>{{item.minute}}</view>
+      <p>剧名：
+        <span>{{item.title}}</span>
+      </p>
+      <view>{{item.create_time}}</view>
       </view>
       <view class="Drama all">
-        <p>类型:
-          <span>{{item.type}}</span>
+        <p>职业:
+          <span>{{item.occupation}}</span>
         </p>
       </view>
       <view class="time all">
-        <p>时间:
-          <span class="hole">{{item.date}}</span>
+        <p>年龄:
+          <span class="hole">{{item.age}}</span>
         </p>
-
       </view>
       <view class="recruit all">
-        <p>招募:
+        <p>特长:
           <view class="field_x">
-            <view class="hole">{{item.actor}}</view>
-            <view class="hole">{{item.actress}}</view>
+            <view class="hole">{{item.speciality}}</view>
           </view>
         </p>
       </view>
       <view class="field all">
         <p>场地:
           <view class="field_x">
-            <view class="hole">{{item.addressfirst}}</view>
-            <view class="hole">{{item.addresssecond}}</view>
+            <view class="hole">北京</view>
           </view>
         </p>
         <view>
-          <image src="{{item.icon}}" class="icon" mode="center"></image>
+          <image src="{{item.avatar_url}}" class="icon" ></image>
         </view>
       </view>
     </view>
@@ -74,3 +64,6 @@
     <image src="../../image/fabu.png"></image>
   </view>
 </view>
+<loading hidden="{{loadingHidden}}">
+    加载中...
+</loading>

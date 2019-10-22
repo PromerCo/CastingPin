@@ -7,9 +7,6 @@
     "wux-upload": "../../components/dist/upload/index",
     "wux-icon": "../../components/dist/icon/index",
     "wux-slider": "../../components/dist/slider/index",
-    "wux-multi-picker-view": "../../components/dist/multi-picker-view/index",
-    "wux-accordion-group": "../../components/dist/accordion-group/index",
-    "wux-accordion": "../../components/dist/accordion/index"
-
+    "wux-multi-picker-view": "../../components/dist/multi-picker-view/index"
   }
 }

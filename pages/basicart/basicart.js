@@ -1,4 +1,4 @@
-import { Basicart } from 'basicart-model.js';
+ import { Basicart } from 'basicart-model.js';
 
 var basicart = new Basicart(); //实例化 首页 对象
 const app = getApp()
@@ -69,6 +69,7 @@ Page({
     tag_all: [],
     tag_list:[],
     tid_s: [],
+    imageUrl:[]
 
   },
   // 城市
@@ -97,13 +98,10 @@ Page({
   },
   //学校
   bingd_university:function(e){
-
     var school = e.currentTarget.dataset.school
-
     wx.navigateTo({
       url: '../../pages/school/school?school=' + school,
     })
-
   },
   // 身高
   showPicker_03: function () {
@@ -340,20 +338,7 @@ bingd_wx:function(e){
       index1: e.detail.value
     })
   },
-  onChange(e) {
-    console.log('onChange', e)
-    const { file } = e.detail
-    if (file.status === 'uploading') {
-      this.setData({
-        progress: 0,
-      })
-      wx.showLoading()
-    } else if (file.status === 'done') {
-      this.setData({
-        imageUrl: file.url,
-      })
-    }
-  },
+ 
   onSuccess(e) {
     console.log('onSuccess', e)
     this.setData({
@@ -409,18 +394,16 @@ bingd_wx:function(e){
   },
   onLoad: function (options) {
     var that = this
-
     var type = options.type
-
     var chaceRecord = wx.getStorageSync('chace_record')  //缓存数据
-
-    // 行业   职位
     var position = [];//职位
     var industry = [];//特长
-
     if (type == 1){
       basicart.getList((data) => {
         var message = data.data 
+
+        console.log(message)
+      
         chaceRecord.forEach(function (item, index) {
           if (item.type == 'industry') {
             industry.push(item)
@@ -428,69 +411,68 @@ bingd_wx:function(e){
             position.push(item)
           }
         })
-        console.log(industry)
-        console.log(position)
-
         that.setData({
           type: type,
           message: message,
           loadingHidden: true,
-          position_list: position,
+          position_list: position,      
           industry_list: industry
-
-      
         })
       })
-
-  
     }else{
-      var occupation = [];//职位
-      var speciality = [];//特长
-      chaceRecord.forEach(function (item, index) {
-        if (item.type == 'occupation') {
-          occupation.push(item)
-        } else if (item.type == 'speciality') {
-          speciality.push(item)
-        }
-      })
+        var occupation = [];//职位
+        var speciality = [];//特长
 
-      that.setData({
-        occupation_list: occupation,
-        speciality_list: speciality
-      })
+        chaceRecord.forEach(function (item, index) {
+          if (item.type == 'occupation') {
+            occupation.push(item)
+          } else if (item.type == 'speciality') {
+            speciality.push(item)
+          }
+        })
+        that.setData({
+          occupation_list: occupation,
+          speciality_list: speciality
+        })
 
-    basicart.getList((data) => {
-    var message = data.data 
-      console.log(message)
-    var woman = message.woman
-    var value = woman.split("-");
-    var speciality_list = that.data.speciality_list
-    var speciality = message.speciality
-    var check_tags = speciality.split(","); 
-    var tid_s = that.data.tid_s
-    let tags_list = [];
-    for (var i = 0; i <= check_tags.length;i++){
-      for (var j = 0; j < speciality_list.length;j++){
-        if (speciality_list[j]['code'] == check_tags[i]){
-          tid_s.push(check_tags[j]);
-          speciality_list[j]['check'] = 'check'
-      }
-      }
-     }
+        basicart.getList((data) => {
+          var message = data.data
+          console.log(message)
+    
+          if (message == null || message ==undefined){
+             message =[]
+          }else{
+            var woman = message.woman
+            var value = woman.split("-");
+            var speciality_list = that.data.speciality_list
+            var speciality = message.speciality
+            var check_tags = speciality.split(",");
+            var tid_s = that.data.tid_s
+            let tags_list = [];
+            for (var i = 0; i <= check_tags.length; i++) {
+              for (var j = 0; j < speciality_list.length; j++) {
+                if (speciality_list[j]['code'] == check_tags[i]) {
+                  tid_s.push(check_tags[j]);
+                  speciality_list[j]['check'] = 'check'
+                }
+              }
+            }
+          }
+          that.setData({
+            type: type,
+            speciality_list: speciality_list,
+            message: message,
+            wx_name: message.wechat,
+            actor_height: message.height,
+            actor_weight: message.weight,
+            phoneNumber: message.phone,
+            imageUrl: message.cover_img,
+            schoolName: message.university,
+            loadingHidden: true,
+            value: value
+          })
+        })
 
-     that.setData({
-        type: type,
-        speciality_list: speciality_list,
-        message:    message,
-        wx_name:    message.wechat,
-        actor_height: message.height,
-        actor_weight: message.weight,
-        phoneNumber:message.phone,
-        schoolName: message.university,
-        loadingHidden: true,
-        value: value
-      })
-    })
     }
   },
 
@@ -660,7 +642,7 @@ bingd_wx:function(e){
   insertImage() {
     const that = this
     wx.chooseImage({
-      count: 9,
+      count: 1,
       success: function (res) {
         var image = res.tempFilePaths[0];
         var url = that.data.url
@@ -685,13 +667,11 @@ bingd_wx:function(e){
               width: '100%',
               success: function (e) {
                 console.log(e)
-
               }
             })
-
           }
-
         })
+
       }
     })
   },
@@ -701,6 +681,107 @@ bingd_wx:function(e){
             console.log(123)
   },
 
+
+// 上传图片
+  onChange(e) {
+    var that =this
+    const { file } = e.detail
+ 
+      var url = that.data.url
+      wx.uploadFile({
+        url: url + "/v1/alioss/index",
+        filePath: file.url,
+        name: 'file',
+        header: {
+          "Content-Type": "multipart/form-data",
+          'accept': 'application/json'
+        },
+        success: function (res) {
+     
+          var data = [];
+          data.push({ "cover_img": res.data })
+          that._saveMsg(data)
+          that.setData({
+            imageUrl: res.data,
+          })
+        }
+      })
+ 
+  },
+
+  // 上传视频
+  onChangeVideo(e) {
+    var that = this
+    const { file } = e.detail
+    if (file.status === 'uploading') {
+      this.setData({
+        progress: 0,
+      })
+      wx.showLoading()
+    } else if (file.status === 'done') {
+      var url = that.data.url
+      wx.uploadFile({
+        url: url + "/v1/alioss/index",
+        filePath: file.url,
+        name: 'file',
+        header: {
+          "Content-Type": "multipart/form-data",
+          'accept': 'application/json'
+        },
+        success: function (res) {
+          console.log(res.data)
+          
+          var data = [];
+          data.push({ "cover_video": res.data })
+          that._saveMsg(data)
+          
+          that.setData({
+            imageUrl: res.data,
+          })
+        }
+      })
+    }
+  },
+
+  onFail(e) {
+    console.log('onFail', e)
+  },
+  onComplete(e) {
+    console.log('onComplete', e)
+    wx.hideLoading()
+  },
+  onCompleteVideo(e) {
+    console.log('onComplete', e)
+    wx.hideLoading()
+  },
+
+  onProgress(e) {
+    console.log('onProgress', e)
+    this.setData({
+      progress: e.detail.file.progress,
+    })
+  },
+  onPreview(e) {
+    console.log('onPreview', e)
+    const { file, fileList } = e.detail
+    wx.previewImage({
+      current: file.url,
+      urls: fileList.map((n) => n.url),
+    })
+  },
+  onRemove(e) {
+    const { file, fileList } = e.detail
+    wx.showModal({
+      content: '确定删除？',
+      success: (res) => {
+        if (res.confirm) {
+          this.setData({
+            fileList: fileList.filter((n) => n.uid !== file.uid),
+          })
+        }
+      },
+    })
+  },
 
   /*加载所有数据*/
   /**
@@ -804,8 +885,6 @@ bingd_wx:function(e){
       speciality_list: speciality_list,
       tid_s: tid_s,
     })
-
-
 
   },
 

@@ -1,0 +1,41 @@
+/* pages/administration/administration.wxss */
+
+.contain-detail {
+  width: 90%;
+  height: 200rpx;
+  margin: 20rpx auto;
+  border-bottom: 1rpx solid rgb(235, 235, 235);
+}
+
+p, span {
+  font-size: 28rpx;
+  margin-left: 20rpx;
+  font-family: "Microsoft Yahei";
+}
+
+.contain-image {
+  width: 50rpx;
+  height: 50rpx;
+  margin-right: 40rpx;
+}
+
+.city {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+}
+/* 发布 */
+
+.publish {
+width: 80rpx;
+height: 80rpx;
+position: fixed;
+right: 30rpx;
+bottom: 30rpx;
+}
+
+.publish image {
+  width: 80rpx;
+  height: 80rpx;
+}

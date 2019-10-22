@@ -9,5 +9,6 @@
       "wux-icon": "../../components/dist/icon/index",
       "wux-slider": "../../components/dist/slider/index",
       "wux-multi-picker-view": "../../components/dist/multi-picker-view/index"
+
   }
 }

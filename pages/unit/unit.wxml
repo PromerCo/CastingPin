@@ -1,0 +1,31 @@
+<view class="contain">
+  <view bindtap="my_group" data-id="{{itemName.id}}"  class="contain-detail" wx:for="{{list}}" wx:for-index="idx" wx:for-item="itemName">
+    <view>
+      <p>剧名:
+        <span>{{itemName.script}}</span>
+      </p>
+    </view>
+    <view>
+      <p>剧型:
+        <span>{{itemName.type}}</span>
+      </p>
+    </view>
+    <view>
+      <p>题材:
+        <span>{{itemName.theme}}</span>
+      </p>
+    </view>
+    <view class="city">   
+        <p>城市:
+          <span>山西 临汾</span>
+        </p>
+        <image src="{{itemName.avatar_url}}" class="contain-image"></image>
+    </view>
+  </view>
+
+    <!-- 发布 -->
+  <view class="publish" bindtap="publish">
+    <image src="../../image/fabu.png"></image>
+  </view>
+
+</view>
