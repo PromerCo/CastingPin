@@ -1,4 +1,4 @@
-<view class="wrap">
+<view class="wrap"  hidden="{{!loadingHidden}}">
   <!-- 详情 -->
   <view class="whole"  >
     <view class="type all">
@@ -61,8 +61,6 @@
   <i class="iconfont icon-wuxupailie {{formats.list === 'bullet' ? 'ql-active' : ''}}" data-name="list" data-value="bullet"></i>
 </view>
    </view>
- 
-
     <view class='apply_kol'>
         <view class='apply_kol_header'>
          <p>已经申请艺人</p>
@@ -74,26 +72,32 @@
     </view>
      </view>
   </view>
-
-
   </view>
   <!-- 底部 -->
   <view class="footer">
-    <view>
+   <view>
+    <button class='share' id="shareBtn" open-type="share" type="primary" hover-class="other-button-hover">
+        <image src='../../image/share.png'></image>
+        <span class="share-title">分享</span>
+      </button>
+</view>
+    <!-- <view>
       <image src="../../image/share.png"></image>
       <span>分享</span>
-    </view>
+    </view> -->
 
-    <view >
+
+    <view>
       <image src="../../image/collection.png"></image>
  <span  bindtap='collect'  data-type="1"   class="share_word share_sc_color"  wx:if="{{is_collect ==0 }}">收藏</span>
     <span  bindtap='collect'  data-type="0" class="share_word share_sc_color"  wx:else >已收藏</span>
     </view>
-
     <view bindtap="agree" data-id="{{list.id}}">
       <image src="../../image/email.png"></image>
       <span>{{agree}}</span>
     </view>
-
   </view>
 </view>
+<loading hidden="{{loadingHidden}}">
+    加载中...
+</loading>

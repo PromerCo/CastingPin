@@ -20,19 +20,16 @@ Page({
   _loadData: function (callback) {
     var that = this;
     var chaceRecord = wx.getStorageSync('chace_record')  //缓存数据
+
+    var cache_list = require('../../common/package.js');
   
     unit.getlist((data) => {
       var list = data.data
       list.forEach(function (item, index) {
-        chaceRecord.forEach(function (cache_item, cache_index) {
-          var type = item.type//剧型
-          var theme = item.theme//题材
-          if (cache_item.code == type) {
-            list[index]['type'] = cache_item['name']
-          } else if (cache_item.code == theme){
-            list[index]['theme'] = cache_item['name']
-          }
-        })
+        
+      list[index]['type']  = cache_list.handleCache(item.type,0); //剧型
+      list[index]['theme'] = cache_list.handleCache(item.theme,0) //题材
+
       })
       that.setData({
         list: list

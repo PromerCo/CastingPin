@@ -1,8 +1,6 @@
 import { Artist } from 'artist-model.js';
 var artist = new Artist(); //实例化 首页 对象
 
-// 缓存数据
-const cache_list = require('../../utils/package.js');
 
 
 const app = getApp()
@@ -43,7 +41,7 @@ Page({
     texf:'none',
     banner: [],
     video_list:[],
-    column: cache_list.columnCache('style'),
+    column: [],
    
   },
   info: {
@@ -91,8 +89,25 @@ Page({
     })
   },
   onLoad(options) {
+    
+    var cache_list = require('../package.js');
+    this.setData({
+      column:cache_list.columnCache('style')
+    })
 
     this._loadData();
+  },
+
+  previewImage:function(e){
+    var current = e.target.dataset.src;
+
+    var  arr = []
+    arr.push(current)
+
+    wx.previewImage({
+      current: arr,
+      urls: arr
+    })
 
   },
 
@@ -106,6 +121,7 @@ Page({
     artist.getlist((data) => {
       if (data.code == 200){
         var video_list = data.data
+        
         video_list.forEach(function (item, index) {
            video_list[index]['width']  = 480
            video_list[index]['height'] = 272

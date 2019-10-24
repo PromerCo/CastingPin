@@ -17,7 +17,7 @@
     </view>
     <view class="city">   
         <p>城市:
-          <span>山西 临汾</span>
+          <span>{{itemName.city}}</span>
         </p>
         <image src="{{itemName.avatar_url}}" class="contain-image"></image>
     </view>

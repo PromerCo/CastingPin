@@ -57,7 +57,6 @@ class Basicart extends Base {
         birthday: param['birthday'],
         phone: param['phone'],
         speciality: param['speciality']
-
       },
       type: 'POST',
       sCallback: function (data) {

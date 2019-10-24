@@ -1,18 +1,17 @@
 import { Detail } from 'detail-model.js';
 var app = getApp();
 var detail = new Detail(); //实例化 首页 对象
-// 缓存数据
-const cache_list = require('../../utils/package.js');
+
 
 Page({
   data: {
     list: [],
     focus: false,
+    loadingHidden: false,
     is_collect:0,
     enroll_list:[],
     agree:'邀请',
     notice_id:'',
-    //编辑
     isIOS: false
   },
 
@@ -21,6 +20,8 @@ Page({
    */
   onLoad: function (options) {
   var that = this  
+    // 缓存数据
+  var  cache_list = require('../../common/package.js');
   var notice_id = options.id
 
   //记录浏览量
@@ -28,7 +29,6 @@ Page({
   detail.list_details(notice_id, (data) => {
     if (data.code == 201) {
       var message = data.data
-   
       message['occupation'] = cache_list.handleCache(message['occupation'], 0); //职业
       message['position'] = cache_list.handleCache(message['position'], 0); //职位
       message['age'] = cache_list.handleCache(message['age'], 0); //年龄范围
@@ -42,7 +42,8 @@ Page({
         enroll_list: enroll,
         is_collect: message['is_collect'],
         enroll_number: message['enroll_number'],
-        notice_id: notice_id
+        notice_id: notice_id,
+        loadingHidden: true
       })
     }
   })
@@ -92,11 +93,11 @@ Page({
         //报名成功
         var img = { 'avatar_url': list.data }; 
         image_list.push(img)
-        var enroll_number = parseInt(that.data.list.enroll_number) + 1
+      
         that.setData({
           is_enroll: 1,
           enroll_list: image_list,
-          enroll_number: enroll_number,
+            enroll_number: parseInt(that.data.list.enroll_number) + 1,
           agree: '已申请'
         })
       } else if (list.code == 417) {

@@ -61,7 +61,7 @@
   </view>
   <!-- 发布 -->
   <view class="publish" bindtap="publish">
-    <image src="../../image/fabu.png"></image>
+    <image src="../../image/lALPDgQ9rJIIVdPMyMzI_200_200.png"></image>
   </view>
 </view>
 <loading hidden="{{loadingHidden}}">

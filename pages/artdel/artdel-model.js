@@ -26,6 +26,8 @@ class Artdel extends Base {
    用户关注
   */
   follow(params, callback) {
+    console.log(params.arranger_id)
+    
     var param = {
       url: 'castingpinactor/follow',
       type: 'POST',

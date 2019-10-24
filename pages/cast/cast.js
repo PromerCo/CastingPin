@@ -15,36 +15,39 @@ Page({
     s_index: 1,
     j_index: 1,
     url: app.globalData.url,
-
+    region: ['北京市', '北京市', '东城区'],
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
 
-    console.log(util.formatTime(new Date()))
+    var cache_list = require('../package.js');
 
     var that = this
-    var chaceRecord = wx.getStorageSync('chace_record')  //缓存数据
-
-    var notice = [];//剧型
-
-    var theme  = [];//题材
-
-    chaceRecord.forEach(function (item, index) {
-      if (item.type == 'theme') {
-        theme.push(item)
-      }  else if (item.type == 'type') {
-        notice.push(item)
-      }
-    })
-
+ 
     that.setData({
-      notice_list: notice,
-      theme_list: theme
+      notice_list: cache_list.columnCache('type'),
+      theme_list: cache_list.columnCache('theme')
     })
 
   },
+
+  // 城市
+  bindRegionChange: function (e) {
+    var that = this
+    var conurbation = e.detail.value
+    //数组转字符串
+    var city = conurbation.join(",")
+    var data = [];
+    
+    console.log(city)
+
+    that.setData({
+      region: e.detail.value
+    })
+  },
+
 
   //保存数据
   formSubmit: throttle(function (e) {
@@ -52,6 +55,7 @@ Page({
     var info = e.detail.value
 
     console.log(info)
+    return false;
 
     cast.pushSave(info, (data) => {
       if (data.code == 201) {

@@ -1,6 +1,6 @@
 import { Publish } from 'publish-model.js';
 // 缓存数据
-const cache_list = require('../../utils/package.js');
+const cache_list = require('../../common/package.js');
 
 var   publish = new Publish(); //实例化 首页 对象
 

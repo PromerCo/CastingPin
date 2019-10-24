@@ -1,6 +1,6 @@
 import { Me } from 'me-model.js';
 
-const cache_list = require('../../utils/package.js');
+
 
 var me = new Me();
 var app = getApp(); 
@@ -11,19 +11,23 @@ Page({
     loadingHidden: false,
     authHidding:false
   },
-
   change:function(e){
 
+    var cache_list = require('../../common/package.js');
     var bol = e.currentTarget.dataset.type;
     var that= this
     me.cutRole(bol, (data) => {
       if (data.code == 201){
+    
+
         var type = data.data.type
         var message = data.data
         var material = data.data.material
         if (type == 1){
+
           message['industry'] =   cache_list.handleCache(message.industry, 0); //行业
           message['position'] =   cache_list.handleCache(message.position, 0); //职位
+          
           that.setData({
             message: message,
             type: type,
@@ -38,9 +42,19 @@ Page({
           else{
             var speciality = data.data.speciality   //特长
             var occupation = data.data.occupation   //职位
-            var check_tags = speciality.split(",");
-            message['occupation'] = cache_list.handleCache(occupation, 0); //行业
-            message['tags_list'] = cache_list.handleCache(check_tags, 1,'#');   //特长
+            
+            if (speciality != undefined || speciality != null) {
+              var check_tags = speciality.split(",");
+              message['tags_list'] = cache_list.handleCache(check_tags, 1, '#');   //特长
+            } else {
+              message['tags_list'] = '暂无资料';
+            }
+
+            if (occupation != undefined || speciality != null) {
+              message['occupation'] = cache_list.handleCache(occupation, 0); //行业
+            } else {
+              message['occupation'] = '暂无资料';
+            }
           }
           that.setData({
             message: message,
@@ -92,21 +106,8 @@ Page({
   },
   // 通告
   onLoad: function (options) {
-    
-    var that = this;
-    wx.getSetting({
-      success(res) {
-        if (!res.authSetting['scope.userInfo']) {
-           that.setData({
-            authHidding: true,
-            loadingHidden: true
-          })
-        } else {
-          //授权成功
-          that._loadData();
-        }
-      }
-    })
+
+
   },
 
   bindGetUserInfo: function (e) {
@@ -116,7 +117,9 @@ Page({
     me.getUserAhth(userInfo, (data) => {
     
       if (data.code == 201) {
+
         that._loadData();
+
         that.setData({
           authHidding: false,
           loadingHidden: true,
@@ -141,16 +144,21 @@ Page({
 
   /*加载所有数据*/
   _loadData: function () {
+
+
+
     var that = this;
-  
+ 
     me.roleStatus((data) => {  
-  
-    var chaceRecord = wx.getStorageSync('chace_record')  //缓存数据
 
     if (data.code == 201){
+
+        var cache_list = require('../package.js');
+
         var material = data.data.material  //查看是否填写资料
         var type = data.data.type   //类型
         var message = data.data 
+
         if (type == 2){
           if (message.material ==0){
              message = [];
@@ -158,11 +166,29 @@ Page({
 
             var speciality = data.data.speciality   //特长
             var occupation = data.data.occupation   //职位
-            var check_tags = speciality.split(",");
-            message['occupation'] = cache_list.handleCache(occupation, 0); //行业
-            message['tags_list'] = cache_list.handleCache(check_tags, 1, '#');   //特长
+            if (speciality != undefined || speciality != null){
+
+                var check_tags = speciality.split(",");
+
+                message['tags_list'] = cache_list.handleCache(check_tags, 1, '#');   //特长
+       
+         
+            }else{
+                message['tags_list'] = '暂无资料';
+            }
+
+     
+             
+            if (occupation != undefined || speciality != null){
+          
+                message['occupation'] = cache_list.handleCache(occupation, 0); //行业
+            } else{
+                message['occupation'] = '暂无资料';
+            }
+
 
           }
+     
 
           that.setData({
             message: message,
@@ -174,10 +200,14 @@ Page({
 
         }else{
 
+
           message['industry'] = cache_list.handleCache(message.industry, 0); //行业
           message['position'] = cache_list.handleCache(message.position, 0);   //职位
+
+          console.log(message)
+
           that.setData({
-            message: data.data,
+            message: message,
             authHidding: false,
             loadingHidden: true,
             type:type,
@@ -203,7 +233,21 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    var that = this;
+    wx.getSetting({
+      success(res) {
+        if (!res.authSetting['scope.userInfo']) {
+          that.setData({
+            authHidding: true,
+            loadingHidden: true
+          })
+        } else {
+          //授权成功
+          console.log('授权成功')
+          that._loadData();
+        }
+      }
+    })
   },
 
   /**

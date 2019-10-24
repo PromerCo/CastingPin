@@ -106,16 +106,15 @@ margin-top: 7rpx;
   left: 120rpx;
   top: 100rpx;
 }
-
 .icon p {
-  font-size: 24rpx;
-  margin-left: 10rpx;
-  margin-top: 5rpx;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
+width: 160rpx;
+font-size: 24rpx;
+margin-left: 10rpx;
+margin-top: 5rpx;
+white-space: nowrap;
+text-overflow: ellipsis;
+overflow: hidden;
 }
-
 .text {
   font-size: 28rpx !important;
 }
@@ -129,10 +128,11 @@ margin-top: 7rpx;
 }
 
 .bottom_all {
-  width: 95%;
+  width: 90%;
   display: flex;
   justify-content: space-between;
-  margin: 0rpx auto;
+  /* margin: 0rpx auto; */
+  margin-left: 40rpx;
   height: 90rpx;
   line-height: 90rpx;
   border-bottom: 1rpx solid rgb(235, 235, 235);

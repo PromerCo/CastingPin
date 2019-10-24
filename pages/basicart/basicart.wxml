@@ -39,7 +39,7 @@
         <view class="basic company">
       <p>
         <image src="../../image/sms-stage_name.png" class="icon"></image>
-         <span class="commoo_right">艺 人:</span>
+         <span class="commoo_right">艺 名:</span>
       </p>
       <view class="rig">
         <input  bindinput="bingd_stage"   placeholder="\*" placeholder-class="phcolor" type=" text" class="input-xin"  value='{{message.stage_name}}'></input>
@@ -47,7 +47,7 @@
     </view>
     <view class="basic company">
       <p>
-        <image src="../../image/sms-compoay.png" class="icon"></image>
+        <image src="../../image/school1.png" class="icon"></image>
        <span class="commoo_right">公 司:</span>
       </p>
       <view class="rig">
@@ -65,6 +65,8 @@
            <image src="../../image/xiaojiantou2.png" class="sc_jiantou"></image>
       </view>
     </view>
+
+    <!-- 城市 -->
     <view class="basic city">
       <picker mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{customItem}}">
         <view class="picker">
@@ -79,6 +81,8 @@
         </view>
       </picker>
     </view>
+
+
  <view class="basic age" bindtap="showPicker_05">
   <picker mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange">
         <view class="picker">
@@ -134,23 +138,23 @@
     
      <view class="territory_name">特长</view>
     <view class='territory'>
-              <p  class="{{item.check}}" wx:for="{{speciality_list}}" data-index='{{index}}'   catchtap="check" data-id="{{item.code}}">{{item.name}}
+  <p  class="{{item.check}}" wx:for="{{speciality_list}}" data-index='{{index}}'    catchtap="check" data-id="{{item.code}}">{{item.name}}
               </p>
     </view>
 
      <view class="territory_name">封面照</view>
 
     <view class="page__bd page__bd_spacing">
-        <wux-upload count="1" listType="picture-card" sizeType="compressed" defaultFileList="{{ fileList }}" max="1" url="https://www.skyvow.cn/api/common/file" bind:change="onChange" bind:success="onSuccess" bind:fail="onFail" bind:complete="onComplete" bind:preview="onPreview">
+        <wux-upload count="1" listType="picture-card" sizeType="compressed" defaultFileList="{{ fileList }}" max="1" url="https://castingpin.pudata.cn/v1/alioss/index"  bind:change="onChange" bind:success="onSuccess" bind:fail="onFail"  bind:complete="onComplete" bind:preview="onPreview" >
             <text>+</text>
         </wux-upload>
-<input name="cover_img"  hidden value="{{cover_img}}" ></input>
+<input name="cover_img"  hidden  value="{{cover_img}}" ></input>
     </view>
 
 
          <view class="territory_name">短视频</view>
     <view class="page__bd page__bd_spacing">
-        <wux-upload count="1" defaultFileType="video" listType="picture-card" sizeType="compressed" defaultFileList="{{ fileList }}" max="1" url="https://www.skyvow.cn/api/common/file" bind:change="onChangeVideo"   bind:complete="onCompleteVideo" bind:preview="onPreviewVideo">
+        <wux-upload count="1" defaultFileType="video" listType="picture-card" sizeType="compressed"  max="1" url="https://castingpin.pudata.cn/v1/alioss/index" bind:change="onChangeVideo"   bind:complete="onCompleteVideo" bind:preview="onPreviewVideo"  defaultFileList="{{ fileListVideo }}">
             <text>+</text>
         </wux-upload>
 <input name="cover_video"  hidden value="{{cover_video}}" ></input>
@@ -241,7 +245,7 @@
 
     <view class="basic company">
       <p>
-        <image src="../../image/sms-compoay.png" class="icon"></image>
+        <image src="../../image/school1.png" class="icon"></image>
        <span class="commoo_right">公 司:</span>
       </p>
       <view class="rig">
@@ -254,7 +258,7 @@
       <picker bindchange="positionChange" value="{{position_list[p_index].name}}" range="{{position_list}}"  range-key="name">
         <view class="picker">
           <p>
-            <image src="../../image/sms-hangye.png" class="icon"></image>
+            <image src="../../image/hangye.png" class="icon"></image>
              <span class="commoo_right">职 位:</span>
           </p>
           <view class="rig">

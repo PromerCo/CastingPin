@@ -40,9 +40,7 @@ Page({
     index1: 0,
     // 简介
     isHidePlaceholder: false,
-    // 上传图片
-    fileList: [
-    ],
+
     options:[
 ['60','61','62','63','64','65','66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80','81','82','84','85'],
 ['20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35'
@@ -69,7 +67,9 @@ Page({
     tag_all: [],
     tag_list:[],
     tid_s: [],
-    imageUrl:[]
+    imageUrl:[],
+    fileList: [],
+    fileListVideo:[],
 
   },
   // 城市
@@ -94,6 +94,12 @@ Page({
     var data = [];
     data.push({ "stage_name": stage_name })
     that._saveMsg(data)
+
+    that.setData({
+      stage_name: stage_name
+    })
+   
+
 
   },
   //学校
@@ -266,6 +272,7 @@ bingd_wx:function(e){
 
     this.setData({
       index: index,
+      occupation: occupation_list[index]['name']
     })
   },
 
@@ -395,69 +402,69 @@ bingd_wx:function(e){
   onLoad: function (options) {
     var that = this
     var type = options.type
-    var chaceRecord = wx.getStorageSync('chace_record')  //缓存数据
-    var position = [];//职位
-    var industry = [];//特长
+
+    var cache_list = require('../package.js');
+
     if (type == 1){
       basicart.getList((data) => {
         var message = data.data 
-
-        console.log(message)
-      
-        chaceRecord.forEach(function (item, index) {
-          if (item.type == 'industry') {
-            industry.push(item)
-          } else if (item.type == 'position') {
-            position.push(item)
-          }
-        })
         that.setData({
           type: type,
           message: message,
           loadingHidden: true,
-          position_list: position,      
-          industry_list: industry
+          position_list: cache_list.columnCache('position', 0),      
+          industry_list: cache_list.columnCache('industry', 0)
         })
       })
     }else{
-        var occupation = [];//职位
-        var speciality = [];//特长
 
-        chaceRecord.forEach(function (item, index) {
-          if (item.type == 'occupation') {
-            occupation.push(item)
-          } else if (item.type == 'speciality') {
-            speciality.push(item)
-          }
-        })
         that.setData({
-          occupation_list: occupation,
-          speciality_list: speciality
+          occupation_list: cache_list.columnCache('occupation'),
+          speciality_list: cache_list.columnCache('speciality'),
         })
 
         basicart.getList((data) => {
           var message = data.data
-          console.log(message)
-    
-          if (message == null || message ==undefined){
-             message =[]
+
+          if (message ==null){
+            message = [];
           }else{
-            var woman = message.woman
-            var value = woman.split("-");
-            var speciality_list = that.data.speciality_list
-            var speciality = message.speciality
+
+       
+          var woman = message.woman   //三围
+          var speciality = message.speciality  //特长
+          var tid_s = that.data.tid_s  //特长ID
+      
+          if (woman != null || woman != undefined){
+              var value = woman.split("-");
+              var speciality_list = cache_list.columnCache('speciality')
+          }else{
+              //  var value  = ['68', '28', '95'],
+          }
+
+          if (speciality != null || speciality != undefined){
+
             var check_tags = speciality.split(",");
-            var tid_s = that.data.tid_s
+            var speciality_list = cache_list.columnCache('speciality')
             let tags_list = [];
             for (var i = 0; i <= check_tags.length; i++) {
               for (var j = 0; j < speciality_list.length; j++) {
-                if (speciality_list[j]['code'] == check_tags[i]) {
+                if (speciality_list[j]['code'] == check_tags[i]) {    
                   tid_s.push(check_tags[j]);
                   speciality_list[j]['check'] = 'check'
                 }
               }
+
             }
           }
+          }
+          var fileList = that.data.fileList  //图片
+          var fileListVideo = that.data.fileListVideo //视频
+          fileList.push({ 'url': message.cover_img})
+          fileListVideo.push({ 'url': message.cover_video })
+
+          console.log(message)
+    
           that.setData({
             type: type,
             speciality_list: speciality_list,
@@ -469,7 +476,11 @@ bingd_wx:function(e){
             imageUrl: message.cover_img,
             schoolName: message.university,
             loadingHidden: true,
-            value: value
+            tid_s: tid_s,
+            value: value,
+            fileList: fileList,
+            fileListVideo:fileListVideo
+      
           })
         })
 
@@ -686,7 +697,8 @@ bingd_wx:function(e){
   onChange(e) {
     var that =this
     const { file } = e.detail
- 
+
+
       var url = that.data.url
       wx.uploadFile({
         url: url + "/v1/alioss/index",
@@ -697,7 +709,8 @@ bingd_wx:function(e){
           'accept': 'application/json'
         },
         success: function (res) {
-     
+         console.log(res)
+
           var data = [];
           data.push({ "cover_img": res.data })
           that._saveMsg(data)
@@ -724,6 +737,7 @@ bingd_wx:function(e){
         url: url + "/v1/alioss/index",
         filePath: file.url,
         name: 'file',
+        data:{'type':1},
         header: {
           "Content-Type": "multipart/form-data",
           'accept': 'application/json'
@@ -824,19 +838,34 @@ bingd_wx:function(e){
    */
   onUnload: function (e) {
     var that = this
+    let pages = getCurrentPages(); //页面栈
+    let currPage = pages[pages.length - 2]; //当前页面
+    currPage.setData({
+      loadingHidden: false,
+    })
 
   },
 
 
   check: function (e) {
     var that = this
+
     var t_id = e.currentTarget.dataset.id 
+ 
+
     var speciality_list = this.data.speciality_list
     var index = e.currentTarget.dataset.index
+   
+
     var tid_s = that.data.tid_s;
     var chek = speciality_list[index];
+
+    console.log(chek)
+
     var tag_list = that.data.tag_list;
     var tag_all = that.data.tag_all;
+
+
 
     if (chek['check'] == 'check') {
       chek['check'] = 'none'
@@ -868,6 +897,9 @@ bingd_wx:function(e){
       tag_list.push(chek.title);
       tid_s.push(t_id)
       tag_all.push(chek);
+
+      console.log(tag_all)
+      console.log(tid_s)
 
       that.setData({
         tid_s: tid_s,

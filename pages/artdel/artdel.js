@@ -1,5 +1,8 @@
 import { Artdel } from 'artdel-model.js';
 var artdel = new Artdel(); //实例化 首页 对象
+// 缓存数据
+const cache_list = require('../../common/package.js');
+
 const app = getApp()
 Page({
   onReady: function (res) {
@@ -15,13 +18,13 @@ Page({
       name: '此时此刻',
       author: '许巍',
       src: 'http://ws.stream.qqmusic.qq.com/M500001VfvsJ21xFqb.mp3?guid=ffffffff82def4af4b12b3cd9337d5e7&uin=346897220&vkey=6292F51E1E384E06DCBDC9AB7C49FD713D632D313AC4858BACB8DDD29067D3C601481D36E62053BF8DFEAF74C0A5CCFADD6471160CAF3E6A&fromtag=46',
+      loadingHidden: false,
     },
     audioAction: {
       method: 'pause'
     },
     // 视屏
     src: '',
-
     indicatorDots: true,
     vertical:false,
     autoplay: false,
@@ -122,40 +125,20 @@ Page({
 
       console.log(message) 
 
-      var chaceRecord = wx.getStorageSync('chace_record')  //缓存数据
 
-      var occupation = [];//职业
-      var speciality = [];//特长
-      chaceRecord.forEach(function (item, index) {
-        if (item.type == 'occupation') {
-          occupation.push(item)
-        }else if (item.type == 'speciality') {
-          speciality.push(item)
-        } 
-      })
+
+  
 
       var techang = message['speciality'];
-    
-      var techang_id = techang.split(",");  
 
-      var occupation_id = message.occupation
-
-      //职业
-      occupation.forEach(function (o_item, o_index) {
-        if (o_item.code == occupation_id) {
-          message['occupation'] = o_item['name']
-        }
-      })
-      //特长
-      var tc = [];
-      for (var i = 0; i < techang_id.length; i++) {
-        speciality.forEach(function (s_item, s_index) {
-          if (techang_id[i] == s_item.code) {
-            tc.push(s_item['name'])
-          }
-          message['speciality'] = tc.join('#');
-        })
+      if (techang != null || techang!=undefined){
+        message['speciality'] = cache_list.handleCache(message['speciality'], 1, '#'); //特长
+      }else{
+        message['speciality'] = '暂无资料'
       }
+    
+  
+      message['occupation'] = cache_list.handleCache(message['occupation'], 0); //职位
 
       var invite_number = message['invite_number']
 
@@ -165,8 +148,6 @@ Page({
         var invite = [];
       }
 
-
-      
       if (message.status == 0){
         that.setData({
           list: message,
@@ -174,6 +155,7 @@ Page({
           follow: '关注',
           invite: invite,
           follow_number: message['follow_number'],
+          loadingHidden:true,
           invite_number: invite_number
         })
       }else{
@@ -183,6 +165,7 @@ Page({
           follow: '取消关注',
           invite: invite,
           follow_number: message['follow_number'],
+          loadingHidden: true,
           invite_number: invite_number
         })
       }
@@ -195,26 +178,30 @@ Page({
     var that = this
     var arranger_id = e.currentTarget.dataset.id    //被关注者ID
     var status = e.currentTarget.dataset.status     //关注状态
- 
     var msg = [];
     msg['arranger_id'] = arranger_id
     msg['status']      = status
+
+    var follow_number = that.data.follow_number
   
     artdel.follow(msg, (data) => {
         console.log(data)
 
         if(data.code == 201){
           var message = data.data
-   
+          
           if (message == 1){
             that.setData({
               status: 0,
-              follow: '取消关注'
+              follow: '取消关注',
+              follow_number: parseInt(follow_number) + 1
+
             })
           }else{
             that.setData({
               status: 1,
-              follow: '关注'
+              follow: '关注',
+              follow_number: parseInt(follow_number) - 1
             })
           }
   
@@ -230,21 +217,24 @@ Page({
   invite:function(e){
     var that = this
     var arranger_id = e.currentTarget.dataset.id    //被邀请
+
+    console.log(arranger_id)
+
     var image_list = that.data.invite
 
     artdel.invite(arranger_id, (data) => {
 
-      console.log(data.code)
+      console.log(data)
 
       if (data.code == 201) {
-        var invite_number = data.invite_number
-        invite_number = parseInt(invite_number) + 1
-        
+
+
         var img = { 'avatar_url': data.data };
         image_list.push(img)
+
         that.setData({
           invite: image_list,
-          invite_number: invite_number,
+          invite_number: parseInt(that.data.invite_number) + 1,
           replace: '已邀请'
         })
       } else if (data.code == 412) {

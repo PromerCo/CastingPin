@@ -7,8 +7,10 @@ class Group extends Base {
   /*
    首页列表
   */
-  getlist(param,callback) {
-    var info = param
+  getlist(callback) {
+
+    // var type = param.type
+    
     var param = {
       url: 'castingpinhome/home',
       type: 'POST',

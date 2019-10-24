@@ -1,15 +1,13 @@
 // 防止重复点击
-const repeatclick = require('../../utils/repeatclick.js')
+const repeatclick = require('../../utils/repeatclick.js');
 
-// 缓存数据
-const cache_list = require('../../utils/package.js');
 
 
 import { Group } from 'group-model.js';
-
 var app = getApp();
 var group = new Group(); //实例化 首页 对象
 
+//缓存
 Page({
   data: {
     loadingHidden: false,
@@ -17,7 +15,7 @@ Page({
     //普通选择器
     list: [],
     banner: [],
-    column: cache_list.columnCache(),
+    column: [],
     ava_list:[],
     dis:"none",
   },
@@ -37,12 +35,14 @@ Page({
     const { index } = e.detail
     // 当前项
     const item = this.data.column[index]
-    const platform_id = item.code
+    const type = item.code
+    var msg = [];
+    msg['type'] = type
+    return false;
+    group.getlist(msg, (data) => {
+     console.log(data)
+    })
     
-
-  
-  
-
   },
   // 显示隐藏
   show(e) {
@@ -72,17 +72,44 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function() {
-   
+    var that = this
 
-    this._loadData();
+
+     that._loadData();
+    // if (chace_list == ''){
+    //   getApp().getCache().then(res => {
+    //     console.log("promise回调后的数据：");
+    //     if (res.code == 200) {
+    //       console.log(wx.getStorageSync('chace_record'))
+    //     }
+    //   }) 
+    // }
   },
 
   _loadData:function(){
+
     var that = this
-    group.getlist(0,(data) => {
+    var msg = []
+    msg['type'] = 0
+
+    group.getlist((data) => {
+
+
+      var cache_list = require('../package.js');
       var material = data.data.material
+   
       if (data.code == 201){
+     
         var message = data.data 
+        console.log(message.length)
+
+        if (message.length == 0) {
+         that.setData({
+           loadingHidden: true,
+           column: cache_list.columnCache(),
+           list: []
+         })
+       }else{
         message.forEach(function (item, index) {
         message[index]['occupation'] = cache_list.handleCache(item['occupation'], 0); //职位
         message[index]['age'] = cache_list.handleCache(item['age'], 0); //年龄
@@ -92,6 +119,7 @@ Page({
           ava_list.push(item)
           that.setData({
             loadingHidden: true,
+            column:cache_list.columnCache(),
             ava_list: ava_list
           })
         }else{
@@ -99,11 +127,19 @@ Page({
           list.push(item)
           that.setData({
             loadingHidden: true,
+            column: cache_list.columnCache(),
             list: list
           })
         }
-        })
 
+
+        })
+       }
+      }else{
+        that.setData({
+          loadingHidden: true,
+  
+        })
       }
 
     })
@@ -158,3 +194,4 @@ Page({
 
   }
 })
+

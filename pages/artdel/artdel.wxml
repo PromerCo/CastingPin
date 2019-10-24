@@ -1,8 +1,8 @@
-<view class="wrap">
+<view class="wrap" hidden="{{!loadingHidden}}">
   <!-- 封面图 -->
   <view class="cover" >
     <view class="picture">
-      <image src="{{list.cover_img}}"></image>
+      <image src="{{list.avatar_url}}" ></image>
     </view>
     <view class="picture_image">
       <view>
@@ -69,11 +69,21 @@
     </view>
 
   <view class="footer">
-    <view>
+    <!-- <view>
       <image src="../../image/share.png"></image>
       <span>分享</span>
-    </view>
-    <view bindtap="bindFollow" data-status="{{status}}" data-id="{{list.open_id}}">
+    </view> -->
+
+   
+      <view>
+        <button class='share' id="shareBtn" open-type="share" type="primary" hover-class="other-button-hover">
+            <image src='../../image/share.png'></image>
+            <span class="share-title">分享</span>
+          </button>
+
+       </view>
+
+    <view bindtap="bindFollow" data-status="{{status}}" data-id="{{list.id}}">
       <image src="../../image/collection.png"></image>
       <span>{{follow}}</span>
     </view>
@@ -83,3 +93,7 @@
     </view>
   </view>
 </view>
+
+<loading hidden="{{loadingHidden}}">
+    加载中...
+</loading>

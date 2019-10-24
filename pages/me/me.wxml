@@ -13,10 +13,10 @@
     <view class="content">
       <view class='head_content_make'>
         <view class="top" bindtap="change" data-type="1">
-          <image src="../../image/artistgray.png" class="change"  mode="scaleToFill"></image>
-          <p>切换身份
+          <image src="../../image//tabbar/artist2.png" class="change"  mode="scaleToFill"></image>
+          <!-- <p>切换身份
             <span style="font-size:24rpx;color:gray">(艺人)</span> 
-          </p>
+          </p> -->
         </view>
 
    <view class="pic" bindtap="basicart" data-type="2">
@@ -30,20 +30,21 @@
 
         <view class="center" wx:if="{{material}}">
           <view class="icon city">
-            <image src="../../image/pingtai.png" class="address"></image>
-            <p>{{message.stage_name}}</p>
+     
+            <image src="../../image/pingpau.png" class="address"></image>
+            <p>{{message.stage_name == null ? '暂无资料' : message.stage_name}}</p>
           </view>
           <view class="icon fans">
             <image src="../../image/Csms-school.png" class="address"></image>
-            <p>{{message.university}}</p>
+            <p>{{message.university == null ? '暂无资料' : message.university}}</p>
           </view>
           <view class="icon music">
             <image src="../../image/biaoqian.png" class="address"></image>
-            <p>{{message.tags_list}}</p>
+            <p>{{message.occupation}}</p>
           </view>
           <view class="icon tag">
-            <image src="../../image/Csms-occupation.png" class="address"></image>
-            <p>{{message.occupation}}</p>
+            <image src="../../image/Csms-occupatio.png" class="address"></image>
+            <p>{{message.tags_list}}</p>
           </view>
         </view>
 
@@ -53,18 +54,21 @@
     <view class="project_bottom">
       <view class="bottom_all" bindtap="basicart" data-type="{{type}}">
         <p>
-          <image src="../../image/guanzhu2.png" class="guanzhu"></image>
+          <image src="../../image/lALPDgQ9rJIOsF_MyMzI_200_200.png" class="guanzhu"></image>
           <p class="isuse">个人信息</p>
         </p>
         <image src="../../image/xiaojiantou2.png" class="arrow"></image>
       </view>
-        <view class="bottom_all" bindtap="make">
+
+        <!-- <view class="bottom_all" bindtap="make">
         <p>
           <image src="../../image/guanzhu2.png" class="guanzhu"></image>
           <p class="isuse">制作模卡</p>
         </p>
         <image src="../../image/xiaojiantou2.png" class="arrow"></image>
-      </view>
+      </view> -->
+
+
       <view class="bottom_all" bindtap="follow">
         <p>
           <image src="../../image/guanzhu2.png" class="guanzhu"></image>
@@ -72,23 +76,26 @@
         </p>
         <image src="../../image/xiaojiantou2.png" class="arrow"></image>
       </view>
-      <view class="bottom_all" bindtap="list">
+
+      <!-- <view class="bottom_all" bindtap="list">
         <p>
-          <image src="../../image/fabu2.png" class="guanzhu"></image>
+          <image src="../../image/baoming.png" class="guanzhu"></image>
           <p class="isuse">报名的通告</p>
         </p>
         <image src="../../image/xiaojiantou2.png" class="arrow"></image>
-      </view>
-      <view class="bottom_all">
+      </view> -->
+
+      <!-- <view class="bottom_all">
         <p>
           <image src="../../image/photo2.png" class="guanzhu"></image>
           <p class="isuse">商务通讯录</p>
         </p>
         <image src="../../image/xiaojiantou2.png" class="arrow"></image>
-      </view>
-      <view class="bottom_all" bindtap="change" data-type="2">
+      </view> -->
+
+      <view class="bottom_all" bindtap="change" data-type="1">
         <p>
-          <image src="../../image/fabu2.png" class="guanzhu" ></image>
+          <image src="../../image/photo2.png" class="guanzhu" ></image>
           <p class="isuse">切换身份</p>
         </p>
         <image src="../../image/xiaojiantou2.png" class="arrow"></image>
@@ -102,10 +109,10 @@
     <view class="content">
       <view class='head_content_make'>
         <view class="top"  bindtap="change" data-type="2">
-          <image src="../../image/me3.png" class="change" mode="scaleToFill"></image>
-          <p>切换身份
+           <image src="../../image//tabbar/grounp2.png" class="change"  mode="scaleToFill"></image>
+          <!-- <p>切换身份
              <span style="font-size:24rpx;color:gray">(统筹)</span> 
-          </p>
+          </p> -->
         </view>
 
      <view class="pic" bindtap="basicart" data-type="1">
@@ -115,7 +122,6 @@
           <view class="name">
        <open-data type="userNickName" lang="zh_CN"></open-data>
           </view>
-
 
 
         <view class="center" wx:if="{{material}}">
@@ -146,7 +152,7 @@
         </p>
         <image src="../../image/xiaojiantou2.png" class="arrow"></image>
       </view>
-      <view class="bottom_all">
+      <view class="bottom_all" bindtap="follow">
         <p>
           <image src="../../image/guanzhu2.png" class="guanzhu"></image>
           <p class="isuse">关注的艺人</p>
@@ -155,19 +161,21 @@
       </view>
       <view class="bottom_all" bindtap="sendPull">
         <p>
-          <image src="../../image/fabu2.png" class="guanzhu" ></image>
+          <image src="../../image/gro.png" class="guanzhu" ></image>
           <p class="isuse">剧组管理</p>
         </p>
         <image src="../../image/xiaojiantou2.png" class="arrow"></image>
       </view>
-      <view class="bottom_all">
+
+      <!-- <view class="bottom_all">
         <p>
           <image src="../../image/photo2.png" class="guanzhu"></image>
           <p class="isuse">商务通讯录</p>
         </p>
         <image src="../../image/xiaojiantou2.png" class="arrow"></image>
-      </view>
-      <view class="bottom_all" bindtap="change" data-type="1">
+      </view> -->
+
+      <view class="bottom_all" bindtap="change" data-type="2">
         <p>
           <image src="../../image/photo2.png" class="guanzhu"></image>
           <p class="isuse">切换身份</p>
