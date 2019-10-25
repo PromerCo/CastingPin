@@ -1,5 +1,9 @@
 
+
 import { Base } from '../../utils/base.js';
+
+
+
 class Group extends Base {
   constructor() {
     super();
@@ -7,12 +11,28 @@ class Group extends Base {
   /*
    首页列表
   */
-  getlist(callback) {
+  getlist(param,callback) {
 
-    // var type = param.type
-    
+    var type = param.type
     var param = {
       url: 'castingpinhome/home',
+      type: 'POST',
+      data: { 'type': type },
+      sCallback: function (data) {
+        //  后台  data
+        callback && callback(data);
+      }
+    };
+    this.request(param);
+  }
+
+  /*
+  查看是否填写剧组资料
+  */
+  getCast(callback) {
+
+    var param = {
+      url: 'castingpincast/castms',
       type: 'POST',
       sCallback: function (data) {
         //  后台  data
@@ -21,6 +41,7 @@ class Group extends Base {
     };
     this.request(param);
   }
+
 
 };
 export { Group };

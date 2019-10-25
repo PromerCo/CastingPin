@@ -3,8 +3,6 @@
 var chaceRecord = wx.getStorageSync('chace_record')  //缓存数据
 
 
-console.log('缓存数据'+chaceRecord)
-
 if (chaceRecord == '') {
   //获取缓存
   console.log('缓存为空')

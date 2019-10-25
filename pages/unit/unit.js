@@ -1,6 +1,8 @@
 import { Unit } from 'unit-model.js';
 var app = getApp();
 var unit = new Unit(); //实例化 首页 对象
+var cache_list = require('../../utils/package.js');
+
 Page({
 
   /**
@@ -20,15 +22,15 @@ Page({
   _loadData: function (callback) {
     var that = this;
     var chaceRecord = wx.getStorageSync('chace_record')  //缓存数据
-
-    var cache_list = require('../../common/package.js');
   
     unit.getlist((data) => {
       var list = data.data
+      console.log(list)
       list.forEach(function (item, index) {
         
-      list[index]['type']  = cache_list.handleCache(item.type,0); //剧型
-      list[index]['theme'] = cache_list.handleCache(item.theme,0) //题材
+        list[index]['type'] = cache_list.handleCache(wx.getStorageSync('chace_record'),item.type,0); //剧型
+        list[index]['theme'] = cache_list.handleCache(wx.getStorageSync('chace_record'),item.theme,0) //题材
+        list[index]['city'] = item.city.split(',')[0]
 
       })
       that.setData({
@@ -41,13 +43,10 @@ Page({
   my_group:function(e){
  
     var cast_id = e.currentTarget.dataset.id
-    console.log(cast_id)
     
     wx.navigateTo({
-      url: '../../pages/my_group/my_group?cast_id=' + cast_id,
+      url: '../../pages/sign/sign?cast_id=' + cast_id,
     })
-
-
 
   },
 

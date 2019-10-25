@@ -3,6 +3,7 @@ import { Follow } from 'follow-model.js';
 var app = getApp();
 var follow = new Follow(); //实例化 首页 对象
 
+var cache_list = require('../../utils/package.js');
 
 Page({
 
@@ -86,10 +87,10 @@ Page({
     follow.follower(type, (data) => {
   
       var message = data.data
-      var cache_list = require('../../common/package.js');
+  
       message.forEach(function (item, index) {
-        message[index]['occupation'] = cache_list.handleCache(item['occupation']); //职业
-        message[index]['position'] = cache_list.handleCache(item['position']); //职位
+        message[index]['occupation'] = cache_list.handleCache(wx.getStorageSync('chace_record'),item['occupation']); //职业
+        message[index]['position'] = cache_list.handleCache(wx.getStorageSync('chace_record'),item['position']); //职位
       })
 
 

@@ -7,17 +7,9 @@
 
     <view class="x_head">
       <p class="head_text">{{itemName.title}}</p>
+      <p class="head_text">{{itemName.speciality}}</p>
     </view>
-    
-    <!-- <view class="data">
-      <view class="reset_data">状态:
-        <p>{{itemName.activity_status}}</p>
-      </view>
-    </view> -->
 
-<view wx:if="{{type==2}}">
-<view class="attend_user" catchtap="attend" data-push_id='{{itemName.id}}' >申请的KOL</view>
-</view>
 
 </view>
 
@@ -34,7 +26,7 @@
 </view>
 
 <view class='footer'>
-   <view bindtap='navhome'  wx:if="{{type == 1}}">查看更多的HUB</view>
+   <view bindtap='navhome'  wx:if="{{type == 1}}">查看更多的公告</view>
    <view bindtap='publish' wx:else>立即发布</view>
 </view>
 

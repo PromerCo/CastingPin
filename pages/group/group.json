@@ -3,5 +3,6 @@
       "wux-card": "../../components/dist/card/index",
       "s-tab-scoller": "../../components/dist/s-tab-scoller/index",
       "wux-wing-blank": "../../components/dist/wing-blank/index"
+
   }
 }

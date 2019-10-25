@@ -1,7 +1,7 @@
 import { Artist } from 'artist-model.js';
 var artist = new Artist(); //实例化 首页 对象
 
-
+var cache_list = require('../../utils/package.js');
 
 const app = getApp()
 let timeout
@@ -66,16 +66,10 @@ Page({
     } = e.detail
     // 当前项
     const item = this.data.column[index]
-    const platform_id = item.id
-    var msg = [];
-    msg.platform_id = platform_id
-    console.log(msg.platform_id)
+    const platform_id = item.code
+    
+    this._loadData(platform_id)
 
-    if (msg.platform_id == 100000) {
-      msg.type = 0
-    } else {
-      msg.type = 1
-    }
     this.setData({
       loadingHidden: false
     })
@@ -90,9 +84,9 @@ Page({
   },
   onLoad(options) {
     
-    var cache_list = require('../package.js');
+ 
     this.setData({
-      column:cache_list.columnCache('style')
+      column: cache_list.columnCache(wx.getStorageSync('chace_record'),'occupation')
     })
 
     this._loadData();
@@ -116,23 +110,38 @@ Page({
   /*
   页面初始化 
   */
-  _loadData: function () {
+  _loadData: function (style = 100200) {
     var that = this;
-    artist.getlist((data) => {
+
+    console.log(style)
+  
+    artist.getlist(style,(data) => {
       if (data.code == 200){
         var video_list = data.data
+
+    
+
+        if (video_list.length !=0){
+          video_list.forEach(function (item, index) {
+            video_list[index]['width'] = 480
+            video_list[index]['height'] = 272
+            video_list[index]['isPlay'] = false
+          })
+          that.setData({
+            banner: video_list,
+            video_list: video_list,
+            status: video_list.status
+          })
+          that.getVideoList(1)
+        }else{
+          that.setData({
+            banner: [],
+            videoList: [],
+         
+          })
+        }
         
-        video_list.forEach(function (item, index) {
-           video_list[index]['width']  = 480
-           video_list[index]['height'] = 272
-           video_list[index]['isPlay'] = false
-        })
-        that.setData({
-          banner: video_list,
-          video_list: video_list,
-          status: video_list.status
-        })
-        that.getVideoList(1)
+
       }
   
     })
@@ -156,14 +165,12 @@ Page({
 
     var data = that.data.video_list
 
-    data = data.concat(data)
   
-
     // 模拟请求
     setTimeout(() => {
       this.setData({
-         videoList: videoList.concat(this.formatVideoList(data)),
-        videoLoading: false
+         videoList: this.formatVideoList(data),
+         videoLoading: false
       })
       // 给数据足够的渲染时间，之后进行视频位置的测量
       setTimeout(() => {
@@ -218,9 +225,11 @@ Page({
     } = event
     this.info.videoPlayDetail[index] = currentTime
   },
+
   // 到底加载更多
   onReachBottom() {
-    this.getVideoList()
+    // 监听页面加载
+    // this.getVideoList()
   },
   // 设置播放的视频
   showVideoList(index) {

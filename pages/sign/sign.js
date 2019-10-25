@@ -5,6 +5,8 @@ var app = getApp();
 
 var sign = new Sign(); //实例化 首页 对象
 
+var cache_list = require('../../utils/package.js');
+
 Page({
 
   /**
@@ -28,18 +30,35 @@ Page({
    */
   onLoad: function (options) {
 
-    var type = options.type
+    var that = this
+    var cast_id = options.cast_id
+ 
 
-    this.setData({
-      type: type
+    sign.list(cast_id, (data) => {
+      var list = data.data
+      
+      console.log(list)
+
+      list.forEach(function (item, index) {
+        list[index]['style'] = cache_list.handleCache(wx.getStorageSync('chace_record'), item['style'].split(','), 1, '#');
+        list[index]['speciality'] = cache_list.handleCache(wx.getStorageSync('chace_record'), item['speciality'].split(','), 1, '#');
+      })
+
+      that.setData({
+        list: list,
+        loadingHidden:true
+      })
+
     })
-    this._loadData()
+
+
+   
 
   },
 
   navhome: function (e) {
     wx.switchTab({
-      url: '/pages/home/home'
+      url: '/pages/group/group'
     })
   },
 
@@ -49,29 +68,8 @@ Page({
     })
   },
 
-  _loadData: function (callback) {
-    var that = this;
-    //栏目列表
-    sign.getlist((data) => { 
-      if (data.code == 201) {
-        that.setData({
-          list: data.data,
-          loadingHidden: true
-        })
-      }
 
 
-    })
-
-  },
-  attend: function (e) {
-
-    var push_id = e.currentTarget.dataset.push_id
-
-    wx.navigateTo({
-      url: '../../pages/enroll/enroll?push_id=' + push_id,
-    })
-  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成

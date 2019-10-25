@@ -3,6 +3,8 @@ import { Cast } from 'cast-model.js';
 var app = getApp();
 var cast = new Cast(); //实例化 首页 对象
 
+var cache_list = require('../../utils/package.js');
+
 var util = require('../../utils/util.js')
 Page({
   data: {
@@ -20,16 +22,9 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function () {
 
-    var cache_list = require('../package.js');
-
-    var that = this
  
-    that.setData({
-      notice_list: cache_list.columnCache('type'),
-      theme_list: cache_list.columnCache('theme')
-    })
 
   },
 
@@ -54,10 +49,10 @@ Page({
     var that = this;
     var info = e.detail.value
 
-    console.log(info)
-    return false;
-
     cast.pushSave(info, (data) => {
+
+  
+
       if (data.code == 201) {
         /*
         跳转 ME 页面
@@ -67,8 +62,14 @@ Page({
         })
 
       } else {
+        if (data.msg instanceof Array) {
+          var msg_error = data.msg[0][0]
+        } else {
+          var msg_error = data.msg;
+        }
+
         wx.showToast({
-          title: '请先完善资料',
+          title: msg_error,
           icon: 'none',
           duration: 1000,
           mask: true,
@@ -235,6 +236,13 @@ Page({
    */
   onShow: function () {
 
+
+    var that = this
+    that.setData({
+      notice_list: cache_list.columnCache(wx.getStorageSync('chace_record'),'type'),
+      theme_list: cache_list.columnCache(wx.getStorageSync('chace_record'),'theme')
+    })
+    
   },
 
   /**

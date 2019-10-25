@@ -1,9 +1,9 @@
 import { Me } from 'me-model.js';
-
-
-
 var me = new Me();
 var app = getApp(); 
+
+var cache_list = require('../../utils/package.js');
+
 
 Page({
   data: {
@@ -13,21 +13,22 @@ Page({
   },
   change:function(e){
 
-    var cache_list = require('../../common/package.js');
+
     var bol = e.currentTarget.dataset.type;
     var that= this
+
+
     me.cutRole(bol, (data) => {
       if (data.code == 201){
-    
 
         var type = data.data.type
         var message = data.data
         var material = data.data.material
-        if (type == 1){
 
-          message['industry'] =   cache_list.handleCache(message.industry, 0); //行业
-          message['position'] =   cache_list.handleCache(message.position, 0); //职位
-          
+        if (type == 1){
+          message['industry'] = cache_list.handleCache(wx.getStorageSync('chace_record'),message.industry, 0); //行业
+          message['position'] = cache_list.handleCache(wx.getStorageSync('chace_record'),message.position, 0); //职位
+
           that.setData({
             message: message,
             type: type,
@@ -45,13 +46,12 @@ Page({
             
             if (speciality != undefined || speciality != null) {
               var check_tags = speciality.split(",");
-              message['tags_list'] = cache_list.handleCache(check_tags, 1, '#');   //特长
+              message['tags_list'] = cache_list.handleCache(wx.getStorageSync('chace_record'),check_tags, 1, '#');   //特长
             } else {
               message['tags_list'] = '暂无资料';
             }
-
             if (occupation != undefined || speciality != null) {
-              message['occupation'] = cache_list.handleCache(occupation, 0); //行业
+              message['occupation'] = cache_list.handleCache(wx.getStorageSync('chace_record'),occupation, 0); //行业
             } else {
               message['occupation'] = '暂无资料';
             }
@@ -104,11 +104,7 @@ Page({
       url: '../../pages/basicgro/basicgro?type=' + type,
     })
   },
-  // 通告
-  onLoad: function (options) {
-
-
-  },
+ 
 
   bindGetUserInfo: function (e) {
     var that = this
@@ -145,50 +141,43 @@ Page({
   /*加载所有数据*/
   _loadData: function () {
 
-
-
     var that = this;
  
     me.roleStatus((data) => {  
 
     if (data.code == 201){
 
-        var cache_list = require('../package.js');
 
-        var material = data.data.material  //查看是否填写资料
-        var type = data.data.type   //类型
-        var message = data.data 
+        var message    = data.data 
+        var material   = message.material  //查看是否填写资料
+        var type       = message.type   //类型
+
 
         if (type == 2){
           if (message.material ==0){
              message = [];
           }else{
 
-            var speciality = data.data.speciality   //特长
-            var occupation = data.data.occupation   //职位
-            if (speciality != undefined || speciality != null){
+            var speciality = message.speciality   //特长
+            var occupation = message.occupation   //职位
 
-                var check_tags = speciality.split(",");
-
-                message['tags_list'] = cache_list.handleCache(check_tags, 1, '#');   //特长
-       
-         
+            if (speciality != undefined || speciality != null ){
+var check_tags = speciality.split(",");
+message['tags_list'] = cache_list.handleCache(wx.getStorageSync('chace_record'),check_tags, 1, '#'); 
             }else{
                 message['tags_list'] = '暂无资料';
             }
-
-     
-             
             if (occupation != undefined || speciality != null){
-          
-                message['occupation'] = cache_list.handleCache(occupation, 0); //行业
+              message['occupation'] = cache_list.handleCache(wx.getStorageSync('chace_record'),occupation, 0); //行业
             } else{
                 message['occupation'] = '暂无资料';
             }
 
-
+            if (message.university == ''){
+              message['university'] = '暂无资料';
+            }
+  
           }
-     
 
           that.setData({
             message: message,
@@ -200,12 +189,12 @@ Page({
 
         }else{
 
-
-          message['industry'] = cache_list.handleCache(message.industry, 0); //行业
-          message['position'] = cache_list.handleCache(message.position, 0);   //职位
-
-          console.log(message)
-
+          var speciality = message.speciality   //特长
+          var occupation = message.occupation   //职位
+    
+          message['industry'] = cache_list.handleCache(wx.getStorageSync('chace_record'),message.industry, 0); //行业
+          message['position'] = cache_list.handleCache(wx.getStorageSync('chace_record'),message.position, 0);   //职位
+       
           that.setData({
             message: message,
             authHidding: false,
@@ -279,7 +268,7 @@ Page({
   },
 
   /**
-   * 用户点击右上角分享
+   * 用户点击右上角分享   
    */
   onShareAppMessage: function () {
 

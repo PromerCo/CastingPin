@@ -2,6 +2,9 @@
 
 var basicart = new Basicart(); //实例化 首页 对象
 const app = getApp()
+
+var cache_list = require('../../utils/package.js');
+
 Page({
   data: {
     loadingHidden: false,
@@ -347,7 +350,7 @@ bingd_wx:function(e){
   },
  
   onSuccess(e) {
-    console.log('onSuccess', e)
+    console.log('onSuccess', e.detail.file.url)
     this.setData({
       url: e.detail.file.url
     })
@@ -403,8 +406,6 @@ bingd_wx:function(e){
     var that = this
     var type = options.type
 
-    var cache_list = require('../package.js');
-
     if (type == 1){
       basicart.getList((data) => {
         var message = data.data 
@@ -412,62 +413,81 @@ bingd_wx:function(e){
           type: type,
           message: message,
           loadingHidden: true,
-          position_list: cache_list.columnCache('position', 0),      
-          industry_list: cache_list.columnCache('industry', 0)
+          position_list: cache_list.columnCache(wx.getStorageSync('chace_record'),'position', 0),      
+          industry_list: cache_list.columnCache(wx.getStorageSync('chace_record'),'industry', 0)
         })
       })
     }else{
 
-        that.setData({
-          occupation_list: cache_list.columnCache('occupation'),
-          speciality_list: cache_list.columnCache('speciality'),
-        })
-
+      var speciality = cache_list.columnCache(wx.getStorageSync('chace_record'),'speciality')
+ 
+    
         basicart.getList((data) => {
           var message = data.data
+          var tid_s = that.data.tid_s  //特长ID
+       
+      
 
           if (message ==null){
             message = [];
           }else{
 
-       
           var woman = message.woman   //三围
-          var speciality = message.speciality  //特长
-          var tid_s = that.data.tid_s  //特长ID
-      
+          var tecahng = message.speciality  //特长
+     
           if (woman != null || woman != undefined){
               var value = woman.split("-");
-              var speciality_list = cache_list.columnCache('speciality')
+        
           }else{
-              //  var value  = ['68', '28', '95'],
+               var value  = ['68', '28', '95']
           }
 
-          if (speciality != null || speciality != undefined){
+    
+  
 
-            var check_tags = speciality.split(",");
-            var speciality_list = cache_list.columnCache('speciality')
-            let tags_list = [];
-            for (var i = 0; i <= check_tags.length; i++) {
-              for (var j = 0; j < speciality_list.length; j++) {
-                if (speciality_list[j]['code'] == check_tags[i]) {    
-                  tid_s.push(check_tags[j]);
-                  speciality_list[j]['check'] = 'check'
+          if (tecahng != null || tecahng != undefined){
+
+            var speciality = cache_list.columnCache(wx.getStorageSync('chace_record'),'speciality')
+
+              var check_tags = tecahng.split(",");
+ 
+              let tags_list = [];
+              for (var i = 0; i <= check_tags.length; i++) {
+          
+                for (var j = 0; j < speciality.length; j++) {
+        
+                  if (speciality[j]['code'] == check_tags[i]) {    
+                    tid_s.push(check_tags[i]);
+                    speciality[j]['check'] = 'check'
+                  }
                 }
-              }
 
+              }
+  
+            }else{
+            var speciality = cache_list.columnCache(wx.getStorageSync('chace_record'),'speciality')
             }
           }
-          }
+
           var fileList = that.data.fileList  //图片
           var fileListVideo = that.data.fileListVideo //视频
-          fileList.push({ 'url': message.cover_img})
-          fileListVideo.push({ 'url': message.cover_video })
 
-          console.log(message)
+          if (fileList != undefined){
+            fileList.push({ 'url': message.cover_img })
+          } 
+
+          if (fileListVideo != undefined){
+            fileListVideo.push({ 'url': message.cover_video })
+          }
+
+          console.log(fileListVideo)
+
+          console.log(fileList)
     
           that.setData({
             type: type,
-            speciality_list: speciality_list,
+            occupation_list: cache_list.columnCache(wx.getStorageSync('chace_record'),'occupation'),
+            speciality_list: speciality,
             message: message,
             wx_name: message.wechat,
             actor_height: message.height,
@@ -695,11 +715,14 @@ bingd_wx:function(e){
 
 // 上传图片
   onChange(e) {
-    var that =this
-    const { file } = e.detail
+       var that =this
 
+       const { file } = e.detail
 
       var url = that.data.url
+
+      console.log(file.url)
+
       wx.uploadFile({
         url: url + "/v1/alioss/index",
         filePath: file.url,
@@ -709,14 +732,9 @@ bingd_wx:function(e){
           'accept': 'application/json'
         },
         success: function (res) {
-         console.log(res)
+             
+          console.log('image：' + res)
 
-          var data = [];
-          data.push({ "cover_img": res.data })
-          that._saveMsg(data)
-          that.setData({
-            imageUrl: res.data,
-          })
         }
       })
  
@@ -744,14 +762,7 @@ bingd_wx:function(e){
         },
         success: function (res) {
           console.log(res.data)
-          
-          var data = [];
-          data.push({ "cover_video": res.data })
-          that._saveMsg(data)
-          
-          that.setData({
-            imageUrl: res.data,
-          })
+  
         }
       })
     }
@@ -761,11 +772,28 @@ bingd_wx:function(e){
     console.log('onFail', e)
   },
   onComplete(e) {
-    console.log('onComplete', e)
+  
+    console.log('onComplete', e.detail.data)
+
+    var that = this
+
+    var data = [];
+    data.push({ "cover_img": e.detail.data })
+    that._saveMsg(data)
+
+
     wx.hideLoading()
   },
   onCompleteVideo(e) {
-    console.log('onComplete', e)
+    console.log('onComplete', e.detail.data)
+
+    var that = this
+
+    var data = [];
+    data.push({ "cover_video": e.detail.data })
+    that._saveMsg(data)
+
+
     wx.hideLoading()
   },
 
@@ -785,6 +813,7 @@ bingd_wx:function(e){
   },
   onRemove(e) {
     const { file, fileList } = e.detail
+
     wx.showModal({
       content: '确定删除？',
       success: (res) => {
@@ -851,18 +880,19 @@ bingd_wx:function(e){
     var that = this
 
     var t_id = e.currentTarget.dataset.id 
- 
+    // cache_list.columnCache('speciality')
 
     var speciality_list = this.data.speciality_list
-    var index = e.currentTarget.dataset.index
-   
 
     var tid_s = that.data.tid_s;
+
+    var index = e.currentTarget.dataset.index
     var chek = speciality_list[index];
 
-    console.log(chek)
+
 
     var tag_list = that.data.tag_list;
+
     var tag_all = that.data.tag_all;
 
 
@@ -882,6 +912,8 @@ bingd_wx:function(e){
         tag_all: tag_all
       })
     } else {
+
+      console.log(tid_s)
 
       if (tid_s.length >= 3) {
         wx.showToast({

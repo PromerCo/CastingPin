@@ -6,14 +6,13 @@
 <view hidden='{{authHidding}}'>
 
 
-
 <block wx:if="{{type==2}}">
 
   <view class="project">
     <view class="content">
       <view class='head_content_make'>
         <view class="top" bindtap="change" data-type="1">
-          <image src="../../image//tabbar/artist2.png" class="change"  mode="scaleToFill"></image>
+          <image src="../../image/tabbar/artist2.png" class="change"  mode="scaleToFill"></image>
           <!-- <p>切换身份
             <span style="font-size:24rpx;color:gray">(艺人)</span> 
           </p> -->
@@ -39,12 +38,12 @@
             <p>{{message.university == null ? '暂无资料' : message.university}}</p>
           </view>
           <view class="icon music">
-            <image src="../../image/biaoqian.png" class="address"></image>
-            <p>{{message.occupation}}</p>
+            <image src="../../image/Csms-occupatio.png" class="address"></image>
+            <p>{{message.occupation== null ? '暂无资料' : message.occupation}}</p>
           </view>
           <view class="icon tag">
-            <image src="../../image/Csms-occupatio.png" class="address"></image>
-            <p>{{message.tags_list}}</p>
+            <image src="../../image/biaoqian.png" class="address"></image>
+            <p>{{message.tags_list== null ? '暂无资料' : message.tags_list}}</p>
           </view>
         </view>
 
@@ -109,7 +108,7 @@
     <view class="content">
       <view class='head_content_make'>
         <view class="top"  bindtap="change" data-type="2">
-           <image src="../../image//tabbar/grounp2.png" class="change"  mode="scaleToFill"></image>
+           <image src="../../image/tabbar/grounp2.png" class="change"  mode="scaleToFill"></image>
           <!-- <p>切换身份
              <span style="font-size:24rpx;color:gray">(统筹)</span> 
           </p> -->
@@ -127,15 +126,15 @@
         <view class="center" wx:if="{{material}}">
           <view class="icon city">
             <image src="../../image/hangye.png" class="address"></image>
-            <p>{{message.industry}}</p>
+            <p>{{message.industry==null?'暂未填写':message.industry}}</p>
           </view>
           <view class="icon fans">
             <image src="../../image/zhiwei.png" class="address"></image>
-            <p>{{message.position}}</p>
+            <p>{{message.position==null?'暂未填写':message.position}}</p>
           </view>
           <view class="icon music">
             <image src="../../image/pingpai.png" class="address"></image>
-            <p>{{message.corporation}}</p>
+            <p>{{message.corporation==null?'暂未填写':message.corporation}}</p>
           </view>
           <view class="icon tag">
             <image src="../../image/diqu.png" class="address"></image>

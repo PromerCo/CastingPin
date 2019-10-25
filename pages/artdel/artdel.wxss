@@ -19,7 +19,8 @@
 
 .picture image {
   width: 100%;
-  /* height: 300rpx; */
+  margin-top: 20rpx;
+
 }
 
 .pic_name {
@@ -39,9 +40,15 @@
 .me {
   position: absolute;
   left: 20rpx;
-  top: 0;
+  top: 30rpx;
   width: 50rpx;
   height: 50rpx;
+}
+.pic_author{
+    top: 40rpx;
+}
+.pic_name{
+   top: 38rpx;
 }
 
 .new {

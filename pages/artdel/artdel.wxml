@@ -1,12 +1,12 @@
 <view class="wrap" hidden="{{!loadingHidden}}">
   <!-- 封面图 -->
   <view class="cover" >
-    <view class="picture">
-      <image src="{{list.avatar_url}}" ></image>
+    <view class="picture" bindtap="previewImage">
+      <image src="{{list.cover_img}}" mode="aspectFill" data-src="{{list.cover_img}}"></image>
     </view>
     <view class="picture_image">
       <view>
-        <image src="../../image/me.png" class="me"></image>
+        <image src="../../image/tabbar/me.png" class="me"></image>
         <p class="pic_name">{{list.stage_name}}</p>
         <p class="pic_author">{{list.occupation}}</p>
       </view>

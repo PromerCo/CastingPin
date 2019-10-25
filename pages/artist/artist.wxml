@@ -1,6 +1,6 @@
 <view class="wrap">
 
-  <view class="search_wrap" style="display:{{texf}}">
+  <view class="search_wrap" style="display:block">
     <s-tab-scoller tabs="{{column}}" current="{{index}}" wx:for-item="itemName" bindchange="onTabsChange" data-platform='{{itemName}}'></s-tab-scoller>
   </view>
   <view class='container' current="{{index}}" duration="300" wx:for-item="itemName" data-platform='{{itemName}}'>
@@ -9,7 +9,7 @@
       <scroll-view scroll-x="true">
         <view class="banner" scroll-x="true">
           <view class="banner_Item" wx:for="{{banner}}" wx:for-index="idx" wx:for-item="itemName" wx:key="idx">
-            <image mode="aspectFill" bindtap="previewImage" data-src="{{itemName.cover_img}}"  src="{{itemName.cover_img}}"></image>
+            <image mode="aspectFill" catchtap="video" data-id="{{itemName.open_id}}"  data-src="{{itemName.cover_img}}"  src="{{itemName.cover_img}}"></image>
           </view>
         </view>
       </scroll-view>
@@ -24,7 +24,7 @@
 
           <view class="video-box" style="height: {{item.styleHight}}px;">
           
-            <video  custom-cache="true"  wx:if="{{item.isPlay}}" src="{{item.cover_video}}" class="video-video" initial-time="{{item.currentTime}}" controls="{{false}}" autoplay="{{true}}" loop="{{false}}" bindtimeupdate="eventPlayupdate" bindfullscreenchange="eventFullScreen" data-index="{{index}}">
+            <video loop="{{true}}" custom-cache="{{false}}"  wx:if="{{item.isPlay}}" src="{{item.cover_video}}" class="video-video" initial-time="{{item.currentTime}}" controls="{{false}}" autoplay="{{true}}"  bindtimeupdate="eventPlayupdate" bindfullscreenchange="eventFullScreen" data-index="{{index}}">
             </video>
 
             <image wx:if="{{!item.isPlay}}" class="video-cover" mode="aspectFill" src="{{item.cover_img}}" data-index="{{index}}"></image>

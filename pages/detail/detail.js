@@ -1,7 +1,7 @@
 import { Detail } from 'detail-model.js';
 var app = getApp();
 var detail = new Detail(); //实例化 首页 对象
-
+var cache_list = require('../../utils/package.js');
 
 Page({
   data: {
@@ -10,7 +10,7 @@ Page({
     loadingHidden: false,
     is_collect:0,
     enroll_list:[],
-    agree:'邀请',
+    agree:'报名',
     notice_id:'',
     isIOS: false
   },
@@ -21,7 +21,7 @@ Page({
   onLoad: function (options) {
   var that = this  
     // 缓存数据
-  var  cache_list = require('../../common/package.js');
+
   var notice_id = options.id
 
   //记录浏览量
@@ -29,11 +29,15 @@ Page({
   detail.list_details(notice_id, (data) => {
     if (data.code == 201) {
       var message = data.data
-      message['occupation'] = cache_list.handleCache(message['occupation'], 0); //职业
-      message['position'] = cache_list.handleCache(message['position'], 0); //职位
-      message['age'] = cache_list.handleCache(message['age'], 0); //年龄范围
-      message['speciality'] = cache_list.handleCache(message['speciality'].split(","),1,'#'); //特长
+
+      message['occupation'] = cache_list.handleCache(wx.getStorageSync('chace_record'),message['occupation'], 0); //职业
+      message['position'] = cache_list.handleCache(wx.getStorageSync('chace_record'),message['position'], 0); //职位
+      message['age'] = cache_list.handleCache(wx.getStorageSync('chace_record'),message['age'], 0); //年龄范围
+      message['speciality'] = cache_list.handleCache(wx.getStorageSync('chace_record'),message['speciality'].split(","),1,'#'); //特长
       var enroll = JSON.parse(JSON.parse(message['enroll']))
+      
+      console.log(message)   
+
       if (enroll == null || enroll==undefined){
            enroll = [];
       }
@@ -98,7 +102,7 @@ Page({
           is_enroll: 1,
           enroll_list: image_list,
             enroll_number: parseInt(that.data.list.enroll_number) + 1,
-          agree: '已申请'
+          agree: '已报名'
         })
       } else if (list.code == 417) {
         wx.showModal({
@@ -143,7 +147,10 @@ Page({
     const that = this
     wx.createSelectorQuery().select('#editor').context(function (res) {
       that.editorCtx = res.context
-      var describe = that.data.list.profile
+      var describe = that.data.list['profile']
+
+      console.log(describe)
+
       that.editorCtx.setContents({
         html: describe,
         success: (res) => {

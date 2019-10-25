@@ -1,7 +1,7 @@
 import { Artdel } from 'artdel-model.js';
 var artdel = new Artdel(); //实例化 首页 对象
 // 缓存数据
-const cache_list = require('../../common/package.js');
+var cache_list = require('../../utils/package.js');
 
 const app = getApp()
 Page({
@@ -123,22 +123,16 @@ Page({
 
       var message = data.data
 
-      console.log(message) 
-
-
-
-  
-
       var techang = message['speciality'];
 
       if (techang != null || techang!=undefined){
-        message['speciality'] = cache_list.handleCache(message['speciality'], 1, '#'); //特长
+        message['speciality'] = cache_list.handleCache(wx.getStorageSync('chace_record'),message['speciality'], 1, '#'); //特长
       }else{
         message['speciality'] = '暂无资料'
       }
     
   
-      message['occupation'] = cache_list.handleCache(message['occupation'], 0); //职位
+      message['occupation'] = cache_list.handleCache(wx.getStorageSync('chace_record'),message['occupation'], 0); //职位
 
       var invite_number = message['invite_number']
 
@@ -174,6 +168,15 @@ Page({
     })
   },
 
+  previewImage: function (e) {
+    var current = e.target.dataset.src;
+    var arr = []
+    arr.push(current)
+    wx.previewImage({
+      current: arr,
+      urls: arr
+    })
+  },
   bindFollow:function(e){
     var that = this
     var arranger_id = e.currentTarget.dataset.id    //被关注者ID

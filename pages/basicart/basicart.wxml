@@ -144,17 +144,19 @@
 
      <view class="territory_name">封面照</view>
 
+<!-- https://castingpin.pudata.cn/v1/alioss/index -->
     <view class="page__bd page__bd_spacing">
-        <wux-upload count="1" listType="picture-card" sizeType="compressed" defaultFileList="{{ fileList }}" max="1" url="https://castingpin.pudata.cn/v1/alioss/index"  bind:change="onChange" bind:success="onSuccess" bind:fail="onFail"  bind:complete="onComplete" bind:preview="onPreview" >
+        <wux-upload count="1" listType="picture-card" sizeType="compressed" defaultFileList="{{ fileList }}" max="1" url="https://minip.castingpin.com/v1/alioss/index"  bind:change="onChange" bind:success="onSuccess" bind:fail="onFail"  bind:complete="onComplete" bind:preview="onPreview" >
             <text>+</text>
         </wux-upload>
 <input name="cover_img"  hidden  value="{{cover_img}}" ></input>
     </view>
 
+<!-- https://castingpin.pudata.cn/v1/alioss/index -->
 
          <view class="territory_name">短视频</view>
     <view class="page__bd page__bd_spacing">
-        <wux-upload count="1" defaultFileType="video" listType="picture-card" sizeType="compressed"  max="1" url="https://castingpin.pudata.cn/v1/alioss/index" bind:change="onChangeVideo"   bind:complete="onCompleteVideo" bind:preview="onPreviewVideo"  defaultFileList="{{ fileListVideo }}">
+        <wux-upload count="1" defaultFileType="video"   listType="picture-card" sizeType="compressed"  max="1" url="https://minip.castingpin.com/v1/alioss/index"    bind:change="onChangeVideo"   bind:complete="onCompleteVideo" bind:preview="onPreviewVideo"  defaultFileList="{{ fileListVideo }}">
             <text>+</text>
         </wux-upload>
 <input name="cover_video"  hidden value="{{cover_video}}" ></input>

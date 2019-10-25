@@ -47,11 +47,7 @@ class Me extends Base {
    切换角色
 */
   cutRole(param,callback){
-
     var type = param
-
-    console.log(type)
-    
     var param = {
       url: 'castingpinuser/cutrole',
       data: { 'type': type },

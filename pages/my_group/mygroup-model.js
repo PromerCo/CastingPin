@@ -1,5 +1,5 @@
 import { Base } from '../../utils/base.js';
-class Sign extends Base {
+class MeGroup extends Base {
   constructor() {
     super();
   }
@@ -8,7 +8,7 @@ class Sign extends Base {
     列表
  */
   list(cast_id, callback) {
-
+ 
     var param = {
       url: 'castingpincast/announce',
       data: { 'cast_id': cast_id },
@@ -21,4 +21,4 @@ class Sign extends Base {
   }
 
 };
-export { Sign };
+export { MeGroup };

@@ -158,7 +158,7 @@
 </view>
 
 
- <input hidden  name="profile" value="{{details}}"></input>
+ <input hidden  name="profile" maxlength="-1" value="{{details}}"></input>
 
 <view style="height:100rpx;"></view> 
 

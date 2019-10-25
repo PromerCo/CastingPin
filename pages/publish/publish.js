@@ -1,6 +1,6 @@
 import { Publish } from 'publish-model.js';
 // 缓存数据
-const cache_list = require('../../common/package.js');
+var cache_list = require('../../utils/package.js');
 
 var   publish = new Publish(); //实例化 首页 对象
 
@@ -31,10 +31,10 @@ Page({
     e_index:1,
     n_index:1,
     j_index:1,
-    age_list: cache_list.columnCache('age'), //年龄范围
-    occupation_list: cache_list.columnCache('occupation'), //职业
-    speciality_list: cache_list.columnCache('speciality'), //特长
-    style_list: cache_list.columnCache('style'), //特长
+    age_list: [], //年龄范围
+    occupation_list: [], //职业
+    speciality_list: [], //特长
+    style_list: [], //特长
     sex_list: [{ 'id': '1', 'name': '男' }, { 'id': '2', 'name': '女' }],
     number_list: [
       { 'code': '1', 'name': '0-20' }, 
@@ -54,7 +54,14 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-  
+    var that = this
+    console.log(cache_list.columnCache(wx.getStorageSync('chace_record'), 'age'))
+   that.setData({
+     age_list: cache_list.columnCache(wx.getStorageSync('chace_record'),'age'),
+     occupation_list: cache_list.columnCache(wx.getStorageSync('chace_record'),'occupation'),
+     speciality_list: cache_list.columnCache(wx.getStorageSync('chace_record'),'speciality'),
+     style_list: cache_list.columnCache(wx.getStorageSync('chace_record'),'style')
+  })
 
   },
 
@@ -62,27 +69,25 @@ Page({
   formSubmit:throttle(function(e){
     var that = this;
     var info = e.detail.value
+
     publish.pushSave(info, (data) => {
+
        if(data.code == 201){
-
          wx.redirectTo({
-           url: '../../pages/sign/sign?type=2',
+           url: '../../pages/sign/sign?cast_id=' + data.data.cast_id,
          })
-
        }else{
          if (data.msg instanceof Array){
            var  msg_error = data.msg[0][0]
          }else{
            var msg_error = data.msg;
          }
-        
          wx.showToast({
            title: msg_error,
            icon: 'none',
            duration: 1000,
            mask: true,
          })
-
        }
     })
   }, 1000),
@@ -101,13 +106,13 @@ Page({
 
     var data = [];
 
-    data['bust'] = woman[0]
+    var bust = woman[0]
 
-    data['waist'] = woman[1]
+    var waist = woman[1]
 
-    data['hip'] = woman[2]
+    var hip = woman[2]
 
-    data['woman'] = woman
+    var woman = woman
 
  
     that.setData({

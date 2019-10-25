@@ -1,11 +1,11 @@
 <view class="wrap"  hidden="{{!loadingHidden}}">
-  <!-- 搜索 -->
-  <view class="search_wrap" style="display:{{dis}}">
+
+  <view class="search_wrap" style="display:block">
     <s-tab-scoller tabs="{{column}}" current="{{index}}" wx:for-item="itemName" bindchange="onTabsChange" data-platform='{{itemName}}'></s-tab-scoller>
   </view>
   <view class='container' current="{{index}}" duration="300" wx:for-item="itemName" data-platform='{{itemName}}'>
     <view class="swiper">
-      <!-- 滑动 -->
+
       <scroll-view scroll-x="true">
   <view class="banner" scroll-x="true">
 <view class="banner_Item" wx:for="{{ava_list}}" wx:for-item="itemName" data-id="{{itemName.id}}" bindtap="detail">
@@ -22,7 +22,7 @@
 </view>
       </scroll-view>
     </view>
-    <!-- 详情 -->
+
     <view class="whole" wx:for="{{list}}" data-id="{{item.id}}" bindtap="detail">
       <view class="type all">
       <p>剧名：
@@ -59,11 +59,16 @@
       </view>
     </view>
   </view>
-  <!-- 发布 -->
+
   <view class="publish" bindtap="publish">
     <image src="../../image/lALPDgQ9rJIIVdPMyMzI_200_200.png"></image>
   </view>
 </view>
+
+
+
+
+
 <loading hidden="{{loadingHidden}}">
-    加载中...
+     加载中...
 </loading>

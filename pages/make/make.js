@@ -4,46 +4,46 @@ Page({
     currentTab: 0,
     array:[
       { "text":"1竖图4横图",
-        "image":"../../image/tupian.jpg"
+        "image":"../../image/lADPDgQ9rJO-AxnNBLDNB4A_1920_1200.jpg"
       },{
         "text": "4竖图4横图",
-        "image": "../../image/tupian.jpg"
+        "image": "../../image/lADPDgQ9rJO-AxnNBLDNB4A_1920_1200.jpg"
       },{
         "text": "5竖图2横图",
-        "image": "../../image/tupian.jpg"
+        "image": "../../image/lADPDgQ9rJO-AxnNBLDNB4A_1920_1200.jpg"
       },{
         "text": "4竖图2横图",
-        "image": "../../image/tupian.jpg"
+        "image": "../../image/lADPDgQ9rJO-AxnNBLDNB4A_1920_1200.jpg"
       }
     ],
      array1: [
       {
         "text": "4竖图4横图",
-        "image": "../../image/tupian.jpg"
+         "image": "../../image/lADPDgQ9rJO-AxnNBLDNB4A_1920_1200.jpg"
       }, {
         "text": "5竖图2横图",
-        "image": "../../image/tupian.jpg"
+         "image": "../../image/lADPDgQ9rJO-AxnNBLDNB4A_1920_1200.jpg"
       }, {
         "text": "6竖图",
-        "image": "../../image/tupian.jpg"
+         "image": "../../image/lADPDgQ9rJO-AxnNBLDNB4A_1920_1200.jpg"
       }, {
         "text": "7竖图3横图",
-        "image": "../../image/tupian.jpg"
+         "image": "../../image/lADPDgQ9rJO-AxnNBLDNB4A_1920_1200.jpg"
       }
     ],
     array2: [
       {
         "text": "3竖图4横图",
-        "image": "../../image/tupian.jpg"
+        "image": "../../image/lADPDgQ9rJO-AxnNBLDNB4A_1920_1200.jpg"
       }, {
         "text": "1竖图4横图",
-        "image": "../../image/tupian.jpg"
+        "image": "../../image/lADPDgQ9rJO-AxnNBLDNB4A_1920_1200.jpg"
       }, {
         "text": "6竖图",
-        "image": "../../image/tupian.jpg"
+        "image": "../../image/lADPDgQ9rJO-AxnNBLDNB4A_1920_1200.jpg"
       }, {
         "text": "8竖图",
-        "image": "../../image/tupian.jpg"
+        "image": "../../image/lADPDgQ9rJO-AxnNBLDNB4A_1920_1200.jpg"
       }
     ],
   },

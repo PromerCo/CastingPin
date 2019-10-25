@@ -53,6 +53,7 @@
           </p>
           <view class="rig">
             <view class="city_y">{{region[0]}},{{region[1]}},{{region[2]}}</view>
+            
     <input hidden name="city" value="{{region[0]}},{{region[1]}},{{region[2]}}"></input>
 
             <image src="../../image/xiaojiantou2.png" class="jiantou"></image>
