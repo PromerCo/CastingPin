@@ -1,4 +1,6 @@
 {
+
+  "navigationBarTitleText": "剧组发布",
   "usingComponents": {
     "wux-segmented-control": "../../components/dist/segmented-control/index",
     "wux-date-picker": "../../components/dist/date-picker/index",

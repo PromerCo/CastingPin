@@ -1,0 +1,8 @@
+{
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "wux-cell-group": "../../components/dist/cell-group/index",
+    "wux-cell": "../../components/dist/cell/index",
+    "wux-picker": "../../components/dist/picker/index"
+  }
+}

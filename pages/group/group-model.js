@@ -14,10 +14,15 @@ class Group extends Base {
   getlist(param,callback) {
 
     var type = param.type
+    var start_page = param.start_page
+    
     var param = {
       url: 'castingpinhome/home',
       type: 'POST',
-      data: { 'type': type },
+      data: {
+         'type': type,
+         'start_page': start_page
+          },
       sCallback: function (data) {
         //  后台  data
         callback && callback(data);

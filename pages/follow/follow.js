@@ -18,6 +18,7 @@ Page({
         style: 'background-color: #F4333C; color: white',
       }],
     loadingHidden: false,
+    status:0,
   },
   swichNav: function (e) {
 
@@ -77,24 +78,32 @@ Page({
    */
   onLoad: function (options) {
     var that = this
+    var status = options.status
+    that.setData({
+      status: status
+    })
+  
 
     this._loadData();
   },
 
   _loadData: function (type = 0) {
     var that = this
+    var msg = [];
+    msg['type'] = type
+    msg['status'] = that.data.status
+    
+    console.log(msg)
+    follow.follower(msg, (data) => {
 
-    follow.follower(type, (data) => {
-  
       var message = data.data
-  
+      
+      console.log(message)
+
       message.forEach(function (item, index) {
         message[index]['occupation'] = cache_list.handleCache(wx.getStorageSync('chace_record'),item['occupation']); //职业
         message[index]['position'] = cache_list.handleCache(wx.getStorageSync('chace_record'),item['position']); //职位
       })
-
-
-      console.log(message)
 
       that.setData({
         list: message,

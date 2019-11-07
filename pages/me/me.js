@@ -17,7 +17,6 @@ Page({
     var bol = e.currentTarget.dataset.type;
     var that= this
 
-
     me.cutRole(bol, (data) => {
       if (data.code == 201){
 
@@ -70,8 +69,10 @@ Page({
   },
   // 演员
   follow:function(e){
-    wx:wx.navigateTo({
-      url: '../../pages/follow/follow',
+
+    let status = e.currentTarget.dataset.status
+    wx.navigateTo({
+      url: '../../pages/follow/follow?status=' + status,
     })
   },
   list:function(e) {
@@ -231,7 +232,7 @@ message['tags_list'] = cache_list.handleCache(wx.getStorageSync('chace_record'),
             loadingHidden: true
           })
         } else {
-          //授权成功
+  
           console.log('授权成功')
           that._loadData();
         }

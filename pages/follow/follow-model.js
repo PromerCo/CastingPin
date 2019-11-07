@@ -8,7 +8,10 @@ class Follow extends Base {
   follower(parmes, callback) {
     var param = {
       url: 'castingpinactor/foluser',
-      data: { type: parmes },
+      data: { 
+        type:   parmes.type,
+        status: parmes.status
+         },
       type: 'POST',
       sCallback: function (data) {
         callback && callback(data);

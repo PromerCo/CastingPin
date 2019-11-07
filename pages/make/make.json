@@ -1,5 +1,5 @@
 {
   "usingComponents": {
-    
+    "wux-upload": "../../components/dist/upload/index"
   }
 }

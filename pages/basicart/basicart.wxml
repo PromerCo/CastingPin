@@ -38,7 +38,7 @@
     <!-- 艺人 -->
         <view class="basic company">
       <p>
-        <image src="../../image/sms-stage_name.png" class="icon"></image>
+        <image src="../../image/icon/sms-stage_name.png" class="icon"></image>
          <span class="commoo_right">艺 名:</span>
       </p>
       <view class="rig">
@@ -47,7 +47,7 @@
     </view>
     <view class="basic company">
       <p>
-        <image src="../../image/school1.png" class="icon"></image>
+        <image src="../../image/icon/school1.png" class="icon"></image>
        <span class="commoo_right">公 司:</span>
       </p>
       <view class="rig">
@@ -57,26 +57,27 @@
      <!-- 学校 -->
             <view class="basic company">
       <p>
-        <image src="../../image/sms-school.png" class="icon"></image>
+        <image src="../../image/icon/sms-school.png" class="icon"></image>
         <span class="commoo_right">学 校:</span>
       </p>
       <view class="rig"  bindtap="bingd_university"  data-school="{{schoolName}}">
         <input  disabled  placeholder="请选择" placeholder-class="phcolor" type=" text" class="input-xin"  value='{{schoolName}}' ></input>
-           <image src="../../image/xiaojiantou2.png" class="sc_jiantou"></image>
+           <image src="../../image/icon/xiaojiantou2.png" class="sc_jiantou"></image>
       </view>
     </view>
 
     <!-- 城市 -->
     <view class="basic city">
-      <picker mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{customItem}}">
+      <picker mode="region" bindchange="bindRegionChange" vvalue="{{region}}" custom-item="{{customItem}}">
         <view class="picker">
           <p>
-            <image src="../../image/sms-city.png" class="icon"></image>
+            <image src="../../image/icon/sms-city.png" class="icon"></image>
              <span class="commoo_right">城 市:</span>
           </p>
           <view class="rig">
-            <view class="city_y">{{region[0]}}，{{region[1]}}，{{region[2]}}</view>
-            <image src="../../image/xiaojiantou2.png" class="jiantou"></image>
+            <view class="city_y">
+            {{region=='' || region==null?'请选择':region}}</view>
+            <image src="../../image/icon/xiaojiantou2.png" class="jiantou"></image>
           </view>
         </view>
       </picker>
@@ -84,31 +85,48 @@
 
 
  <view class="basic age" bindtap="showPicker_05">
-  <picker mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange">
+
+
+
+  <!-- <picker mode="date" value="{{date}}" bindchange="bindDateChange ">
         <view class="picker">
           <p>
-            <image src="../../image/sms-date.png" class="icon"></image>
+            <image src="../../image/icon/sms-date.png" class="icon"></image>
              <span class="commoo_right">日 期:</span>
           </p>
           <view class="rig">
-            <view class="height_y"> {{date}}</view>
-            <image src="../../image/xiaojiantou2.png" class="jiantou"></image>
+            <view class="height_y"> {{date == null?'请选择':date}}</view>
+            <image src="../../image/icon/xiaojiantou2.png" class="jiantou"></image>
           </view>
           <input hidden value='{{multiArray2[0][multiIndex2[0]]}}{{multiArray2[1][multiIndex2[1]]}}' name="birthday"></input>
         </view>
-  </picker>
+  </picker> -->
+
+
+
+ <wux-date-picker mode="datetime" value="{{ value1 }}" lang="{{ lang }}" data-index="1" data-mode="datetime" bind:confirm="onConfirm" maxDate="2019-11-1" minDate="1980-1-1">
+      <image src="../../image/icon/sms-date.png" class="icon"></image>
+      <view class="current_date">
+           <wux-cell title="日 期:" is-link extra="{{ displayValue1 }}"></wux-cell>
+      </view>
+         <image src="../../image/icon/xiaojiantou2.png" class="jiantouwe"></image>
+ </wux-date-picker>
+
+  
+
+
     </view>
     <view class="basic profession">
       <picker bindchange="bindPickerChange" value="{{occupation_list[index].name}}" range="{{occupation_list}}"  range-key="name">
         <view class="picker">
           <p>
-            <image src="../../image/sms-occupation.png" class="icon"></image>
+            <image src="../../image/icon/sms-occupation.png" class="icon"></image>
              <span class="commoo_right">职 业:</span>
           </p>
           <view class="rig">
             <view class="height_y"> {{occupation_list[index].name}}</view>
       
-            <image src="../../image/xiaojiantou2.png" class="jiantou"></image>
+            <image src="../../image/icon/xiaojiantou2.png" class="jiantou"></image>
           </view>
         </view>
       </picker>
@@ -130,7 +148,7 @@
        <view class="page__bd">
         <view class="sub-title">三围(胸围,腰围,臀围)</view>
        <view class="multi">
-        <wux-multi-picker-view itemHeight="28" value="{{ value }}"  options="{{ options }}" bind:valueChange="onValueChange" />
+        <wux-multi-picker-view  itemHeight="28" value="{{ value }}"  options="{{ options }}" bind:valueChange="onValueChange" />
        </view>
     </view>
     </view>
@@ -145,14 +163,29 @@
      <view class="territory_name">封面照</view>
 
 <!-- https://castingpin.pudata.cn/v1/alioss/index -->
-    <view class="page__bd page__bd_spacing">
-        <wux-upload count="1" listType="picture-card" sizeType="compressed" defaultFileList="{{ fileList }}" max="1" url="https://minip.castingpin.com/v1/alioss/index"  bind:change="onChange" bind:success="onSuccess" bind:fail="onFail"  bind:complete="onComplete" bind:preview="onPreview" >
+<!-- https://minip.castingpin.com/v1/alioss/index -->
+
+
+    <!-- <view class="page__bd page__bd_spacing">
+        <wux-upload count="1" listType="picture-card" sizeType="compressed" defaultFileList="{{ fileList}}" max="1" url="https://minip.castingpin.com/v1/alioss/index"  bind:change="onChange" bind:success="onSuccess" bind:fail="onFail"  bind:complete="onComplete" bind:preview="onPreview" >
             <text>+</text>
         </wux-upload>
 <input name="cover_img"  hidden  value="{{cover_img}}" ></input>
-    </view>
+    </view> -->
 
-<!-- https://castingpin.pudata.cn/v1/alioss/index -->
+<input name="cover_img"  hidden  value="{{actor_url}}" ></input>
+
+<view class="tailor" bindtap="cropper" wx:if="{{actor_url == null}}" >
+      +
+</view>
+
+<view wx:else  class="tailor">
+ <image src="{{actor_url}}" data-src="{{actor_url}}" mode="aspectFit" bindtap="previewImage"></image> 
+</view>
+
+
+
+
 
          <view class="territory_name">短视频</view>
     <view class="page__bd page__bd_spacing">
@@ -247,7 +280,7 @@
 
     <view class="basic company">
       <p>
-        <image src="../../image/school1.png" class="icon"></image>
+        <image src="../../image/icon/school1.png" class="icon"></image>
        <span class="commoo_right">公 司:</span>
       </p>
       <view class="rig">
@@ -260,13 +293,13 @@
       <picker bindchange="positionChange" value="{{position_list[p_index].name}}" range="{{position_list}}"  range-key="name">
         <view class="picker">
           <p>
-            <image src="../../image/hangye.png" class="icon"></image>
+            <image src="../../image/icon/hangye.png" class="icon"></image>
              <span class="commoo_right">职 位:</span>
           </p>
           <view class="rig">
             <view class="height_y"> {{position_list[p_index].name}}</view>
       
-            <image src="../../image/xiaojiantou2.png" class="jiantou"></image>
+            <image src="../../image/icon/xiaojiantou2.png" class="jiantou"></image>
           </view>
         </view>
       </picker>
@@ -276,13 +309,13 @@
       <picker bindchange="industryChange" value="{{industry_list[c_index].name}}" range="{{industry_list}}"  range-key="name">
         <view class="picker">
           <p>
-            <image src="../../image/sms-occupation.png" class="icon"></image>
+            <image src="../../image/icon/sms-occupation.png" class="icon"></image>
              <span class="commoo_right">行 业:</span>
           </p>
           <view class="rig">
             <view class="height_y"> {{industry_list[c_index].name}}</view>
       
-            <image src="../../image/xiaojiantou2.png" class="jiantou"></image>
+            <image src="../../image/icon/xiaojiantou2.png" class="jiantou"></image>
           </view>
         </view>
       </picker>
@@ -292,12 +325,14 @@
       <picker mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{customItem}}">
         <view class="picker">
           <p>
-            <image src="../../image/sms-city.png" class="icon"></image>
+            <image src="../../image/icon/sms-city.png" class="icon"></image>
              <span class="commoo_right">城 市:</span>
           </p>
           <view class="rig">
-            <view class="city_y">{{region[0]}}，{{region[1]}}，{{region[2]}}</view>
-            <image src="../../image/xiaojiantou2.png" class="jiantou"></image>
+<view class="city_y">
+{{region== '' || region== null  ? '请选择' : region}}
+</view>
+            <image src="../../image/icon/xiaojiantou2.png" class="jiantou"></image>
           </view>
         </view>
       </picker>

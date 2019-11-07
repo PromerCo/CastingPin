@@ -85,3 +85,17 @@ font-size: 26rpx;
   font-size: 24rpx;
 
 }
+
+.enshrine{
+height: 120rpx;
+border-bottom: 1rpx solid gray;
+line-height: 60px;
+
+}
+
+.enshrine view{
+font-size: 26rpx;
+float: left;
+margin-left: 38rpx;
+
+}

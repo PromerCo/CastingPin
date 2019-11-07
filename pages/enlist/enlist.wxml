@@ -1,0 +1,123 @@
+
+<view class="wrap"  hidden="{{!loadingHidden}}">
+   <view class="header" id="j_page">
+       <view class="header_content">
+          <view class="header_content_left">
+              <image src="{{list.cover_img== null?'../../image/movie/cp-bg.jpg':list.cover_img}}" mode="aspectFill"></image>
+          </view>
+          <view class="header_content_right">
+  <view class="header_content_right_title">
+   <image src="../../image/icon/tonggao.png"></image>
+  <span class="tg_title">{{list.script}}</span>
+  </view>
+    <view class="header_content_right_content">
+       <p style="letter-spacing:5rpx">{{list.title}}</p> 
+    </view>
+       <view class="header_content_right_time">
+                 时间：
+                 <span>{{list.shoot_time}}</span> 
+      </view>
+          </view>
+       </view>
+
+
+       <view class="collect_content">
+             <view class="collect_left" wx:if="{{is_collect==1}}"  bindtap="onCollect" data-collect="0" data-id="{{list.id}}">
+             <view class="collect_left_img">
+             <image src="../../image/icon/sms-collect.png"></image>
+             </view>
+             <view class="collect_left_text">
+                <span>已收藏</span>
+             </view>
+             </view>
+
+              <view bindtap="onCollect" data-collect="1" class="collect_left" wx:else style="border:2rpx solid #ff5e47" data-id="{{list.id}}">
+                       <view class="collect_left_img">
+                      <image src="../../image/icon/collect.png"></image>
+                      </view>
+                      <view class="collect_left_text">
+                          <span style="color:#ff5e47">收藏</span>
+                      </view>
+              </view>
+
+             <view class="collect_right">
+                 {{enroll_count}}人收藏
+             </view>
+       </view>
+
+       <view class="card_content">
+           <view class="card_content_tg">
+              <span class="card_content_tg_title">招募：</span>
+              <span>{{list.convene}}人</span>
+           </view>
+           
+           <view class="card_content_tg">
+              <span class="card_content_tg_title">年龄：</span>
+              <span>{{list.age}}</span>
+           </view>
+
+           <view class="card_content_tg">
+              <span class="card_content_tg_title">截止：</span>
+              <span>2019/12/15</span>
+           </view>
+
+           <view class="card_content_tg">
+              <span  class="card_content_tg_title">城市：</span>
+              <span>{{list.city}}</span>
+           </view>
+
+  
+<view class="enroll_user">
+         <view class="card_content_tg">
+              <p class="card_content_ms">角色简介</p>
+<view class="container_s" style="height:auto;">  
+              <editor
+  id="editor"
+  class="ql-container"
+  placeholder="{{placeholder}}"
+  showImgSize
+  showImgToolbar
+  showImgResize
+  bindstatuschange="onStatusChange"
+  read-only="true"
+  bindfocus="bindfocus"
+  bindinput="bindinput"
+  bindready="onEditorReady"  selectable="true" >
+</editor>
+</view>
+           </view>
+     <view class="enroll_user_title">已报名({{enroll_number}}/{{list.convene}})</view>
+     <view class="enroll_user_content" >
+         <image wx:for="{{enroll_list}}" src="{{item.avatar_url}}"></image>                                          
+     </view>
+</view>
+
+<view class="enroll_user_footer">
+   
+</view>
+
+       </view>
+
+
+
+
+   <view class="footer_bm">
+        <view class="footer_bm_left ">
+  <button class='share' id="shareBtn" open-type="share" type="primary" hover-class="other-button-hover">   
+   <image src="../../image/icon/feixiang.png"></image>
+  </button>
+
+        </view>
+
+        <view class="footer_bm_right" bindtap="agree" data-id="{{list.id}}">
+              <span>{{agree}}</span>
+        </view>
+   </view> 
+
+
+   </view>
+</view>
+
+<loading hidden="{{loadingHidden}}">
+    加载中...
+</loading>

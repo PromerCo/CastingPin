@@ -1,4 +1,5 @@
 {
+  "enablePullDownRefresh": true,
   "usingComponents": {
       "wux-card": "../../components/dist/card/index",
       "s-tab-scoller": "../../components/dist/s-tab-scoller/index",

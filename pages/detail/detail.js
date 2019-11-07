@@ -20,27 +20,39 @@ Page({
    */
   onLoad: function (options) {
   var that = this  
-    // 缓存数据
-
+  // 缓存数据
   var notice_id = options.id
+
+  var arranger_id = options.arranger_id
+
+  var msg = [];
+
+  msg['notice_id'] = notice_id
+
+  msg['arranger_id'] = arranger_id
+
+
 
   //记录浏览量
   that._loadData(notice_id)
-  detail.list_details(notice_id, (data) => {
+  
+  detail.list_details(msg, (data) => {
     if (data.code == 201) {
       var message = data.data
+
+      console.log(message)
 
       message['occupation'] = cache_list.handleCache(wx.getStorageSync('chace_record'),message['occupation'], 0); //职业
       message['position'] = cache_list.handleCache(wx.getStorageSync('chace_record'),message['position'], 0); //职位
       message['age'] = cache_list.handleCache(wx.getStorageSync('chace_record'),message['age'], 0); //年龄范围
       message['speciality'] = cache_list.handleCache(wx.getStorageSync('chace_record'),message['speciality'].split(","),1,'#'); //特长
       var enroll = JSON.parse(JSON.parse(message['enroll']))
-      
-      console.log(message)   
-
+    
       if (enroll == null || enroll==undefined){
            enroll = [];
       }
+      
+      that.showEditorReady() //炫染数据
       that.setData({
         list: message,
         enroll_list: enroll,
@@ -49,6 +61,8 @@ Page({
         notice_id: notice_id,
         loadingHidden: true
       })
+
+     
     }
   })
   },
@@ -101,7 +115,7 @@ Page({
         that.setData({
           is_enroll: 1,
           enroll_list: image_list,
-            enroll_number: parseInt(that.data.list.enroll_number) + 1,
+          enroll_number: parseInt(that.data.list.enroll_number) + 1,
           agree: '已报名'
         })
       } else if (list.code == 417) {
@@ -143,7 +157,10 @@ Page({
     return statusBarHeight + navigationBarHeight
   },
 
-  onEditorReady() {
+//  onEditorReady() {
+  showEditorReady() {
+
+    console.log('嘻嘻哈哈')
     const that = this
     wx.createSelectorQuery().select('#editor').context(function (res) {
       that.editorCtx = res.context
@@ -162,7 +179,10 @@ Page({
       })
 
     }).exec()
+
   },
+
+
 
   bindinput: function (e) {
     var that = this

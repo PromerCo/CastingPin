@@ -30,19 +30,19 @@
         <view class="center" wx:if="{{material}}">
           <view class="icon city">
      
-            <image src="../../image/pingpau.png" class="address"></image>
+            <image src="../../image/icon/pingpau.png" class="address"></image>
             <p>{{message.stage_name == null ? '暂无资料' : message.stage_name}}</p>
           </view>
           <view class="icon fans">
-            <image src="../../image/Csms-school.png" class="address"></image>
+            <image src="../../image/icon/Csms-school.png" class="address"></image>
             <p>{{message.university == null ? '暂无资料' : message.university}}</p>
           </view>
           <view class="icon music">
-            <image src="../../image/Csms-occupatio.png" class="address"></image>
+            <image src="../../image/icon/Csms-occupatio.png" class="address"></image>
             <p>{{message.occupation== null ? '暂无资料' : message.occupation}}</p>
           </view>
           <view class="icon tag">
-            <image src="../../image/biaoqian.png" class="address"></image>
+            <image src="../../image/icon/biaoqian.png" class="address"></image>
             <p>{{message.tags_list== null ? '暂无资料' : message.tags_list}}</p>
           </view>
         </view>
@@ -53,10 +53,10 @@
     <view class="project_bottom">
       <view class="bottom_all" bindtap="basicart" data-type="{{type}}">
         <p>
-          <image src="../../image/lALPDgQ9rJIOsF_MyMzI_200_200.png" class="guanzhu"></image>
+          <image src="../../image/icon/lALPDgQ9rJIOsF_MyMzI_200_200.png" class="guanzhu"></image>
           <p class="isuse">个人信息</p>
         </p>
-        <image src="../../image/xiaojiantou2.png" class="arrow"></image>
+        <image src="../../image/icon/xiaojiantou2.png" class="arrow"></image>
       </view>
 
         <!-- <view class="bottom_all" bindtap="make">
@@ -67,13 +67,12 @@
         <image src="../../image/xiaojiantou2.png" class="arrow"></image>
       </view> -->
 
-
-      <view class="bottom_all" bindtap="follow">
+      <view class="bottom_all" bindtap="follow" data-status="1">
         <p>
-          <image src="../../image/guanzhu2.png" class="guanzhu"></image>
-          <p class="isuse">关注的通告</p>
+          <image src="../../image/icon/guanzhu2.png" class="guanzhu"></image>
+          <p class="isuse">收藏的通告</p>
         </p>
-        <image src="../../image/xiaojiantou2.png" class="arrow"></image>
+        <image src="../../image/icon/xiaojiantou2.png" class="arrow"></image>
       </view>
 
       <!-- <view class="bottom_all" bindtap="list">
@@ -94,10 +93,10 @@
 
       <view class="bottom_all" bindtap="change" data-type="1">
         <p>
-          <image src="../../image/photo2.png" class="guanzhu" ></image>
+          <image src="../../image/icon/photo2.png" class="guanzhu" ></image>
           <p class="isuse">切换身份</p>
         </p>
-        <image src="../../image/xiaojiantou2.png" class="arrow"></image>
+        <image src="../../image/icon/xiaojiantou2.png" class="arrow"></image>
       </view>
     </view>
   </view>
@@ -125,19 +124,19 @@
 
         <view class="center" wx:if="{{material}}">
           <view class="icon city">
-            <image src="../../image/hangye.png" class="address"></image>
+            <image src="../../image/icon/hangye.png" class="address"></image>
             <p>{{message.industry==null?'暂未填写':message.industry}}</p>
           </view>
           <view class="icon fans">
-            <image src="../../image/zhiwei.png" class="address"></image>
+            <image src="../../image/icon/zhiwei.png" class="address"></image>
             <p>{{message.position==null?'暂未填写':message.position}}</p>
           </view>
           <view class="icon music">
-            <image src="../../image/pingpai.png" class="address"></image>
+            <image src="../../image/icon/pingpai.png" class="address"></image>
             <p>{{message.corporation==null?'暂未填写':message.corporation}}</p>
           </view>
           <view class="icon tag">
-            <image src="../../image/diqu.png" class="address"></image>
+            <image src="../../image/icon/diqu.png" class="address"></image>
             <p>{{message.city==null?'暂未填写':message.city}}</p>
           </view>
         </view>
@@ -146,24 +145,24 @@
     <view class="project_bottom">
         <view class="bottom_all" bindtap="basicart" data-type="{{type}}" >
         <p>
-          <image src="../../image/fabu2.png" class="guanzhu" ></image>
+          <image src="../../image/icon/fabu2.png" class="guanzhu" ></image>
           <p class="isuse">个人信息</p>
         </p>
-        <image src="../../image/xiaojiantou2.png" class="arrow"></image>
+        <image src="../../image/icon/xiaojiantou2.png" class="arrow"></image>
       </view>
-      <view class="bottom_all" bindtap="follow">
+      <view class="bottom_all" bindtap="follow" data-status="0">
         <p>
-          <image src="../../image/guanzhu2.png" class="guanzhu"></image>
+          <image src="../../image/icon/guanzhu2.png" class="guanzhu"></image>
           <p class="isuse">关注的艺人</p>
         </p>
-        <image src="../../image/xiaojiantou2.png" class="arrow"></image>
+        <image src="../../image/icon/xiaojiantou2.png" class="arrow"></image>
       </view>
       <view class="bottom_all" bindtap="sendPull">
         <p>
-          <image src="../../image/gro.png" class="guanzhu" ></image>
+          <image src="../../image/icon/gro.png" class="guanzhu" ></image>
           <p class="isuse">剧组管理</p>
         </p>
-        <image src="../../image/xiaojiantou2.png" class="arrow"></image>
+        <image src="../../image/icon/xiaojiantou2.png" class="arrow"></image>
       </view>
 
       <!-- <view class="bottom_all">
@@ -176,10 +175,10 @@
 
       <view class="bottom_all" bindtap="change" data-type="2">
         <p>
-          <image src="../../image/photo2.png" class="guanzhu"></image>
+          <image src="../../image/icon/photo2.png" class="guanzhu"></image>
           <p class="isuse">切换身份</p>
         </p>
-        <image src="../../image/xiaojiantou2.png" class="arrow"></image>
+        <image src="../../image/icon/xiaojiantou2.png" class="arrow"></image>
       </view>
     </view>
   </view>
@@ -190,7 +189,7 @@
 <view hidden='{{!authHidding}}'>
     <view class='auth'>
          <view class='auth_img'>
-           <image src='../../image/sms-logo.png'></image>                                                 
+           <image src='../../image/icon/sms-logo.png'></image>                                                 
          </view>
                <button bindgetuserinfo="bindGetUserInfo" class="bottom  auth_button" lang="zh_CN" openType="getUserInfo" type="primary"> 
 一键登陆

@@ -14,10 +14,14 @@ Page({
     displayValue2: '请选择',
     lang: 'zh_CN',
     isHidePlaceholder: false,
-    s_index: 1,
-    j_index: 1,
+    s_index: 0,
+    placeholder:'输入团队简介',
+    placeholder_xm: '输入项目简介',
+    j_index: 0,
     url: app.globalData.url,
+    type:0,
     region: ['北京市', '北京市', '东城区'],
+    cover_img:[]
   },
   /**
    * 生命周期函数--监听页面加载
@@ -43,6 +47,43 @@ Page({
     })
   },
 
+  onSuccess(e) {
+
+    var that = this;
+    var cover_img = that.data.cover_img
+    var url_img = e.detail.file.url
+    var url = that.data.url
+    wx.uploadFile({
+      url: url + "/v1/alioss/index",
+      filePath: url_img,
+      name: 'file',
+      data: { 'type': 1 },
+      header: {
+        "Content-Type": "multipart/form-data",
+        'accept': 'application/json'
+      },
+      success: function (res) {
+        console.log(res.data)
+        cover_img.push(res.data);
+        that.setData({
+          cover_img: cover_img
+        })
+      }
+    })
+
+
+  
+  },
+
+  onChange:function(){
+     console.log(55) 
+  },
+  onRemove(e) {
+    var that = this
+    var cover_img = that.data.cover_img
+    var index = e.detail.index
+    cover_img.splice(index,1)
+  },
 
   //保存数据
   formSubmit: throttle(function (e) {
@@ -51,14 +92,12 @@ Page({
 
     cast.pushSave(info, (data) => {
 
-  
-
       if (data.code == 201) {
         /*
         跳转 ME 页面
        */
         wx.redirectTo({
-          url: '../../pages/sign/sign?type=2',
+          url: '../../pages/unit/unit',
         })
 
       } else {
@@ -82,22 +121,47 @@ Page({
   bindinput: function (e) {
     var that = this
     var info = e.detail.html
+  
     that.setData({
-      details: info
+      details: info,
+      type:0
     })
   },
   item_bindinput:function(e){
+
     var that = this
     var info = e.detail.html
     that.setData({
-      item_details: info
+      item_details: info,
+      type: 1
     })
   },
+
+  onEditorFocus:function(e){
+    var that=  this
+    let type = e.target.dataset.type
+    console.log(type)
+    that.setData({
+      type: type
+    })
+
+  },
+
+  onPreview(e) {
+    const { file, fileList } = e.detail
+    wx.previewImage({
+      current: file.url,
+      urls: fileList.map((n) => n.url),
+    })
+  },
+
   //剧类型
   bindNoticeChange: function (e) {
     var that = this
     var theme_list = that.data.theme_list
     var index = e.detail.value
+
+
     var occupation = theme_list[index]['code']
     this.setData({
       j_index: index,
@@ -110,6 +174,7 @@ Page({
     var theme_list = that.data.theme_list
     var index = e.detail.value
     var occupation = theme_list[index]['code']
+
     this.setData({
       s_index: index,
     })
@@ -133,50 +198,32 @@ Page({
   },
 
   onEditorReady() {
+
+
     const that = this
     wx.createSelectorQuery().select('#editor').context(function (res) {
       that.editorCtx = res.context
-
+      
     }).exec()
   },
 
+  onEditorReady_xm() {
+
+
+    const that = this
+    wx.createSelectorQuery().select('#editor_xm').context(function (res) {
+      that.editorCtx_xm = res.context
+
+    }).exec()
+  },
  
 
-  blur() {
-    this.editorCtx.blur()
-  },
-  format(e) {
-    console.log(e)
-    let { name, value } = e.target.dataset
-    if (!name) return
-
-
-    this.editorCtx.format(name, value)
-
-  },
   onStatusChange(e) {
     const formats = e.detail
-    console.log(formats)
 
     this.setData({ formats })
   },
-  insertDivider() {
-    this.editorCtx.insertDivider({
-      success: function () {
-        console.log('insert divider success')
-      }
-    })
-  },
-  clear() {
-    this.editorCtx.clear({
-      success: function (res) {
-        console.log("clear success")
-      }
-    })
-  },
-  removeFormat() {
-    this.editorCtx.removeFormat()
-  },
+
   insertDate() {
     const date = new Date()
     const formatDate = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`
@@ -185,14 +232,13 @@ Page({
     })
   },
 
-  insertImage() {
+  insertImage(e) {
     const that = this
     wx.chooseImage({
       count: 9,
       success: function (res) {
         var image = res.tempFilePaths[0];
         var url = that.data.url
-
         wx.uploadFile({
           url: url + "/v1/alioss/index",
           filePath: image,
@@ -203,7 +249,6 @@ Page({
           },
           success: function (res) {
             console.log(res.data)
-
             that.editorCtx.insertImage({
               src: res.data,
               data: {
@@ -213,14 +258,44 @@ Page({
               width: '100%',
               success: function (e) {
                 console.log(e)
-
               }
             })
-
           }
-
         })
+      }
+    })
+  },
 
+  insertImage_xm:function(){
+    const that = this
+    wx.chooseImage({
+      count: 9,
+      success: function (res) {
+        var image = res.tempFilePaths[0];
+        var url = that.data.url
+        wx.uploadFile({
+          url: url + "/v1/alioss/index",
+          filePath: image,
+          name: 'file',
+          header: {
+            "Content-Type": "multipart/form-data",
+            'accept': 'application/json'
+          },
+          success: function (res) {
+        
+            that.editorCtx_xm.insertImage({
+              src: res.data,
+              data: {
+                id: 'abcd',
+                role: 'god'
+              },
+              width: '100%',
+              success: function (e) {
+                console.log(e)
+              }
+            })
+          }
+        })
       }
     })
   },
@@ -238,9 +313,16 @@ Page({
 
 
     var that = this
+    var notice_list = cache_list.columnCache(wx.getStorageSync('chace_record'), 'type')
+    notice_list.splice(0, 1);
+
+    var theme_list = cache_list.columnCache(wx.getStorageSync('chace_record'), 'theme')
+    theme_list.splice(0,1);
+
+
     that.setData({
-      notice_list: cache_list.columnCache(wx.getStorageSync('chace_record'),'type'),
-      theme_list: cache_list.columnCache(wx.getStorageSync('chace_record'),'theme')
+      notice_list: notice_list,
+      theme_list: theme_list
     })
     
   },

@@ -17,7 +17,12 @@ Component({
         // 监听当前index值，切换
         this.updated(newVal)
       }
-    }
+    },
+    zhiye:{
+      type: String,
+      value: '职业'
+    },
+  
   },
   data: {
     showNavDrap: false,

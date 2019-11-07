@@ -122,11 +122,13 @@
 
 .input-text {
   font-size: 24rpx;
-  margin-top: -3rpx;
+  margin-top: -5rpx;
 }
 
 .input-text_wx {
   font-size: 24rpx;
+  margin-top: -5rpx;
+
 }
 
 .rig {
@@ -157,6 +159,7 @@
   line-height: 80rpx;
   margin: 6rpx 20rpx 12rpx 20rpx;
   border-bottom: 1rpx solid rgb(235, 235, 235);
+  position: relative;
 }
 
 .basic p {
@@ -166,15 +169,15 @@
 }
 
 .icon {
-  width: 38rpx;
-  height: 38rpx;
-  margin-top: 20rpx;
+width: 35rpx;
+height: 35rpx;
+margin-top: 20rpx;
 }
 
 .jiantou {
   width: 50rpx;
   height: 50rpx;
-  margin-top: -68rpx;
+  margin-top: -73rpx;
   float: right;
 }
 
@@ -328,4 +331,39 @@ width: 200rpx !important;
 height: 200rpx !important;
 margin-left: 0rpx !important;
 
+}
+.current_date{
+margin-top: -50px;
+}
+.wux-cell__text {
+margin-left: 40rpx !important;
+
+}
+.wux-cell--access .wux-cell__ft{
+  margin-left: 40rpx !important;
+}
+.jiantouwe {
+width: 50rpx;
+height: 50rpx;
+position: absolute;
+left: 618rpx;
+top: 10rpx;
+}
+
+.tailor{
+width: 180rpx;
+height: 180rpx;
+background: #fafafa;
+text-align: center;
+line-height: 180rpx;
+margin-left: 30rpx;
+margin-top: 30rpx;
+border-radius:16rpx;
+border:2rpx dashed #d9d9d9;
+
+}
+.tailor image{
+width: 180rpx;
+height: 180rpx;
+border-radius:16rpx;
 }

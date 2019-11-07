@@ -3,7 +3,7 @@
 
 <view wx:if="{{list.length !=0}}">
 
- <view  bindtap="see" data-push_id='{{itemName.id}}' class="content" wx:for="{{list}}" wx:for-index="idx" wx:for-item="itemName" wx:key="idx">
+ <view  bindtap="see" data-notice_id='{{itemName.id}}' class="content" wx:for="{{list}}" wx:for-index="idx" wx:for-item="itemName" wx:key="idx">
 
     <view class="x_head">
       <p class="head_text">{{itemName.title}}</p>
@@ -26,7 +26,7 @@
 </view>
 
 <view class='footer'>
-   <view bindtap='navhome'  wx:if="{{type == 1}}">查看更多的公告</view>
+   <view bindtap='navhome'  wx:if="{{type == 1}}">查看更多的剧组</view>
    <view bindtap='publish' wx:else>立即发布</view>
 </view>
 

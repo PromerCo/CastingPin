@@ -1,0 +1,141 @@
+
+<view class="wrap">
+     
+   <view class="casket_header">
+ 
+    <swiper class='bannerSwiper' previous-margin="54rpx" next-margin='54rpx'  indicator-color='#B5B5B5' indicator-active-color='#fff' interval='3000' duration='500' bindchange='onChange' circular='true'>
+      <block wx:for="{{banner}}">
+        <swiper-item style=" border-radius: 20rpx">
+          <image mode="widthFix" class="{{index==xindex?'imageBanner':'imageBanner_small'}}" data-index="{{index}}" data-item="item" src="{{item}}"></image>
+        </swiper-item>
+      </block>
+    </swiper>
+   </view>
+
+
+<view  class="box">
+
+    <view class="casket_content">
+             <view class="casket_content_card">
+                  <view class="casket_content_card_left">
+                     <image src="https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=3740471263,1502499886&fm=58&s=DE3C04C642A280FA18A2A4AD0300800B"></image>
+                  </view>
+                  <view class="casket_content_card_right">
+    <view class="casket_content_card_right_title">
+    我和我的祖国
+     <span class="movie_class">5小时前</span> 
+    </view>
+    
+    <view class="casket_content_card_right_content">
+    <p class="casket_content_card_right_content_one">业务范围：</p>
+    <p class="casket_content_card_right_content_tow">
+    <span>影视制作</span><span>演艺公司</span><span>影视后期</span>
+    <span>宣传发行</span><span>影视周边</span><span>影视投资</span>
+    </p>
+    </view>
+    <view class="casket_content_card_right_top">
+      <p class="casket_content_card_right_content_three">
+        <p >年龄范围：<span style="margin-left:25rpx">18-25岁</span> </p>
+    </p>
+     <view class="casket_content_card_right_top">
+          <view class="card_right_top_left">
+            <image src="../../image/icon/diqu.png"></image>
+            <span>双桥</span>
+          </view>
+          <view class="card_right_top_right">
+             <span>浏览：120次</span>  
+          </view>
+     </view>
+    </view>
+    <view>
+    </view>
+                  </view> 
+             </view>
+    </view>
+
+
+
+    
+    <view class="casket_content">
+             <view class="casket_content_card">
+                  <view class="casket_content_card_left">
+                     <image src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1588364103,2036988885&fm=58&s=DFDDA844965203D4CFA4599303008099"></image>
+                  </view>
+                  <view class="casket_content_card_right">
+    <view class="casket_content_card_right_title">
+     我和我的祖国 
+     <span class="movie_class">1天前</span> 
+    </view>
+    <view class="casket_content_card_right_content">
+    <p class="casket_content_card_right_content_one">业务范围：</p>
+    <p class="casket_content_card_right_content_tow">
+    <span>影视制作</span><span>演艺公司</span><span>影视后期</span>
+    <span>宣传发行</span><span>影视周边</span><span>影视投资</span>
+    </p>
+    </view>
+    <view class="casket_content_card_right_top">
+      <p class="casket_content_card_right_content_three">
+       <p >年龄范围：<span style="margin-left:25rpx">18-25岁</span> </p>
+    </p>
+     <view class="casket_content_card_right_top">
+          <view class="card_right_top_left">
+            <image src="../../image/icon/diqu.png"></image>
+            <span>双桥</span>
+          </view>
+          <view class="card_right_top_right">
+             <span>浏览：120次</span>  
+          </view>
+     </view>
+    </view>
+    <view>
+    </view>
+                  </view> 
+             </view>
+    </view>
+
+
+      <view class="casket_content">
+             <view class="casket_content_card">
+                  <view class="casket_content_card_left">
+                     <image src="https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=2902217750,1702414084&fm=58&s=D78EEEAE4453CBED3C8B5CB30300E00B#"></image>
+                  </view>
+                  <view class="casket_content_card_right">
+    <view class="casket_content_card_right_title">我和我的祖国
+      <span class="movie_class">2天前</span> 
+    </view>
+
+     
+
+    <view class="casket_content_card_right_content">
+    <p class="casket_content_card_right_content_one">业务范围：</p>
+    <p class="casket_content_card_right_content_tow">
+    <span>影视制作</span><span>演艺公司</span><span>影视后期</span>
+    <span>宣传发行</span><span>影视周边</span><span>影视投资</span>
+    </p>
+    </view>
+    <view class="casket_content_card_right_top">
+      <p class="casket_content_card_right_content_three">
+        <p >年龄范围：<span>18-25岁</span> </p>
+    </p>
+     <view class="casket_content_card_right_top">
+          <view class="card_right_top_left">
+            <image src="../../image/icon/diqu.png"></image>
+            <span>双桥</span>
+          </view>
+          <view class="card_right_top_right">
+             <span>浏览：120次</span>  
+          </view>
+     </view>
+    </view>
+    <view>
+    </view>
+                  </view> 
+             </view>
+    </view>
+
+    <!-- <view class="push_ico">
+          <image src="../../image/icon/sms-push.png"></image>
+    </view> -->
+
+    </view>
+</view>

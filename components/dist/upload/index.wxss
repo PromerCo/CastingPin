@@ -61,8 +61,8 @@
 }
 .wux-upload--picture-card .wux-upload__file {
   float: left;
-  width: 156rpx;
-  height: 156rpx;
+  width: 210rpx;
+  height: 210rpx;
   margin: 0 16rpx 16rpx 0;
   padding: 8rpx;
   border-radius: 8rpx;

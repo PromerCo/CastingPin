@@ -30,7 +30,7 @@ Page({
     s_index:1,
     e_index:1,
     n_index:1,
-    j_index:1,
+    j_index:0,
     age_list: [], //年龄范围
     occupation_list: [], //职业
     speciality_list: [], //特长
@@ -42,25 +42,32 @@ Page({
       { 'code': '3', 'name': '50-100'},
       { 'code': '4', 'name': '100-200'},
       { 'code': '5', 'name': '200-500'},
-      { 'code': '6', 'name': '500-1000' }
+      { 'code': '6', 'name': '500-1000'}
       ],
     placeholder: '活动介绍...',
+    script:[],
     url: app.globalData.url,
   },
-
-
-
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
     var that = this
-    console.log(cache_list.columnCache(wx.getStorageSync('chace_record'), 'age'))
-   that.setData({
+    
+    var script = JSON.parse(decodeURIComponent(options.script))
+
+    var occupation = cache_list.columnCache(wx.getStorageSync('chace_record'), 'occupation')
+
+    occupation.splice(0, 1)
+    
+    console.log(script)
+
+    that.setData({
      age_list: cache_list.columnCache(wx.getStorageSync('chace_record'),'age'),
-     occupation_list: cache_list.columnCache(wx.getStorageSync('chace_record'),'occupation'),
+     occupation_list: occupation,
      speciality_list: cache_list.columnCache(wx.getStorageSync('chace_record'),'speciality'),
-     style_list: cache_list.columnCache(wx.getStorageSync('chace_record'),'style')
+     style_list: cache_list.columnCache(wx.getStorageSync('chace_record'),'style'),
+     script: script
   })
 
   },
@@ -69,6 +76,34 @@ Page({
   formSubmit:throttle(function(e){
     var that = this;
     var info = e.detail.value
+    var style = info.style
+    var speciality = info.speciality
+
+    console.log(speciality)
+
+
+
+    if (speciality == '' || speciality == null){
+          wx.showToast({
+            title: "特长不能为空",
+            icon: 'none',
+            duration: 800,
+            mask: true
+          });
+          return false;
+    }
+
+    if (style == '' || style == null) {
+      wx.showToast({
+        title: "风格不能为空",
+        icon: 'none',
+        duration: 800,
+        mask: true
+      });
+      return false;
+    }
+
+
 
     publish.pushSave(info, (data) => {
 
@@ -112,16 +147,15 @@ Page({
 
     var hip = woman[2]
 
-    var woman = woman
 
- 
     that.setData({
-      value: woman,
       bust: bust,
       waist: waist,
       hip: hip,
     })
   },
+
+
 
   bindinput: function (e) {
 
@@ -147,15 +181,17 @@ Page({
     })
 
   },
+ 
 
   //剧类型
   bindNoticeChange:function(e){
     var that = this
-    var notice_list = that.data.notice_list
+
 
     var index = e.detail.value
 
-    var occupation = notice_list[index]['code']
+ 
+
 
     this.setData({
       j_index: index,
@@ -332,7 +368,7 @@ Page({
   bindinput: function (e) {
 
     var that = this
-    var info = e.detail.html
+    var info = e.detail.value
     console.log(info)
 
     that.setData({

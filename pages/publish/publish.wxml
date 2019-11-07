@@ -1,20 +1,152 @@
 <view class="wrap">
   <form bindsubmit="formSubmit" bindreset="formReset">
-
-  <view class='send_active'>
-    <view class='footer'>
-        <button  form-type="submit"  class='save_button' type="primary" >发布</button>
+    <view class='send_active'>
+      <view class='footer'>
+        <button form-type="submit" class='save_button' type="primary">发布</button>
+      </view>
     </view>
-  </view>
-
-     <!-- 剧名 -->
+     <!-- 剧组类型 -->
+    <view class="basic profession fe">
+      <picker bindchange="bindNoticeChange" value="{{script[j_index].script}}" range="{{script}}" range-key="script">
+        <view class="picker">
+          <p>
+            <span class="commoo_right">剧 组 :</span>
+          </p>
+          <view class="rig">
+            <view class="height_y"> {{script[j_index].script}}</view>
+            <input hidden name="cast_id" value="{{script[j_index].id}}"></input>
+            <image src="../../image/icon/xiaojiantou2.png" class="jiantou"></image>
+          </view>
+        </view>
+      </picker>
+    </view>
+    <!-- 剧名 -->
     <view class="title_name name">
-       <p>标题:</p>
+      <p>标 题 :</p>
       <input maxlength="20" placeholder="必填" placeholder-class="phcolor" type=" text" class="input_common" name="title"></input>
     </view>
+    
+    <!-- 性别 -->
+    <view class="basic profession">
+      <picker bindchange="bindSexChange" value="{{sex_list[e_index].name}}" range="{{sex_list}}" range-key="name">
+        <view class="picker">
+          <p>
+            <span class="commoo_right">性 别 :</span>
+          </p>
+          <view class="rig">
+            <view class="height_y"> {{sex_list[e_index].name}}</view>
+            <input hidden name="gender" value="{{sex_list[e_index].id}}"></input>
+            <image src="../../image/icon/xiaojiantou2.png" class="jiantou"></image>
+          </view>
+        </view>
+      </picker>
+    </view>
+    <!-- 年龄 -->
+    <view class="basic profession">
+      <picker bindchange="bindAgeChange" value="{{age_list[s_index].name}}" range="{{age_list}}" range-key="name">
+        <view class="picker">
+          <p>
+            <span class="commoo_right">年 龄 :</span>
+          </p>
+          <view class="rig">
+            <view class="height_y"> {{age_list[s_index].name}}</view>
+            <input hidden name="age" value="{{age_list[s_index].code}}"></input>
 
-       <!-- 剧类型 -->
-  <!-- <view class="basic profession">
+            <image src="../../image/icon/xiaojiantou2.png" class="sc_jiantou"></image>
+          </view>
+        </view>
+      </picker>
+    </view>
+    <!-- 召集人数 -->
+    <view class="basic profession">
+      <picker bindchange="bindNumberChange" value="{{number_list[n_index].name}}" range="{{number_list}}" range-key="name">
+        <view class="picker">
+          <p>
+            <span class="commoo_right">人 数 :</span>
+          </p>
+          <view class="rig">
+            <view class="height_y"> {{number_list[n_index].name}}</view>
+            <input hidden name="convene" value="{{number_list[n_index].code}}"></input>
+            <image src="../../image/icon/xiaojiantou2.png" class="jiantou"></image>
+          </view>
+        </view>
+      </picker>
+    </view>
+    <!-- 职业 -->
+    <view class="basic profession">
+      <picker bindchange="bindPickerChange" value="{{occupation_list[index].name}}" range="{{occupation_list}}" range-key="name">
+        <view class="picker">
+          <p>
+            <span class="commoo_right">职 业 :</span>
+          </p>
+          <view class="rig">
+            <view class="height_y"> {{occupation_list[index].name}}</view>
+            <input hidden name="occupation" value="{{occupation_list[index].code}}"></input>
+            <image src="../../image/icon/xiaojiantou2.png" class="jiantou"></image>
+          </view>
+        </view>
+      </picker>
+    </view>
+
+    <wux-accordion-group>
+      <!-- 三围 -->
+      <wux-accordion title="三围" content="">
+        <view class="page__bd">
+          <view class="multi">
+            <wux-multi-picker-view itemHeight="28" value="{{ value }}" options="{{ options }}" bind:valueChange="onValueChange" />
+            <input hidden name="woman" value="{{value}}"></input>
+            <input hidden name="bust" value="{{bust}}"></input>
+            <input hidden name="waist" value="{{waist}}"></input>
+            <input hidden name="hip" value="{{hip}}"></input>
+          </view>
+        </view>
+      </wux-accordion>
+      <!-- 特长 -->
+      <wux-accordion title="特长" content="">
+        <view class='territory'>
+          <p class="{{item.check}}" wx:for="{{speciality_list}}" data-index='{{index}}' catchtap="check" data-id="{{item.code}}">{{item.name}}
+          </p>
+          <input hidden name="speciality" value="{{tid_s}}"></input>
+        </view>
+      </wux-accordion>
+      <!-- 风格 -->
+      <wux-accordion title="风格" content="">
+        <view class='territory'>
+          <p class="{{item.check}}" wx:for="{{style_list}}" data-index='{{index}}' catchtap="fg_check" data-id="{{item.code}}">{{item.name}}
+          </p>
+          <input hidden name="style" value="{{ter_s}}"></input>
+
+        </view>
+      </wux-accordion>
+    </wux-accordion-group>
+    <!-- 富文本编辑器 -->
+    <view class="synopsis">
+      <view class="jianjie"> 简介 </view>
+      <view class="container_s">
+        <editor id="editor" class="ql-container" placeholder="{{placeholder}}" showImgSize showImgToolbar showImgResize bindstatuschange="onStatusChange" bindinput="bindinput" read-only="{{readOnly}}" bindready="onEditorReady">
+        </editor>
+      </view>
+
+      <view class="toolbar" catchtouchend="format" style="bottom: {{isIOS ? keyboardHeight : 0}}rpx">
+        <i class="iconfont icon-charutupian" catchtouchend="insertImage"></i>
+        <i class="iconfont icon-format-header-2 {{formats.header === 2 ? 'ql-active' : ''}}" data-name="header" data-value="{{2}}"></i>
+        <i class="iconfont icon-format-header-3 {{formats.header === 3 ? 'ql-active' : ''}}" data-name="header" data-value="{{3}}"></i>
+        <i class="iconfont icon-zitijiacu {{formats.bold ? 'ql-active' : ''}}" data-name="bold"></i>
+        <i class="iconfont icon-zitixieti {{formats.italic ? 'ql-active' : ''}}" data-name="italic"></i>
+        <i class="iconfont icon-zitixiahuaxian {{formats.underline ? 'ql-active' : ''}}" data-name="underline"></i>
+        <i class="iconfont icon--checklist" data-name="list" data-value="check"></i>
+        <i class="iconfont icon-youxupailie {{formats.list === 'ordered' ? 'ql-active' : ''}}" data-name="list" data-value="ordered"></i>
+        <i class="iconfont icon-wuxupailie {{formats.list === 'bullet' ? 'ql-active' : ''}}" data-name="list" data-value="bullet"></i>
+      </view>
+
+      <input hidden name="profile" maxlength="-1" value="{{details}}"></input>
+      <view style="height:100rpx;"></view>
+
+    </view>
+  </form>
+</view>
+   <!-- 剧类型 -->
+    <!-- <view class="basic profession">
       <picker bindchange="bindNoticeChange" value="{{notice_list[j_index].name}}" range="{{notice_list}}"  range-key="name">
         <view class="picker">
           <p>
@@ -28,142 +160,3 @@
         </view>
       </picker>
     </view> -->
-
-
-    <!-- 性别 -->
-      <view class="basic profession">
-      <picker bindchange="bindSexChange" value="{{sex_list[e_index].name}}" range="{{sex_list}}"  range-key="name">
-        <view class="picker">
-          <p>
-             <span class="commoo_right">性 别:</span>
-          </p>
-          <view class="rig">
-            <view class="height_y"> {{sex_list[e_index].name}}</view>
-            <input hidden name="gender" value="{{sex_list[e_index].id}}"></input>
-            <image src="../../image/xiaojiantou2.png" class="jiantou"></image>
-          </view>
-        </view>
-      </picker>
-    </view>
-    
-    <!-- 年龄 -->
-  <view class="basic profession">
-      <picker bindchange="bindAgeChange" value="{{age_list[s_index].name}}" range="{{age_list}}"  range-key="name">
-        <view class="picker">
-          <p>
-             <span class="commoo_right">年 龄:</span>
-          </p>
-          <view class="rig">
-            <view class="height_y"> {{age_list[s_index].name}}</view>
-            <input hidden  name="age" value="{{age_list[s_index].code}}"></input>
-
-            <image src="../../image/xiaojiantou2.png" class="sc_jiantou"></image>
-          </view>
-        </view>
-      </picker>
-    </view>
-
-  <!-- 召集人数 -->
-
-    <view class="basic profession">
-      <picker bindchange="bindNumberChange" value="{{number_list[n_index].name}}" range="{{number_list}}"  range-key="name">
-        <view class="picker">
-          <p>
-             <span class="commoo_right">人 数:</span>
-          </p>
-          <view class="rig">
-            <view class="height_y"> {{number_list[n_index].name}}</view>
-            <input hidden name="convene" value="{{number_list[n_index].code}}"></input>
-            <image src="../../image/xiaojiantou2.png" class="jiantou"></image>
-          </view>
-        </view>
-      </picker>
-    </view>
-
-    <!-- 职业 -->
-  <view class="basic profession">
-      <picker bindchange="bindPickerChange" value="{{occupation_list[index].name}}" range="{{occupation_list}}"  range-key="name">
-        <view class="picker">
-          <p>
-             <span class="commoo_right">职 业:</span>
-          </p>
-          <view class="rig">
-            <view class="height_y"> {{occupation_list[index].name}}</view>
-            <input hidden name="occupation" value="{{occupation_list[index].code}}"></input>
-            <image src="../../image/xiaojiantou2.png" class="jiantou"></image>
-          </view>
-        </view>
-      </picker>
-    </view>
-
-
-   <wux-accordion-group >
-            <wux-accordion  title="三围" content="">
-            <view class="page__bd">
-            <view class="multi">
-            <wux-multi-picker-view itemHeight="28" value="{{ value }}"  options="{{ options }}" bind:valueChange="onValueChange" />
-          <input hidden  name="woman" value="{{value}}"></input>
-          <input hidden  name="bust" value="{{bust}}"></input>
-          <input hidden  name="waist" value="{{waist}}"></input>
-          <input hidden  name="hip" value="{{hip}}"></input>
-              </view>
-            </view>
-            </wux-accordion>
-
-            <wux-accordion  title="特长" content="">
-    <view class='territory'>
-    <p  class="{{item.check}}" wx:for="{{speciality_list}}" data-index='{{index}}'   catchtap="check" data-id="{{item.code}}">{{item.name}}
-    </p>
-  <input  hidden  name="speciality" value="{{tid_s}}"></input>
-    </view>
-            </wux-accordion>
-            <wux-accordion  title="风格" content="">
-<view class='territory'>
-              <p  class="{{item.check}}" wx:for="{{style_list}}" data-index='{{index}}'   catchtap="fg_check" data-id="{{item.code}}">{{item.name}}
-              </p>
-   <input hidden  name="style" value="{{ter_s}}"></input>
-              
-    </view>
-            </wux-accordion>
-    </wux-accordion-group>
-
-
- <!-- 富文本编辑器 -->
-    <view class="synopsis">
-<view class="jianjie"> 简介 </view>
-<view class="container_s" >
-<editor
-  id="editor"
-  class="ql-container"
-  placeholder="{{placeholder}}"
-  showImgSize
-  showImgToolbar
-  showImgResize
-  bindstatuschange="onStatusChange"
-  bindinput="bindinput"	
-  read-only="{{readOnly}}"
-  bindready="onEditorReady">
-</editor>   
-</view>
-<view class="toolbar" catchtouchend="format" style="bottom: {{isIOS ? keyboardHeight : 0}}rpx">
-  <i class="iconfont icon-charutupian" catchtouchend="insertImage"></i>
-  <i class="iconfont icon-format-header-2 {{formats.header === 2 ? 'ql-active' : ''}}" data-name="header" data-value="{{2}}"></i>
-  <i class="iconfont icon-format-header-3 {{formats.header === 3 ? 'ql-active' : ''}}" data-name="header" data-value="{{3}}"></i>
-  <i class="iconfont icon-zitijiacu {{formats.bold ? 'ql-active' : ''}}" data-name="bold"></i>
-  <i class="iconfont icon-zitixieti {{formats.italic ? 'ql-active' : ''}}" data-name="italic"></i>
-  <i class="iconfont icon-zitixiahuaxian {{formats.underline ? 'ql-active' : ''}}" data-name="underline"></i>
-  <i class="iconfont icon--checklist" data-name="list" data-value="check"></i>
-  <i class="iconfont icon-youxupailie {{formats.list === 'ordered' ? 'ql-active' : ''}}" data-name="list" data-value="ordered"></i>
-  <i class="iconfont icon-wuxupailie {{formats.list === 'bullet' ? 'ql-active' : ''}}" data-name="list" data-value="bullet"></i>
-</view>
-
-
- <input hidden  name="profile" maxlength="-1" value="{{details}}"></input>
-
-<view style="height:100rpx;"></view> 
-
-  </view>
-
- 
-  </form>
-</view>

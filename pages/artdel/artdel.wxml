@@ -1,10 +1,72 @@
 <view class="wrap" hidden="{{!loadingHidden}}">
   <!-- 封面图 -->
   <view class="cover" >
-    <view class="picture" bindtap="previewImage">
-      <image src="{{list.cover_img}}" mode="aspectFill" data-src="{{list.cover_img}}"></image>
+    <view class="picture">
+
+<!-- <swiper current="1" class='u-wrp-bnr'  circular='true'>
+  <block wx:for="{{bnner_img}}" wx:for-index="index">
+    <swiper-item> -->
+      <image  bindtap="previewImage" data-src="{{list.cover_img}}"  lazy-load="true" show-menu-by-longpress="true"   src='{{list.cover_img}}' class='u-img-slide' mode='aspectFill'></image>
+    <!-- </swiper-item>
+  </block>
+</swiper> -->
+
+
+
+<view class="ava_img">
+  <image   src="{{list.avatar_url}}"></image>
+</view>
+
+<view class="soperng"></view>
+
+<view class="artist_name">
+     <span>{{list.stage_name==null?'暂无资料':stage_name}}</span>
+     <!-- <span>{{list.occupation}}</span> -->
+</view>
+
+<!-- <view class="artis_tag">
+   <view class="artis_tag_follow">
+     <span class="artis_tag_follow_img"><image src="../../image/icon/sms-browse.png"></image></span>
+     <span class="artis_tag_follow_num"> 51 </span>
+   </view>
+   <view class="artis_tag_follow">
+     <span class="artis_tag_follow_img"><image src="../../image/icon/sms-fs.png"></image></span>
+     <span class="artis_tag_follow_num"> 84 </span>
+   </view>
+</view>  -->
+
+<view class="portrait">
+
+  <view >
+  <span>年龄</span>
+  <span class="portrait_tow">{{list.birthday}}岁</span>
+  </view>
+
+  <view >
+  <span>身高</span>
+  <span class="portrait_tow">{{list.height}}cm</span>
+  </view>
+
+  <view >
+  <span>体重 </span>
+  <span class="portrait_tow">{{list.weight}}kg </span>
+  </view>  
+
+  <view >
+  <span>三围 </span>
+  <span class="portrait_tow">{{list.woman==null?'暂无资料':list.woman}} </span>
+  </view>  
+
+
+</view>
+
+<view class="slicing"></view>
+
+
+
+<!-- <image src="{{list.cover_img}}" mode="aspectFill" data-src="{{list.cover_img}}"></image> -->
     </view>
-    <view class="picture_image">
+    <!-- <view class="picture_image">
       <view>
         <image src="../../image/tabbar/me.png" class="me"></image>
         <p class="pic_name">{{list.stage_name}}</p>
@@ -12,34 +74,60 @@
       </view>
       <view class="new">
         <p class="width">{{list.height}}cm</p>
-        <p class="circles">{{list.woman}}</p>
+        <p class="circles" style="width:150rpx">{{list.woman}}</p> 
         <view class="speciality">
           <p>特长：</p>
-
           <span>{{list.speciality}} </span>
         </view>
       </view>
-    </view>
+    </view> -->
+
   </view>
   <!-- 音频 -->
   <!-- <view class="audio">
     <audio src="{{current.src}}" poster="{{current.poster}}" name="{{current.name}}" author="{{current.author}}" action="{{audioAction}}" bindplay="audioPlayed" bindtimeupdate="audioTimeUpdated" controls></audio>
   </view> -->
   <!-- 视频 -->
-  <view class="video">
+  <!-- <view class="video">
     <video id="myVideo" src="{{list.cover_video}}"
       binderror="videoErrorCallback" controls></video>
-  </view>
+  </view> -->
   <!-- 写真 -->
   <view>
-  <view class="photo">写真</view>
-    <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" circular="{{circular}}" vertical="{{vertical}}" interval="{{interval}}" duration="{{duration}}" previous-margin="{{previousMargin}}px" next-margin="{{nextMargin}}px">
+  <view class="photo">形象照片</view>
+
+    <!-- <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" circular="{{circular}}" vertical="{{vertical}}" interval="{{interval}}" duration="{{duration}}" previous-margin="{{previousMargin}}px" next-margin="{{nextMargin}}px">
       <block>
-        <swiper-item>
-          <image src="{{list.cover_img}}"></image>
-        </swiper-item>
+        <swiper-item> -->
+
+
+        <view class="photo_img">
+            <image mode="aspectFill" src="{{list.bnner_img[0]}}"></image>
+            <!-- <image mode="aspectFill" src="{{list.cover_img}}"></image>
+            <image mode="aspectFill" src="{{list.cover_img}}"></image> -->
+        </view>
+
+  
+
+        <!-- 身份 -->
+        <!-- <view class="shenfen">身份</view>
+        <view class="dignity">
+            <span>平面模特</span>
+            <span>演员</span>
+            <span>主持人</span>
+        </view> -->
+
+        <view class="fenge">特长</view>
+        <view class="dignity">
+            <span wx:for="{{list.techang}}">{{item}}</span>
+
+        </view>
+
+
+        <!-- </swiper-item>
       </block>
-    </swiper>
+    </swiper> -->
+
   </view>
   <!-- 剧照 -->
   <!-- <view>
@@ -77,18 +165,18 @@
    
       <view>
         <button class='share' id="shareBtn" open-type="share" type="primary" hover-class="other-button-hover">
-            <image src='../../image/share.png'></image>
+            <image src='../../image/share/share.png'></image>
             <span class="share-title">分享</span>
           </button>
 
        </view>
 
     <view bindtap="bindFollow" data-status="{{status}}" data-id="{{list.id}}">
-      <image src="../../image/collection.png"></image>
+      <image src="../../image/share/collection.png"></image>
       <span>{{follow}}</span>
     </view>
     <view catchtap='invite' data-id="{{list.id}}">
-      <image src="../../image/email.png"></image>
+      <image src="../../image/share/email.png"></image>
       <span>邀请</span>
     </view>
   </view>

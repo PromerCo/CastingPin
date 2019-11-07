@@ -5,7 +5,7 @@
 .container_s {
   top: 0; 
   left: 0; 
- padding:20px;
+ padding:10px;
 
 }
 .container_s p{
@@ -14,12 +14,10 @@ margin-left:16rpx;
 }
 
 .jianjie{
-
 font-size: 24rpx;
 margin-top: 30rpx;
-border-bottom: 1rpx solid rgb(247, 247, 247);
 padding-left: 38rpx;
-height: 60rpx;
+
 
 }
 
@@ -37,6 +35,7 @@ margin-left:16rpx;
   line-height: 1.5;
   overflow: auto;
   padding: 10px 10px 20px 10px;
+border: 1rpx solid #F0F0F0;
 
 }
 
@@ -77,16 +76,14 @@ width: 50rpx;
 height: 50rpx;
 margin-top: -60rpx;
 float: right;
-
-
 }
-
 
 .wrap {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
+  margin-top: 100rpx;
 }
 .name {
 height:100rpx;
@@ -128,12 +125,13 @@ padding-right:45rpx;
 }
 
 .input_common {
+
 float: right;
-height: 100rpx;
-line-height: 100rpx;
+height: 80rpx;
+line-height: 80rpx;
 font-size: 24rpx;
 text-align: left;
-margin-left: 50rpx;
+margin-left: 10rpx;
 
 }
 .follow_picker{
@@ -207,17 +205,24 @@ font-size:28rpx;
   margin-top: 230rpx !important;
 }
 .basic {
+
 display: flex;
-height: 85rpx;
-line-height: 85rpx;
-border-bottom: 1rpx solid rgb(247, 247, 247);
-padding-left: 42rpx;
+height: 90rpx;
+line-height: 90rpx;
+border-bottom: 1rpx solid #F0F0F0;
+padding-left: 28rpx;
+width: 90%;
+margin: 0 auto;
+
 
 }
 .basic p {  
+
 display: flex;
-font-size: 26rpx;
-width: 115rpx;
+font-size: 24rpx;
+width: 100rpx;
+color: #484848;
+
 }
 .picker{
   display: flex;
@@ -229,14 +234,15 @@ height: 38rpx;
 margin-top: 20rpx;
 }
 .jiantou{
+position: absolute;
 width: 50rpx;
 height: 50rpx;
-margin-top: -68rpx;
-float: right;
+margin-top: 20rpx;
+right: 20rpx;
 }
 .height_y{
-  width: 325rpx;
-  height: 80rpx;
+height: 80rpx;
+float: right;
 }
 .rig{
 width: 520rpx;
@@ -250,7 +256,7 @@ height: 80rpx;
 font-size: 24rpx;
 width: 92%;
 margin: 0 auto;
-border-bottom: 1rpx solid rgb(235, 235, 235);
+border-bottom: none;
 }
 
 .sub-title{
@@ -289,13 +295,14 @@ border-radius:10rpx;
 }
 
 .send_active{
-  width:100%;
-  height:100rpx;
-  position:fixed;
-  background:white;
-  top:0;
-  /* border-bottom:1rpx solid #F0F0F0; */
-  z-index:10000;
+width: 100%;
+height: 90rpx;
+position: fixed;
+background: white;
+top: 0;
+z-index: 10000;
+box-shadow: 0rpx 0rpx 2rpx 1rpx #F0F0F0;
+
 }
 
 .footer{
@@ -303,12 +310,83 @@ position:fixed;
 z-index:100000;
 right:12rpx;
 top:12rpx;
+width: 150rpx;
 }
 
 .title_name{
   margin-top: 120rpx;
 }
 .button-hover{
-  font-size: 28rpx !important;
-  
+  font-size: 24rpx !important; 
+  width: 150rpx;
+}
+
+/*
+  新页面
+*/
+.city_y{
+  float: right
+}
+.casket_header{
+border: 1rpx solid  #F0F0F0;
+width: 90%;
+margin: 30rpx auto;
+display: flex;
+border-radius: 50rpx;
+height: 80rpx;
+line-height: 80rpx;
+padding-left: 30rpx;
+}
+
+.casket_header_title{
+color: #484848;
+font-size: 26rpx;
+}
+
+.casket_header_title p{
+
+}
+
+.casket_header_input{
+
+}
+
+.casket_header_input input{
+
+}
+
+.casket_header_input span{
+ margin-left: 20rpx;
+ color: gray;
+}
+
+.territory_name {
+  line-height: 80rpx;
+  height: 80rpx;
+  font-size: 24rpx;
+  width: 92%;
+  margin: 0 auto;
+  border-bottom: none;
+}
+
+wux-upload--picture-card .wux-upload__file {
+  width: 210rpx !important;
+  height: 210rpx  !important;
+  border: 1rpx solid #d9d9d9  !important;
+  border-radius: 10rpx;
+
+}
+.wux-upload{
+margin-top: 10rpx !important;
+margin-left: 30rpx !important;
+}
+.wux-upload--picture-card .wux-upload__select {
+width: 210rpx !important;
+height: 210rpx !important;
+margin-left: 0rpx !important;
+
+}
+.save_button{
+  width: 150rpx;
+  font-size: 26rpx;
 }

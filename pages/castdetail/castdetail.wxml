@@ -1,0 +1,139 @@
+<view class="wrap" hidden="{{!loadingHidden}}">
+  <view class="picture">
+        <view class="picture_left" bindtap="nva_home">
+             <image src="../../image/icon/jt.png"></image>
+       </view>
+    <image src="{{list.cover_img== null?'../../image/movie/cp-bg.jpg':list.cover_img}}" mode="aspectFill" bindtap="imgYu" data-src="{{list.cover_img}}"></image>
+
+    
+       <view class="picture_address" >
+             <image src="../../image/icon/address.png"></image>
+             <span>{{list.city}}</span>
+       </view>
+
+       <view class="picture_follow">
+           <span>{{follow_counts}}人 关注过</span>
+       </view>
+
+  </view>
+  <view class="title">
+    <text class="word1">{{list.script}}</text>
+  </view>
+
+  <view class="follow">
+
+  <view wx:if="{{follow_status == 0}}" bindtap="follow" data-status="1" data-arranger_id="{{list.arranger_id}}">
+      <span >+关注</span>
+  </view>
+  <view wx:else  bindtap="follow" data-status="0" data-arranger_id="{{list.arranger_id}}">
+      <span>已关注</span>
+  </view>
+  </view>
+  <view class="announce" wx:for="{{list.notice}}" bindtap="zhaomu" data-notice_id="{{item.id}}" data-cast_id="{{item.cast_id}}"> 
+       <view class="announce_content" >
+           <view class="announce_content_title">
+              <span>{{item.title}}</span>
+              <span> | </span>
+              <span>{{item.occupation}}</span>
+           </view>
+           <view class="zhaomu">
+                招募中
+           </view>
+           <view class="announce_content_footer">
+                <view class="announce_content_footer_img">
+                   <image src="../../image/icon/sms-follow.png"></image>
+                   <span>{{item.convene}}</span>
+                </view>
+                <view class="announce_content_footer_right">
+                   <span>{{item.shoot_time}}</span>
+                </view>
+           </view>
+       </view>
+  </view>
+
+  <view class="introduce">
+    <view class="head">
+      <image src="../../image/icon/gongsi.png"></image>
+      <p>公司简介</p>
+    </view>
+    <!-- <view class="word">
+      天螟传媒EE Mda)成立于2004年，是中国领先的青年文化公司。旗下拥有天娱音乐和天燥影视两大核心业务板块。为中国12- 35岁的年轻酒费群体提供倒像艺人。音乐唱片，演唱合。电影。电视园、综艺节日。图书等优质娱乐内容及街生产品。天娱传媒以青年娱乐文化产 品的制造和优质青年偶像的打造，作为公司的核心竞争力。同中国最优质的电视媒体。网络门户。根睛网站。社交媒体，商业品牌。中国乃至世界顶尖的明星保持良好的合作共高关展，正運步成长成为中国领先的青年文化公司。
+    </view> -->
+    <view class="container_s" style="height:auto;">
+<editor
+  id="editor"
+  class="ql-container"
+  placeholder="{{placeholder}}"
+  showImgSize
+  showImgToolbar
+  showImgResize
+  bindstatuschange="onStatusChange"
+  read-only="true"
+  bindfocus="bindfocus"
+  bindinput="bindinput"
+  bindready="onEditorReady"  selectable="true" >
+</editor>
+   </view>
+
+  </view>
+  <view class="Range">
+   <view class="head">
+      <image src="../../image/icon/tame.png"></image>
+      <p>团队介绍</p>
+    </view>
+    <!-- <view class="word">
+  天娱传媒专注影视拍摄制作，宣发支持。周边可生品一站式服务。团队历经多年商业影视作品朗作。集合了业内专业的营销专家和影视专家，整合传统和新兴商业广告形式，致力于影视创意策划。专业制作。营销传操等-站式视频营销项目服务。
+    </view> -->
+       <view class="container_s" style="height:auto;">
+<editor
+  id="tema_editor"
+  class="ql-container"
+  showImgSize
+  showImgToolbar
+  showImgResize
+  read-only="true"
+  selectable="true" >
+</editor>
+   </view>
+
+  </view>
+  <view class="works" >
+    <view class="head">
+      <image src="../../image/icon/works.png"></image>
+      <p>其它剧组</p>
+    </view>
+    <view class="photo" >
+   <view class="photo_img" wx:for="{{list.cast_list}}" bindtap="cast_list" data-arranger_id="{{item.arranger_id}}" data-cast_id="{{item.id}}">
+   <image src="{{item.cover_img== null?'../../image/movie/cp-bg.jpg':item.cover_img}}" mode="aspectFill"></image>
+      <view class="photo_img_content">
+            <span>{{item.script}}</span>
+      </view>
+   </view>
+
+  
+    </view>
+  </view>
+
+    <!-- <view class="works">
+    <view class="head">
+      <image src="../../image/icon/lianxi.png"></image>
+      <p>联系方式</p>
+    </view>
+          <view class="lianxi">
+             <view >
+                 <span>电 话：</span>
+                 <span> 18511236598</span>
+             </view>
+             <view> 
+                  <span>地 址：</span>
+                  <span> 北京朝阳区双桥铁路小区</span>
+             </view>
+        </view>
+    </view> -->
+
+
+</view>
+
+<loading hidden="{{loadingHidden}}">
+    加载中...
+</loading>

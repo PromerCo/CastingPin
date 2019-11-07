@@ -8,12 +8,16 @@ class Artist extends Base {
  /*
  首页列表
  */
-  getlist(style,callback) {
-   
+  getlist(param,callback) {
+    var info = param
+    console.log(info.style)
     var param = {
       url: 'castingpinactor/list',
       type: 'POST',
-      data: { 'style': style},
+      data: { 
+        start_page: info.start_page,
+        style: info.style,
+        },
       sCallback: function (data) {
         //  后台  data
         callback && callback(data);

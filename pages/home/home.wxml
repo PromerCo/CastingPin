@@ -1,0 +1,64 @@
+
+<view class="wrap" hidden="{{!loadingHidden}}">
+     
+
+   <view class="casket_header">
+    <swiper class='bannerSwiper' previous-margin="54rpx" next-margin='54rpx'  indicator-color='#B5B5B5' indicator-active-color='#fff' interval='3000' duration='500' bindchange='onChange' circular='true'>
+      <block wx:for="{{list}}" wx:for-index="i" wx:if="{{i<5}}">
+        <swiper-item style=" border-radius: 20rpx" bindtap="detail" data-cast_id="{{item.id}}"  data-arranger_id="{{item.arranger_id}}">
+          <image mode="widthFix" class="{{index==xindex?'imageBanner':'imageBanner_small'}}" data-index="{{index}}" lazy-load="true"  data-item="item" mode="aspectFill" src="{{item.cover_img== null?'../../image/movie/cp-bg.jpg':item.cover_img}}"></image>
+        </swiper-item>
+      </block>
+    </swiper>
+   </view>
+
+
+<view  class="box">
+<!-- <scroll-view scroll-y="true" style="height: 800rpx;" > -->
+    <view class="casket_content" wx:for="{{list}}" wx:for-index="i" wx:if="{{i>=5}}">
+             <view class="casket_content_card" bindtap="detail" data-cast_id="{{item.id}}"  data-arranger_id="{{item.arranger_id}}">
+                  <view class="casket_content_card_left">
+                     <image lazy-load="true" src="{{item.cover_img == null?'../../image/movie/cp-bg.jpg':item.cover_img}}"></image>
+                  </view>
+                  <view class="casket_content_card_right">
+    <view class="casket_content_card_right_title">
+    {{item.script}}
+     <span class="movie_class">{{item.create_time}}前</span> 
+    </view>
+    <view class="casket_content_card_right_content">
+    <p class="casket_content_card_right_content_one">题材 ：{{item.theme}}</p>
+    </view>
+    <view class="casket_content_card_right_top">
+    <p class="casket_content_card_right_content_three">
+        <p >剧型 ：<span >{{item.type}}</span> </p>
+    </p>
+    </view>
+    <view class="casket_content_card_right_top">
+    <p class="casket_content_card_right_content_three">
+        <p >时间 ：<span >{{item.debut_time}}</span> </p>
+    </p>
+    </view>
+       <view class="casket_content_card_right_top">
+          <view class="card_right_top_left">
+            <image src="../../image/icon/diqu.png"></image>
+            <span>{{item.city}}</span>
+          </view>
+          <view class="card_right_top_right">
+             <span>浏览：{{item.browse}}次</span>  
+          </view>
+     </view>
+    <view>
+    </view>
+    </view> 
+   </view>
+    </view>
+    <view class="push_ico"  bindtap="publish">
+          <image src="../../image/icon/sms-push.png"></image>
+    </view>
+   <!-- </scroll-view> -->
+    </view>
+</view>
+
+<loading hidden="{{loadingHidden}}">
+    加载中...
+</loading>

@@ -69,3 +69,33 @@ width: 100%;
 height: 900rpx;
 margin: 50rpx 70rpx;
 }
+#picture .wux-upload--picture-card .wux-upload__select{
+  width: 750rpx !important;
+  height: 300rpx !important;
+  margin: 20rpx 16rpx 16rpx 0;
+  background-image:url('https://i03piccdn.sogoucdn.com/fcdc913ec2458092');
+
+}
+#picture-second .wux-upload--picture-card .wux-upload__select{
+  width: 650rpx !important;
+  height: 500rpx !important;
+  margin: 40rpx !important;
+  background-image:url('https://i02piccdn.sogoucdn.com/da07bf00e21e8a66');
+
+}
+#footer{
+
+ text-align: center;
+ margin-top: 30rpx;
+
+}
+
+.he_img{
+
+}
+
+.he_img image{
+  width: 400rpx;
+  height: 900rpx;
+
+}

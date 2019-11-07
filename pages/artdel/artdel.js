@@ -25,7 +25,7 @@ Page({
     },
     // 视屏
     src: '',
-    indicatorDots: true,
+    indicatorDots: false,
     vertical:false,
     autoplay: false,
     circular: true,
@@ -123,10 +123,30 @@ Page({
 
       var message = data.data
 
-      var techang = message['speciality'];
+      console.log(message)
 
+  
+      var draw_img = message.profile
+
+      var reg = /<img[^>]*src[=\'\"\s]+([^\"\']*)[\"\']?[^>]*>/gi;
+
+      var bnner_img = [];
+
+      while (reg.exec(draw_img)){
+        bnner_img.push(RegExp.$1)
+      }
+
+      console.log(bnner_img)
+
+      var techang = message['speciality'];
+    
+
+   
       if (techang != null || techang!=undefined){
-        message['speciality'] = cache_list.handleCache(wx.getStorageSync('chace_record'),message['speciality'], 1, '#'); //特长
+
+        message['techang'] = cache_list.handleCache(wx.getStorageSync('chace_record'), message['speciality'].split(','), 0, '#'); //特长
+
+        message['speciality'] = cache_list.handleCache(wx.getStorageSync('chace_record'),message['speciality'].split(','), 1, '#'); //特长
       }else{
         message['speciality'] = '暂无资料'
       }
@@ -142,6 +162,8 @@ Page({
         var invite = [];
       }
 
+      console.log(message)
+
       if (message.status == 0){
         that.setData({
           list: message,
@@ -150,7 +172,8 @@ Page({
           invite: invite,
           follow_number: message['follow_number'],
           loadingHidden:true,
-          invite_number: invite_number
+          invite_number: invite_number,
+          bnner_img: bnner_img
         })
       }else{
         that.setData({
@@ -160,7 +183,8 @@ Page({
           invite: invite,
           follow_number: message['follow_number'],
           loadingHidden: true,
-          invite_number: invite_number
+          invite_number: invite_number,
+          bnner_img: bnner_img
         })
       }
       
@@ -170,6 +194,7 @@ Page({
 
   previewImage: function (e) {
     var current = e.target.dataset.src;
+    console.log(e)
     var arr = []
     arr.push(current)
     wx.previewImage({

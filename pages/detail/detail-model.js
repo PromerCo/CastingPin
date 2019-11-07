@@ -8,12 +8,15 @@ class Detail extends Base {
   /*
     详情内容
   */
-  list_details(notice_id, callback) {
+  list_details(msg, callback) {
+    console.log(msg)
+    
     var param = {
       url: 'castingpinhome/details',
       type: 'POST',
       data: {
-        'notice_id': notice_id,
+        'notice_id': msg.notice_id,
+        'arranger_id': msg.arranger_id,
       },
       sCallback: function (data) {
         callback && callback(data);

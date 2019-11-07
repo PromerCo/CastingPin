@@ -7,33 +7,33 @@ var cache_list = require('../../utils/package.js');
 
 Page({
   data: {
+    value1: [1997, 1, 1, 0, 0],
+    displayValue1: '请选择',
     loadingHidden: false,
     // 手机号
     phoneNumber: '',
     url: app.globalData.url,
     //日期
-    date:'2016-09-01',
+    date:'请选择',
     message: [],
     // 城市
-    region: ['北京市', '北京市', '东城区'],
-    
+    region: '',
+    ur_status:0,
     // 身高
     multiArray: [
       ['15', '16', '17', '18', '19', '20'],
       ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     ],
-
     //体重
     multiArray1: [
       ['4','5', '6', '7', '8', '9', '10'],
       ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     ],
-    // 年龄
+    //年龄
     multiArray2: [
       ['1', '2', '3', '4', '5', '6', '7', '8'],
       ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     ],
-
     index: 1,
     c_index:1,
     p_index:1,
@@ -41,9 +41,9 @@ Page({
     schoolName:'',
     tag:[],
     index1: 0,
+    actor_url:null,
     // 简介
     isHidePlaceholder: false,
-
     options:[
 ['60','61','62','63','64','65','66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80','81','82','84','85'],
 ['20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35'
@@ -73,21 +73,48 @@ Page({
     imageUrl:[],
     fileList: [],
     fileListVideo:[],
-
+    placeholder:'说点什么呢....',
+    lang: 'zh_CN',
   },
   // 城市
   bindRegionChange: function (e) {
     var that = this
     var conurbation = e.detail.value
     //数组转字符串
-    var city = conurbation.join(",")
+
     var data = [];
-    data.push({ "city": city })
+    data.push({ "city": conurbation[1] })
     that._saveMsg(data)
     this.setData({
-      region: e.detail.value
+      region: conurbation[1]
     })
   },
+
+  /*
+ 时间
+  */
+  onConfirm: function (e) {
+ 
+    var that = this
+    that.setData({
+      displayValue1: e.detail.displayValue[0] + e.detail.displayValue[1] + e.detail.displayValue[2],
+      expire_time: e.detail.label
+    })
+    var data = [];
+    data.push({ "birthday": e.detail.label })
+    that._saveMsg(data)
+
+  },
+
+  previewImage: function (e) {
+    var current = e.target.dataset.src;
+    var img_list = [];
+    img_list.push(current);
+    wx.previewImage({
+      current: current, // 当前显示图片的http链接 
+      urls: img_list    // 需要预览的图片http链接列表 
+    })
+  }, 
 
   //艺人
   bingd_stage:function(e){
@@ -181,13 +208,7 @@ Page({
 
     data.push({ "bust": bust,"waist": waist,"hip": hip,"woman": woman })
 
-    that._saveMsg(data)
-  
-    that.setData({
-        value: woman
-    })
-
-
+    that._saveMsg(data);
 
   },
 
@@ -241,8 +262,6 @@ bingd_wx:function(e){
     var that = this
 
     var birthday = e.detail.value
-
-    console.log(birthday)
 
     var data = [];
     data.push({ "birthday": birthday })
@@ -369,7 +388,7 @@ bingd_wx:function(e){
     })
   },
   onPreview(e) {
-    console.log('onPreview', e)
+
     const { file, fileList } = e.detail
     wx.previewImage({
       current: file.url,
@@ -413,47 +432,34 @@ bingd_wx:function(e){
           type: type,
           message: message,
           loadingHidden: true,
-          position_list: cache_list.columnCache(wx.getStorageSync('chace_record'),'position', 0),      
+          region: message.city,
+          position_list: cache_list.columnCache(wx.getStorageSync('chace_record'),'position', 0),
           industry_list: cache_list.columnCache(wx.getStorageSync('chace_record'),'industry', 0)
         })
       })
     }else{
-
       var speciality = cache_list.columnCache(wx.getStorageSync('chace_record'),'speciality')
- 
-    
-        basicart.getList((data) => {
+      basicart.getList((data) => {
           var message = data.data
-          var tid_s = that.data.tid_s  //特长ID
-       
-      
 
+        console.log(message)
+         
+          var tid_s = that.data.tid_s  //特长ID
           if (message ==null){
             message = [];
           }else{
-
           var woman = message.woman   //三围
           var tecahng = message.speciality  //特长
-     
           if (woman != null || woman != undefined){
               var value = woman.split("-");
-        
           }else{
                var value  = ['68', '28', '95']
           }
-
-    
-  
-
           if (tecahng != null || tecahng != undefined){
-
-            var speciality = cache_list.columnCache(wx.getStorageSync('chace_record'),'speciality')
-
+              var speciality = cache_list.columnCache(wx.getStorageSync('chace_record'),'speciality')
               var check_tags = tecahng.split(",");
- 
               let tags_list = [];
               for (var i = 0; i <= check_tags.length; i++) {
-          
                 for (var j = 0; j < speciality.length; j++) {
         
                   if (speciality[j]['code'] == check_tags[i]) {    
@@ -472,11 +478,13 @@ bingd_wx:function(e){
           var fileList = that.data.fileList  //图片
           var fileListVideo = that.data.fileListVideo //视频
 
-          if (fileList != undefined){
+       
+
+        if (message.cover_img != null ){
             fileList.push({ 'url': message.cover_img })
           } 
 
-          if (fileListVideo != undefined){
+        if (message.cover_video != null){
             fileListVideo.push({ 'url': message.cover_video })
           }
 
@@ -494,7 +502,9 @@ bingd_wx:function(e){
             actor_weight: message.weight,
             phoneNumber: message.phone,
             imageUrl: message.cover_img,
+            region:message.city,
             schoolName: message.university,
+            displayValue1: message.birthday,
             loadingHidden: true,
             tid_s: tid_s,
             value: value,
@@ -505,6 +515,16 @@ bingd_wx:function(e){
         })
 
     }
+  },
+
+  //跳转裁剪页面
+
+  cropper:function(e){
+
+    wx.navigateTo({
+      url: '../../pages/cutInside/cutInside',
+    })
+
   },
 
   onChangeHeight:function(e){
@@ -715,28 +735,7 @@ bingd_wx:function(e){
 
 // 上传图片
   onChange(e) {
-       var that =this
-
-       const { file } = e.detail
-
-      var url = that.data.url
-
-      console.log(file.url)
-
-      wx.uploadFile({
-        url: url + "/v1/alioss/index",
-        filePath: file.url,
-        name: 'file',
-        header: {
-          "Content-Type": "multipart/form-data",
-          'accept': 'application/json'
-        },
-        success: function (res) {
-             
-          console.log('image：' + res)
-
-        }
-      })
+  
  
   },
 
@@ -772,18 +771,15 @@ bingd_wx:function(e){
     console.log('onFail', e)
   },
   onComplete(e) {
-  
     console.log('onComplete', e.detail.data)
-
     var that = this
-
     var data = [];
     data.push({ "cover_img": e.detail.data })
     that._saveMsg(data)
 
-
     wx.hideLoading()
   },
+
   onCompleteVideo(e) {
     console.log('onComplete', e.detail.data)
 
@@ -839,7 +835,18 @@ bingd_wx:function(e){
    */
   onShow: function () {
     var that = this
+  
+    var that = this
 
+
+    var ur_status = that.data.ur_status
+
+    if (ur_status == 1){
+      var actor_url = that.data.actor_url
+      var data = [];
+      data.push({ "cover_img": actor_url })
+      that._saveMsg(data)
+    }
 
     wx.login({
       success: function (res) {

@@ -1,0 +1,24 @@
+
+@import "../../common/style/common.wxss";
+
+.cropper{
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.cropper-buttons{
+    background-color: rgba(0, 0, 0, 0.95);
+  
+position: fixed;
+
+}
+
+.btn{
+height: 30px;
+line-height: 30px;
+padding: 0 24rpx;
+border-radius: 2px;
+color: #ffffff;
+z-index: 10000;
+}

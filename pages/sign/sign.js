@@ -20,9 +20,10 @@ Page({
     url: app.globalData.url
   },
   see: function (e) {
-    var push_id = e.currentTarget.dataset.push_id
+    var notice_id = e.currentTarget.dataset.notice_id
+    console.log(notice_id)
     wx.navigateTo({
-      url: '../../pages/details/details?push_id=' + push_id,
+      url: '../../pages/enlist/enlist?notice_id=' + notice_id
     })
   },
   /**
@@ -32,33 +33,16 @@ Page({
 
     var that = this
     var cast_id = options.cast_id
- 
 
-    sign.list(cast_id, (data) => {
-      var list = data.data
-      
-      console.log(list)
-
-      list.forEach(function (item, index) {
-        list[index]['style'] = cache_list.handleCache(wx.getStorageSync('chace_record'), item['style'].split(','), 1, '#');
-        list[index]['speciality'] = cache_list.handleCache(wx.getStorageSync('chace_record'), item['speciality'].split(','), 1, '#');
-      })
-
-      that.setData({
-        list: list,
-        loadingHidden:true
-      })
-
+    that.setData({
+      cast_id: cast_id
     })
-
-
-   
 
   },
 
   navhome: function (e) {
     wx.switchTab({
-      url: '/pages/group/group'
+      url: '/pages/home/home'
     })
   },
 
@@ -82,7 +66,20 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    var that = this
+    var cast_id = that.data.cast_id
+    sign.list(cast_id, (data) => {
+      var list = data.data
+      console.log(list)
+      list.forEach(function (item, index) {
+        list[index]['style'] = cache_list.handleCache(wx.getStorageSync('chace_record'), item['style'].split(','), 1, '#');
+        list[index]['speciality'] = cache_list.handleCache(wx.getStorageSync('chace_record'), item['speciality'].split(','), 1, '#');
+      })
+      that.setData({
+        list: list,
+        loadingHidden: true
+      })
+    })
 
   },
 

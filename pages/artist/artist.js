@@ -41,7 +41,11 @@ Page({
     texf:'none',
     banner: [],
     video_list:[],
+    start_page: 0,
+    type:100200,
     column: [],
+    loadingHidden:false,
+    list:[]
    
   },
   info: {
@@ -59,6 +63,7 @@ Page({
       hidden: 1
     })
   },
+
   // 点击切换
   onTabsChange: function(e) {
     const {
@@ -67,12 +72,14 @@ Page({
     // 当前项
     const item = this.data.column[index]
     const platform_id = item.code
-    
-    this._loadData(platform_id)
-
+    var start_page = this.data.start_page
     this.setData({
-      loadingHidden: false
+      loadingHidden: false,
+      type: platform_id
     })
+
+    this._loadData(start_page, 1, platform_id)
+
 
   },
   // video
@@ -83,13 +90,12 @@ Page({
     })
   },
   onLoad(options) {
-    
- 
     this.setData({
       column: cache_list.columnCache(wx.getStorageSync('chace_record'),'occupation')
     })
+    var start_page = this.data.start_page
 
-    this._loadData();
+    this._loadData(start_page, 1);
   },
 
   previewImage:function(e){
@@ -106,48 +112,81 @@ Page({
   },
 
 
-
+  /**
+ * 页面相关事件处理函数--监听用户下拉动作
+ */
+  onPullDownRefresh: function () {
+    wx.showNavigationBarLoading() //在标题栏中显示加载
+    var that = this
+    var start_page = 0
+    var type = that.data.type
+    that._loadData(start_page, 1, type);
+  },
   /*
   页面初始化 
   */
-  _loadData: function (style = 100200) {
-    var that = this;
+  _loadData: function (start_page, status = 0,style = 100200) {
 
-    console.log(style)
+    var that = this;
+    var msg = [];
+
+    msg['start_page'] = start_page
+    msg['style']      = style
   
-    artist.getlist(style,(data) => {
+    artist.getlist(msg,(data) => {
+
+      var list = that.data.list;
+
+      console.log(list)
+
       if (data.code == 200){
+
         var video_list = data.data
 
-    
-
+        if (status == 0) {
+          for (var i = 0; i < video_list.length; i++) {
+            list.push(video_list[i])
+          }
+        } else {
+          that.setData({
+            banner: [],
+            type: style,
+            video_list: []
+          })
+        }
         if (video_list.length !=0){
-          video_list.forEach(function (item, index) {
+            video_list.forEach(function (item, index) {
             video_list[index]['width'] = 480
             video_list[index]['height'] = 272
             video_list[index]['isPlay'] = false
           })
           that.setData({
-            banner: video_list,
-            video_list: video_list,
-            status: video_list.status
+            status: video_list.status,
+            type: style,
+            list: video_list,
+            loadingHidden:true
           })
-          that.getVideoList(1)
+           that.getVideoList(1)
         }else{
           that.setData({
             banner: [],
             videoList: [],
-         
+            loadingHidden: true
           })
         }
         
 
       }
+
+      wx.hideNavigationBarLoading() //完成停止加载
+      wx.stopPullDownRefresh(); 
   
     })
     
   },
-  /**
+
+
+/**
    * 分页获取视频
    */
   getVideoList(initPage) {
@@ -180,6 +219,7 @@ Page({
         }
       }, 300)
     }, 300)
+
   },
   
 

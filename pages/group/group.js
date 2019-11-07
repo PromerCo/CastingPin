@@ -3,11 +3,7 @@ const repeatclick = require('../../utils/repeatclick.js');
 import { Group } from 'group-model.js';
 var app = getApp();
 var group = new Group(); //实例化 首页 对象
-
 var cache_list = require('../../utils/package.js');
-
-
-
 //缓存
 Page({
   data: {
@@ -17,47 +13,40 @@ Page({
     list: [],
     banner: [],
     column: [],
-    ava_list:[],
+    start_page: 0,
     dis:"none",
+    type: 100600
   },
   detail:function(e) {
-    var id = e.currentTarget.dataset.id
+    var id = e.currentTarget.dataset.id  //通告Id
+    var arranger_id = e.currentTarget.dataset.arranger_id  //统筹ID
+
     wx.navigateTo({
-      url: '../../pages/detail/detail?id=' + id,
+      url: '../../pages/detail/detail?id=' + id + "&arranger_id=" + arranger_id,
     })
   },
   publish:function() {
-    
     group.getCast( (data) => {
-
-      console.log(data)
-
       if(data.code == 201){
-               wx.navigateTo({
-                 url: '../../pages/publish/publish',
-               })
+        var script = encodeURIComponent(JSON.stringify(data.data))
+        wx.navigateTo({
+          url: '../../pages/publish/publish?script=' + script,
+        })
       }else{
-
         wx.showModal({
           title: "您尚未填写剧组资料",
           content: '确定跳转到剧组页面么',
           showCancel: true,//是否显示取消按钮
           success: function (res) {
-            if (res.cancel) {
-              console.log('取消') 
-            } else {
+            if (!res.cancel) {
               wx.navigateTo({
                 url: '../../pages/cast/cast'
               })
-            }
+            } 
           }
         })
-
         }
     })
-
-
-
   },
   // 点击切换
   onTabsChange: function(e) {
@@ -67,8 +56,14 @@ Page({
     // 当前项
     const item = this.data.column[index]
     const type = item.code
-    that._loadData(type)
-    
+
+
+
+    var start_page = that.data.start_page
+
+    that._loadData(0,type,1);
+
+
   },
   // 显示隐藏
   show(e) {
@@ -99,57 +94,72 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function() {
-
     var that = this
-    that._loadData();
-
+    var start_page = that.data.start_page
+    that._loadData(start_page, 100600,0);
 
   },
 
-  _loadData: function (type=100600){
+  _loadData: function (start_page = 0, type = 100600,status = 0){
     var that = this
     var msg = []
     msg['type'] = type
+    msg['start_page'] = start_page
     group.getlist(msg,(data) => {
-
       var material = data.data.material
-      var cache = wx.getStorageSync('chace_record');
-
+      var cache    = wx.getStorageSync('chace_record');
       if (data.code == 201){
-        var message = data.data 
-        if (message.length == 0) {
-         that.setData({
-           loadingHidden: true,
-           column: cache_list.columnCache(cache),
-           list: [],
-           ava_list:[]
-         })
-       }else{
-          var ava_list = []  //最新 
-          var list     = []  //普通展示
-        message.forEach(function (item, index) {
-          message[index]['occupation'] = cache_list.handleCache(cache,item['occupation'], 0); //职位
-          message[index]['age'] = cache_list.handleCache(cache,item['age'], 0); //年龄
-          message[index]['speciality'] = cache_list.handleCache(cache,item['speciality'].split(','), 1, '#'); //特长
-        if(index<3){
-          ava_list.push(item)
-          that.setData({
-            loadingHidden: true,
-            column: cache_list.columnCache(cache),
-            ava_list: ava_list
+          var message = data.data 
+          var list = that.data.list;
+          if (status == 0) {
+            if (message.length != 0){
+              for (var i = 0; i < message.length; i++) {
+                list.push(message[i])
+              }
+            } else{
+               return   false
+            }
+          } else{
+              list = message
+  
+          }
+
+        if (list.length != 0){
+          list.forEach(function (item, index) {
+            if (isNumber(item['occupation'])) {
+              list[index]['occupation'] = cache_list.handleCache(cache, item['occupation'], 0); //职位
+            }
+            if (isNumber(item['age'])) {
+              list[index]['age'] = cache_list.handleCache(cache, item['age'], 0); //年龄
+            }
+            if (isNumber(item['speciality'].split(',')[0])) {
+              list[index]['speciality'] = cache_list.handleCache(cache, item['speciality'].split(','), 1, '#');
+            }
+            that.setData({
+              loadingHidden: true,
+              start_page: start_page,
+              column: cache_list.columnCache(cache),
+              type: type,
+              list: list
+            })
           })
         }else{
-       
-          list.push(item)
           that.setData({
             loadingHidden: true,
+            start_page: start_page,
             column: cache_list.columnCache(cache),
-            list: list
+            type: type,
+            list: []
           })
         }
+ 
 
-        })
-       }
+
+        setTimeout(function () {
+        wx.hideNavigationBarLoading();
+        wx.stopPullDownRefresh(); 
+        }, 1500);
+  
       }else{
         that.setData({
           loadingHidden: true,
@@ -160,6 +170,66 @@ Page({
     })
 
   },
+
+
+  // option: function (type = 100600){
+
+  //   var that = this
+  //   var ava_list = []  //最新 
+  //   var ata_list = []
+  //   var msg = [];
+  //   msg['type'] = type
+  //   that.setData({
+  //     type: type
+  //   })
+  //   group.getlist(msg, (data) => {
+  //     var message = data.data
+
+  //     var material = data.data.material
+  //     var cache = wx.getStorageSync('chace_record');
+
+  //     if(message.length == 0){
+  //       that.setData({
+  //         loadingHidden: true,
+  //         column: cache_list.columnCache(cache),
+  //         ata_list: [],
+  //         ava_list: [],
+  //       })
+  //     }else{
+
+  //     message.forEach(function (item, index) {
+  //       if (isNumber(item['occupation'])) {
+  //         message[index]['occupation'] = cache_list.handleCache(cache, item['occupation'], 0); //职位
+  //       }
+  //       if (isNumber(item['age'])) {
+  //         message[index]['age'] = cache_list.handleCache(cache, item['age'], 0); //年龄
+  //       }
+  //       if (isNumber(item['speciality'].split(',')[0])) {
+  //         message[index]['speciality'] = cache_list.handleCache(cache, item['speciality'].split(','), 1, '#');
+  //       }
+  //       if (index < 3) {
+  //         ava_list.push(item)
+  //         that.setData({
+  //           loadingHidden: true,
+  //           column: cache_list.columnCache(cache),
+  //           ava_list: ava_list,
+          
+  //         })
+  //       } else {
+  //         ata_list.push(item)
+  //         that.setData({
+  //           loadingHidden: true,
+  //           column: cache_list.columnCache(cache),
+  //           ata_list: ata_list,
+      
+  //         })
+  //       }
+  //   })
+  //     }
+  //   })
+
+  // },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -192,13 +262,24 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function() {
+    wx.showNavigationBarLoading() //在标题栏中显示加载
+    var that = this
+    var start_page = 0
+    var type = that.data.type
 
+    this._loadData(start_page,type,1);
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
+    var that = this;
+    var start_page = that.data.start_page
+    var start_page = start_page + 8 
+    var type = that.data.type
+    console.log(start_page)
+    that._loadData(start_page,type,0);
 
   },
 
@@ -210,3 +291,20 @@ Page({
   }
 })
 
+function  isNumber(val) {
+
+      var  regPos = /^\d+(\.\d+)?$/; //非负浮点数
+
+      var  regNeg = /^(-(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*)))$/; //负浮点数
+
+      if (regPos.test(val) || regNeg.test(val)) {
+
+            return  true;
+
+          }  else  {
+
+            return  false;
+
+          }
+
+    }

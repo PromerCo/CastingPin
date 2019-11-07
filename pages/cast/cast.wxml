@@ -1,24 +1,21 @@
-<view class="wrap">
+<!-- <view class="wrap">
   <form bindsubmit="formSubmit" bindreset="formReset">
-
-  <view class='send_active'>
-    <view class='footer'>
-        <button  form-type="submit"  class='save_button' type="primary" >保存</button>
+    <view class='send_active'>
+      <view class='footer'>
+        <button form-type="submit" class='save_button' type="primary">保存</button>
+      </view>
     </view>
-  </view>
-
-     <!-- 剧名 -->
     <view class="title_name name">
-       <p>剧名:</p>
-      <input maxlength="20" placeholder="必填" placeholder-class="phcolor" type=" text" class="input_common" name="script"></input>
-    </view>
 
- <!-- 剧类型 -->
-  <view class="basic profession">
-      <picker bindchange="bindNoticeChange" value="{{notice_list[j_index].name}}" range="{{notice_list}}"  range-key="name">
+      <p>剧名:</p>
+      <input maxlength="20" placeholder="必填" placeholder-class="phcolor" type=" text" class="input_common" name="script"></input>
+
+    </view>
+    <view class="basic profession">
+      <picker bindchange="bindNoticeChange" value="{{notice_list[j_index].name}}" range="{{notice_list}}" range-key="name">
         <view class="picker">
           <p>
-             <span class="commoo_right">剧 型:</span>
+            <span class="commoo_right">剧 型:</span>
           </p>
           <view class="rig">
             <view class="height_y"> {{notice_list[j_index].name}}</view>
@@ -28,13 +25,11 @@
         </view>
       </picker>
     </view>
-
-     <!-- 题材 -->
-  <view class="basic profession">
-      <picker bindchange="bindThemeChange" value="{{theme_list[s_index].name}}" range="{{theme_list}}"  range-key="name">
+    <view class="basic profession">
+      <picker bindchange="bindThemeChange" value="{{theme_list[s_index].name}}" range="{{theme_list}}" range-key="name">
         <view class="picker">
           <p>
-             <span class="commoo_right">题 材:</span>
+            <span class="commoo_right">题 材:</span>
           </p>
           <view class="rig">
             <view class="height_y"> {{theme_list[s_index].name}}</view>
@@ -44,63 +39,158 @@
         </view>
       </picker>
     </view>
-    <!-- 城市 -->
     <view class="basic profession">
       <picker mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{customItem}}">
         <view class="picker">
           <p>
-             <span class="commoo_right">城 市:</span>
+            <span class="commoo_right">城 市:</span>
           </p>
           <view class="rig">
             <view class="city_y">{{region[0]}},{{region[1]}},{{region[2]}}</view>
-            
-    <input hidden name="city" value="{{region[0]}},{{region[1]}},{{region[2]}}"></input>
-
+            <input hidden name="city" value="{{region[0]}},{{region[1]}},{{region[2]}}"></input>
             <image src="../../image/xiaojiantou2.png" class="jiantou"></image>
           </view>
         </view>
       </picker>
     </view>
 
-
- <!-- 富文本编辑器 -->
+    
     <view class="synopsis">
-<view class="jianjie"> 团队简介 </view>
-<view class="container_s" >
-<editor
-  id="editor"
-  class="ql-container"
-  placeholder="{{placeholder}}"
-  showImgSize
-  showImgToolbar
-  showImgResize
-  bindstatuschange="onStatusChange"
-  bindinput="bindinput"	
-  read-only="{{readOnly}}"
-  bindready="onEditorReady">
-</editor>  
+      <view class="jianjie"> 团队简介 </view>
+      <view class="container_s">
+        <editor id="editor" class="ql-container" placeholder="{{placeholder}}" showImgSize showImgToolbar showImgResize  bindinput="bindinput"  bindready="onEditorReady"
+bindfocus="onEditorFocus"
+data-type="0">
+        </editor>
+      </view> 
+  <view class="jianjie"> 项目简介 </view>
+      <view class="container_s">
+        <editor id="editor_xm" class="ql-container" placeholder="{{placeholder_xm}}" showImgSize showImgToolbar showImgResize bindinput="item_bindinput"  bindready="onEditorReady_xm"
+bindfocus="onEditorFocus"
+data-type="1">
+        </editor>
+      </view>
+<view wx:if="{{type == 0}}">
+      <view class="toolbar" catchtouchend="format" style="bottom: {{isIOS ? keyboardHeight : 0}}rpx">
+        <i class="iconfont icon-charutupian" catchtouchend="insertImage" ></i>
+        <i class="iconfont icon-format-header-2 {{formats.header === 2 ? 'ql-active' : ''}}" data-name="header" data-value="{{2}}"></i>
+        <i class="iconfont icon-format-header-3 {{formats.header === 3 ? 'ql-active' : ''}}" data-name="header" data-value="{{3}}"></i>
+        <i class="iconfont icon-zitijiacu {{formats.bold ? 'ql-active' : ''}}" data-name="bold"></i>
+        <i class="iconfont icon-zitixieti {{formats.italic ? 'ql-active' : ''}}" data-name="italic"></i>
+        <i class="iconfont icon-zitixiahuaxian {{formats.underline ? 'ql-active' : ''}}" data-name="underline"></i>
+        <i class="iconfont icon--checklist" data-name="list" data-value="check"></i>
+        <i class="iconfont icon-youxupailie {{formats.list === 'ordered' ? 'ql-active' : ''}}" data-name="list" data-value="ordered"></i>
+        <i class="iconfont icon-wuxupailie {{formats.list === 'bullet' ? 'ql-active' : ''}}" data-name="list" data-value="bullet"></i>
+      </view>
 </view>
-
-<view class="jianjie"> 项目简介 </view>
-<view class="container_s" >
-<editor
-  id="editor"
-  class="ql-container"
-  placeholder="{{placeholder}}"
-  showImgSize
-  showImgToolbar
-  showImgResize
-  bindstatuschange="onStatusChange"
-  bindinput="item_bindinput"	
-  read-only="{{readOnly}}"
-  bindready="onEditorReady">
-</editor>  
+<view wx:else>
+       <view class="toolbar" catchtouchend="format" style="bottom: {{isIOS ? keyboardHeight : 0}}rpx">
+        <i class="iconfont icon-charutupian" catchtouchend="insertImage_xm" ></i>
+        <i class="iconfont icon-format-header-2 {{formats.header === 2 ? 'ql-active' : ''}}" data-name="header" data-value="{{2}}"></i>
+        <i class="iconfont icon-format-header-3 {{formats.header === 3 ? 'ql-active' : ''}}" data-name="header" data-value="{{3}}"></i>
+        <i class="iconfont icon-zitijiacu {{formats.bold ? 'ql-active' : ''}}" data-name="bold"></i>
+        <i class="iconfont icon-zitixieti {{formats.italic ? 'ql-active' : ''}}" data-name="italic"></i>
+        <i class="iconfont icon-zitixiahuaxian {{formats.underline ? 'ql-active' : ''}}" data-name="underline"></i>
+        <i class="iconfont icon--checklist" data-name="list" data-value="check"></i>
+        <i class="iconfont icon-youxupailie {{formats.list === 'ordered' ? 'ql-active' : ''}}" data-name="list" data-value="ordered"></i>
+        <i class="iconfont icon-wuxupailie {{formats.list === 'bullet' ? 'ql-active' : ''}}" data-name="list" data-value="bullet"></i>
+      </view>
 </view>
+      <input hidden name="team" value="{{details}}"></input>
+      <input hidden name="profile" value="{{item_details}}"></input>
+      <view style="height:100rpx;"></view>
+    </view>
+  </form>
+</view> -->
 
+<view class="wrap">
 
-<view class="toolbar" catchtouchend="format" style="bottom: {{isIOS ? keyboardHeight : 0}}rpx">
+  <form bindsubmit="formSubmit" bindreset="formReset">
+
+    <view class='send_active'>
+      <view class='footer'>
+        <button form-type="submit" class='save_button' type="primary">保存</button>
+      </view>
+    </view>
+    
+    <view class="casket_header">
+          <view class="casket_header_title">
+             <p>剧 名</p>
+          </view>
+          <view class="casket_header_input">
+              <span>|</span>
+      <input maxlength="20" placeholder="必填" placeholder-class="phcolor" type=" text" class="input_common" name="script"></input>
+          </view>
+    </view>
+
+    <view class="basic profession" style="border-top:1rpx solid #F0F0F0">
+      <picker bindchange="bindNoticeChange" value="{{notice_list[j_index].name}}" range="{{notice_list}}" range-key="name">
+        <view class="picker">
+          <p>
+            <span class="commoo_right">剧 型</span>
+          </p>
+          <view class="rig">
+            <view class="height_y"> {{notice_list[j_index].name}}</view>
+            <input hidden name="type" value="{{notice_list[j_index].code}}"></input>
+            <image src="../../image/icon/xiaojiantou2.png" class="jiantou"></image>
+          </view>
+        </view>
+      </picker>
+    </view>
+
+        <view class="basic profession">
+      <picker bindchange="bindThemeChange" value="{{theme_list[s_index].name}}" range="{{theme_list}}" range-key="name" >
+        <view class="picker">
+          <p>
+            <span class="commoo_right">题 材</span>
+          </p>
+          <view class="rig">
+            <view class="height_y"> {{theme_list[s_index].name}}</view>
+            <input hidden name="theme" value="{{theme_list[s_index].code}}"></input>
+            <image src="../../image/icon/xiaojiantou2.png" class="jiantou"></image>
+          </view>
+        </view>
+      </picker>
+    </view>
+
+     <view class="basic profession">
+  <picker mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{customItem}}">
+        <view class="picker">
+          <p> <span class="commoo_right">城 市</span> </p>
+          <view class="rig">
+            <view class="city_y">{{region[1]}}</view>
+            <input hidden name="city" value="{{region[1]}}"></input>
+            <image src="../../image/icon/xiaojiantou2.png" class="jiantou"></image>
+          </view>
+        </view>
+      </picker>
+    </view>
+
+  <view class="territory_name">封面照</view>
+  <view class="page__bd page__bd_spacing">
+  <wux-upload count="3" listType="picture-card" sizeType="compressed" defaultFileList="{{ fileList}}" max="3" url="https://minip.castingpin.com/v1/alioss/index"  bind:change="onChange" bind:success="onSuccess" bind:fail="onFail"  bind:complete="onComplete" bind:preview="onPreview" bind:remove="onRemove" >
+  <text>+</text></wux-upload>
+  <input name="cover_img"  hidden  value="{{cover_img}}"  maxlength="-1"></input>
+  </view>
+<view class="synopsis">
+      <view class="jianjie"> 团队简介 </view>
+      <view class="container_s">
+        <editor id="editor" class="ql-container" placeholder="{{placeholder}}" showImgSize showImgToolbar showImgResize  bindinput="bindinput"  bindready="onEditorReady"
+bindfocus="onEditorFocus"
+data-type="0">
+        </editor>
+      </view> 
+  <view class="jianjie"> 项目简介 </view>
+      <view class="container_s">
+        <editor id="editor_xm" class="ql-container" placeholder="{{placeholder_xm}}" showImgSize showImgToolbar showImgResize bindinput="item_bindinput"  bindready="onEditorReady_xm"
+bindfocus="onEditorFocus"
+data-type="1">
+        </editor>
+      </view>
+<view wx:if="{{type == 0}}">
+    <view class="toolbar" catchtouchend="format" style="bottom: {{isIOS ? keyboardHeight : 0}}rpx">
   <i class="iconfont icon-charutupian" catchtouchend="insertImage"></i>
-  <i class="iconfont icon-format-header-2 {{formats.header === 2 ? 'ql-active' : ''}}" data-name="header" data-value="{{2}}"></i>
+
   <i class="iconfont icon-format-header-3 {{formats.header === 3 ? 'ql-active' : ''}}" data-name="header" data-value="{{3}}"></i>
   <i class="iconfont icon-zitijiacu {{formats.bold ? 'ql-active' : ''}}" data-name="bold"></i>
   <i class="iconfont icon-zitixieti {{formats.italic ? 'ql-active' : ''}}" data-name="italic"></i>
@@ -109,16 +199,23 @@
   <i class="iconfont icon-youxupailie {{formats.list === 'ordered' ? 'ql-active' : ''}}" data-name="list" data-value="ordered"></i>
   <i class="iconfont icon-wuxupailie {{formats.list === 'bullet' ? 'ql-active' : ''}}" data-name="list" data-value="bullet"></i>
 </view>
+</view>
+<view wx:else>
+       <view class="toolbar" catchtouchend="format" style="bottom: {{isIOS ? keyboardHeight : 0}}rpx">
+        <i class="iconfont icon-charutupian" catchtouchend="insertImage_xm" ></i>
 
- <!-- 执行团队 -->
- <input hidden  name="team" value="{{details}}"></input>
-<!-- 简介 -->
- <input hidden  name="profile" value="{{item_details}}"></input>
-
-<view style="height:100rpx;"></view> 
-
-  </view>
-
- 
-  </form>
+        <i class="iconfont icon-format-header-3 {{formats.header === 3 ? 'ql-active' : ''}}" data-name="header" data-value="{{3}}"></i>
+        <i class="iconfont icon-zitijiacu {{formats.bold ? 'ql-active' : ''}}" data-name="bold"></i>
+        <i class="iconfont icon-zitixieti {{formats.italic ? 'ql-active' : ''}}" data-name="italic"></i>
+        <i class="iconfont icon-zitixiahuaxian {{formats.underline ? 'ql-active' : ''}}" data-name="underline"></i>
+        <i class="iconfont icon--checklist" data-name="list" data-value="check"></i>
+        <i class="iconfont icon-youxupailie {{formats.list === 'ordered' ? 'ql-active' : ''}}" data-name="list" data-value="ordered"></i>
+        <i class="iconfont icon-wuxupailie {{formats.list === 'bullet' ? 'ql-active' : ''}}" data-name="list" data-value="bullet"></i>
+      </view>
+</view>
+      <input hidden name="team" value="{{details}}" maxlength="-1"></input>
+      <input hidden name="profile" value="{{item_details}}" maxlength="-1"></input>
+      <view style="height:100rpx;"></view>
+    </view>
+      </form>
 </view>

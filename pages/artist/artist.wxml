@@ -1,36 +1,33 @@
-<view class="wrap">
+<view class="wrap" hidden="{{!loadingHidden}}">
 
   <view class="search_wrap" style="display:block">
-    <s-tab-scoller tabs="{{column}}" current="{{index}}" wx:for-item="itemName" bindchange="onTabsChange" data-platform='{{itemName}}'></s-tab-scoller>
+    <s-tab-scoller zhiye="职业" tabs="{{column}}" current="{{index}}" wx:for-item="itemName" bindchange="onTabsChange" data-platform='{{itemName}}'></s-tab-scoller>
   </view>
   <view class='container' current="{{index}}" duration="300" wx:for-item="itemName" data-platform='{{itemName}}'>
 
     <view class="swiper">
       <scroll-view scroll-x="true">
         <view class="banner" scroll-x="true">
-          <view class="banner_Item" wx:for="{{banner}}" wx:for-index="idx" wx:for-item="itemName" wx:key="idx">
-            <image mode="aspectFill" catchtap="video" data-id="{{itemName.open_id}}"  data-src="{{itemName.cover_img}}"  src="{{itemName.cover_img}}"></image>
+          <view class="banner_Item" wx:for="{{list}}" wx:for-index="idx" wx:for-item="itemName" wx:key="idx"  wx:if="{{idx < 3}}">
+            <image mode="aspectFill" lazy-load="true" catchtap="video" data-id="{{itemName.open_id}}"  data-src="{{itemName.cover_img}}"  src="{{itemName.cover_img}}"></image>
           </view>
         </view>
       </scroll-view>
     </view>
- 
-
+    
     <view class='block' class="construtor">
-
-      <view >
-      
-        <view catchtap="video" data-id="{{item.open_id}}" class="video-card" id="video{{index}}" wx:for="{{videoList}}" wx:key="*this">
-
+        <view catchtap="video" data-id="{{item.open_id}}" class="video-card" id="video{{index}}" wx:for="{{list}}" wx:key="*this"  wx:for-index="idx"  wx:if="{{idx >= 3}}">
           <view class="video-box" style="height: {{item.styleHight}}px;">
-          
-            <video loop="{{true}}" custom-cache="{{false}}"  wx:if="{{item.isPlay}}" src="{{item.cover_video}}" class="video-video" initial-time="{{item.currentTime}}" controls="{{false}}" autoplay="{{true}}"  bindtimeupdate="eventPlayupdate" bindfullscreenchange="eventFullScreen" data-index="{{index}}">
-            </video>
-
-            <image wx:if="{{!item.isPlay}}" class="video-cover" mode="aspectFill" src="{{item.cover_img}}" data-index="{{index}}"></image>
+            <!-- <video loop="{{true}}" custom-cache="{{false}}"  wx:if="{{item.isPlay}}" src="{{item.cover_video}}" class="video-video" initial-time="{{item.currentTime}}" controls="{{false}}" autoplay="{{true}}"  bindtimeupdate="eventPlayupdate" bindfullscreenchange="eventFullScreen" data-index="{{index}}">
+            </video> -->
+            <!-- <image wx:if="{{!item.isPlay}}" class="video-cover" mode="aspectFill" src="{{item.cover_img}}" data-index="{{index}}"></image> -->
+               <image  class="video-cover" mode="aspectFill" lazy-load="true" src="{{item.cover_img}}"  data-index="{{index}}"></image>
           </view>
-        </view>
       </view>
     </view>
   </view>
 </view>
+
+<loading hidden="{{loadingHidden}}">
+     加载中...
+</loading>

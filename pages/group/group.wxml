@@ -1,14 +1,13 @@
 <view class="wrap"  hidden="{{!loadingHidden}}">
-
   <view class="search_wrap" style="display:block">
-    <s-tab-scoller tabs="{{column}}" current="{{index}}" wx:for-item="itemName" bindchange="onTabsChange" data-platform='{{itemName}}'></s-tab-scoller>
+    <s-tab-scoller zhiye="电影分类" tabs="{{column}}" current="{{index}}" wx:for-item="itemName" bindchange="onTabsChange" data-platform='{{itemName}}'></s-tab-scoller>
   </view>
   <view class='container' current="{{index}}" duration="300" wx:for-item="itemName" data-platform='{{itemName}}'>
     <view class="swiper">
 
       <scroll-view scroll-x="true">
   <view class="banner" scroll-x="true">
-<view class="banner_Item" wx:for="{{ava_list}}" wx:for-item="itemName" data-id="{{itemName.id}}" bindtap="detail">
+<view class="banner_Item" wx:for="{{list}}" wx:for-item="itemName" data-id="{{itemName.id}}" bindtap="detail" data-arranger_id="{{itemName.arranger_id}}" wx:for-index="i" wx:if="{{i<5}}">
             <view class="pic">
               <image src="{{itemName.avatar_url}}"></image>
             </view>
@@ -22,8 +21,8 @@
 </view>
       </scroll-view>
     </view>
+    <view class="whole" wx:for="{{list}}" data-id="{{item.id}}" bindtap="detail" data-arranger_id="{{item.arranger_id}}" wx:for-index="i" wx:if="{{i>=5}}">
 
-    <view class="whole" wx:for="{{list}}" data-id="{{item.id}}" bindtap="detail">
       <view class="type all">
       <p>剧名：
         <span>{{item.title}}</span>
@@ -57,18 +56,14 @@
           <image src="{{item.avatar_url}}" class="icon" ></image>
         </view>
       </view>
+
     </view>
   </view>
 
   <view class="publish" bindtap="publish">
-    <image src="../../image/lALPDgQ9rJIIVdPMyMzI_200_200.png"></image>
+    <image src="../../image/icon/lALPDgQ9rJIIVdPMyMzI_200_200.png"></image>
   </view>
 </view>
-
-
-
-
-
 <loading hidden="{{loadingHidden}}">
      加载中...
 </loading>
